@@ -1,0 +1,108 @@
+<div class="container">
+<%if !current_user.blank? && current_user.isClient?%>
+<div id="reviewsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><h2 style="text-align: center">Recommendations</h2></h4>
+      </div>
+      <div class="modal-body">
+
+          <%= form_tag  user_reviews_path(current_user) , :html => {:method => :post} do %>
+
+                <div class="row form-group">
+                    <%= text_field_tag "reviews[comments]", params[:comments], class: "form-control no-border ",style:"width: 300px;height:120px",:required=>true%>
+                  <br/>
+                  <div class="row">
+                    <div class="col-md-2 np-nm text-center">
+                        Quality
+                      <div class="rattingstar">
+                        <div class="stars">
+
+                          <input id="star-5-2" class="star star-5" type="radio" name="[reviews][quality]" value="5">
+                          <label class="star star-5" for="star-5-2"></label>
+                          <input id="star-4-2" class="star star-4" type="radio" name="[reviews][quality]" value="4">
+                          <label class="star star-4" for="star-4-2"></label>
+                          <input id="star-3-2" class="star star-3" type="radio" name="[reviews][quality]" value="3">
+                          <label class="star star-3" for="star-3-2"></label>
+                          <input id="star-2-2" class="star star-2" type="radio" name="[reviews][quality]" value="2">
+                          <label class="star star-2" for="star-2-2"></label>
+                          <input id="star-1-2" class="star star-1" type="radio" name="[reviews][quality]" value="1"  >
+                          <label class="star star-1" for="star-1-2"></label>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  <div class="col-md-2 np-nm text-center" style="text-align: left;margin-left: 10%">
+                    Professionalism
+                    <div class="rattingstar">
+                      <div class="stars">
+
+                        <input id="star-10-2" class="star star-5" type="radio" name="[reviews][professionalism]" value="5" >
+                        <label class="star star-5" for="star-10-2"></label>
+                        <input id="star-9-2" class="star star-4" type="radio" name="[reviews][professionalism]" value="4">
+                        <label class="star star-4" for="star-9-2"></label>
+                        <input id="star-8-2" class="star star-3" type="radio" name="[reviews][professionalism]" value="3">
+                        <label class="star star-3" for="star-8-2"></label>
+                        <input id="star-7-2" class="star star-2" type="radio" name="[reviews][professionalism]" value="2">
+                        <label class="star star-2" for="star-7-2"></label>
+                        <input id="star-6-2" class="star star-1" type="radio" name="[reviews][professionalism]" value="1"  >
+                        <label class="star star-1" for="star-6-2"></label>
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                <div class="col-md-2 np-nm text-center" style="text-align: left;margin-left: 10%">
+                  Timings
+                  <div class="rattingstar">
+                    <div class="stars">
+
+                      <input id="star-15-2" class="star star-5" type="radio" name="[reviews][timing]" value="5" >
+                      <label class="star star-5" for="star-15-2"></label>
+                      <input id="star-14-2" class="star star-4" type="radio" name="[reviews][timing]" value="4">
+                      <label class="star star-4" for="star-14-2"></label>
+                      <input id="star-13-2" class="star star-3" type="radio" name="[reviews][timing]" value="3">
+                      <label class="star star-3" for="star-13-2"></label>
+                      <input id="star-12-2" class="star star-2" type="radio" name="[reviews][timing]" value="2">
+                      <label class="star star-2" for="star-12-2"></label>
+                      <input id="star-11-2" class="star star-1" type="radio" name="[reviews][timing]" value="1"  >
+                      <label class="star star-1" for="star-11-2"></label>
+
+                    </div>
+                  </div>
+                </div>
+                  </div>
+
+                  <%= hidden_field_tag 'reviews[stylist_id]',  @user.id %>
+
+
+              <div class="row form-group">
+                <div class="actions">
+                  <%= submit_tag "Comment", class: "btn-confirm btn btn-small btn-primary pull-right" ,:style=>"margin-right:75%;"%>
+                </div>
+              </div>
+        <%end%>
+        </div>
+    </div>
+</div>
+</div>
+    </div>
+
+      <%end%>
+  </div>
+<script type="text/javascript">
+$("#reviews").on("click", function () {
+$('#reviewsModal').modal('show');
+});
+$(".notLogin").on("click", function () {
+    $('#myModal_login').modal('show');
+});
+
+$(".notify").on("click", function () {
+  alert("Please Book Stylist to write Reviews");
+});
+</script>

@@ -1,0 +1,83 @@
+<div class="container">
+<div id="appointment_summary">
+  <div class="col-lg-12 text-center">
+    <h2 class="sh7">Appointment Summary</h2>
+  </div>
+  <div class="col-md-12 margin-zero">
+    <div class="row recommendations mb30">
+      <div class="margin-zero">
+        <div class="col-md-2 col-sm-2 col-xs-12">
+          <div class="app-sum"><img id="stylistImg1"src="<%=current_user.photo.image.url%>"></div>
+        </div>
+        <div class="col-md-10 col-sm-10 col-xs-12">
+          <div class="table-pop-appt table-responsive app-table">
+            <table class="table">
+              <thead>
+              <tr>
+                <td>email</td>
+                <td>amount</td>
+                <td>gift_code</td>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td id="stylistName1"><%=@gift_card.to_email%></td>
+                <td id="serviceName1"><%=@gift_card.amount%></td>
+                <td id="serviceDate1"><%=@gift_card.gift_code%></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <!-- textbox-->
+        <div class="clearfix"></div>
+
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="clearfix"></div>
+      <div class="form-row">
+        <div class="col-md-12 mt30 text-right">
+          <!--<button id="bookAppointment1" class="btn-confirm btn btn-small btn-primary" type="submit"> Request</button>-->
+        </div>
+      </div>
+      <div class="clear"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="container">
+<%=form_for :transaction, :url => {:action => "gift_card_payment_create", :controller => "transactions"} do |f|%>
+    <%= render 'customer_form' unless current_user.has_payment_info? %>
+    <br/>
+
+    <div id="dropin"></div>
+    <br/>
+      <%=hidden_field_tag :amount,@gift_card.amount.to_s%>
+
+    <div class="actions row text-center">
+      <%=f.submit "Purchase Gift Card", class: "btn-confirm btn btn-small btn-primary requesting",:id=>"transSubmit"%>
+    </div>
+    <br/>
+<%end%>
+  </div>
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script type='text/javascript'>
+    if(typeof gon != undefined){
+        braintree.setup(gon.client_token,'dropin', {container: 'dropin'});
+    }
+
+    //paste this code under the head tag or in a separate js file.
+    // Wait for window load
+    $(window).load(function() {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
+
+
+
+</script>

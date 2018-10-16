@@ -1,0 +1,83 @@
+<div class="row dashboard">
+  <div>
+
+
+  <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="page-header">
+        <h1 class="pull-left">Past </h1><span class="pull-left msg-notf-icon"><img src='<%=asset_path("icon-clock.png")%>'></span>
+        <div class="clearfix"></div>
+        <h5>View or Delete</h5>
+      </div>
+
+    </div>
+
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <%=will_paginate @past,:param_name => 'past_page', renderer: BootstrapPagination::Rails %>
+          <%if !@past.blank?%>
+              <% @past.each do |past| %>
+
+            <div class="table-responsive table-booking">
+
+                <table class="table table-condensed latest-thum-size text-justfy">
+                  <tbody>
+                  <tr>
+                    <td>
+                      <%if current_user.isClient?%>
+                          <%= link_to stylist_path(past.stylist.id,past.stylist.first_name), :class => "thumbnail" do %>
+                              <%= image_tag past.stylist.photo.image.url, :class => "img-circle" %>
+                          <% end %>
+                          <%= past.stylist.first_name %>
+                      <%else %>
+                          <%= link_to client_path(past.user.id,past.user.first_name), :class => "thumbnail" do %>
+                              <%= image_tag past.user.photo.image.url, :class => "img-circle" %>
+                          <% end %>
+                          <%= past.user.first_name %>
+                      <%end%>
+                    </td>
+                    <td><h4><%=Booking.get_services_name_by_booking(past) %></h4>
+                      <h6> <%=past.dates.strftime("%a-%b. %d %Y")%>, <%=past.slots.slice(0,7)%></h6>
+
+                    </td>
+                    <td><span aria-hidden="true" class="glyphicon glyphicon-time mr5"></span><%= past.total_time%></td>
+                    <td>$<%=get_amount_paid_for_transaction_booking(past)%></td>
+                    <td> <%=link_to "Delete",user_delete_path(current_user,past.id),:class=>"btn-confirm btn btn-small btn-primary pull-right",:style=>"width: 120px;height: 35px ;margin-left: 30%" ,method: :put,:remote=>true %>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <%end%>
+
+        <%end%>
+
+        </div>
+  </div>
+</div>
+<script>
+  /*  $(function() {
+        $(".pagination a").on("click", function() {
+            var geturl=this.href
+            $.ajax({
+                url:geturl ,
+                type: "GET",
+                dataType : 'script'
+            });           return false;
+        });
+    });
+
+*/
+
+  $(function() {
+      $(".pagination a").on("click", function() {
+          var geturl=this.href
+          $.ajax({
+              url:geturl ,
+              type: "GET",
+              dataType : 'script'
+          });           return false;
+      });
+  });
+
+
+
+</script>

@@ -1,0 +1,529 @@
+<div class="tab-pane" id="AccountSettings">
+  <section class="container">
+    <div class="row transactions aAccountSettings">
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">General <br/>
+            Settings</h1>
+          <span class="pull-left msg-notf-icon"><img src="<%= asset_path('icon-settings.png') %>"></span>
+
+          <div class="clearfix"></div>
+          <h5>Edit General Settings </h5>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="row mb30">
+          <%= form_for @user, html: {multipart: true} , :id=>"zipCodeForm" do |f| %>
+
+              <div class="form-row">
+                <% if @user.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+                      <ul>
+                        <% @user.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                <% end %>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label "First Name" %>
+                    <%= f.text_field :first_name , class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label "Email" %>
+                    <%= f.text_field :email , class: "form-control" %>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label :last_name %><br>
+                    <%= f.text_field :last_name, class: "form-control" %>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label :address %><br>
+                    <%= f.text_field :address, class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label :state %><br>
+                    <%= f.text_field :state, class: "form-control" %>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                <div class="form-group">
+                  <%= f.label :city %><br>
+                  <%= f.text_field :city, class: "form-control" %>
+                </div>
+              </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <%= f.label :zipcode %><br>
+                    <%= f.text_field :zipcode, class: "form-control" %>
+                  </div>
+                </div>
+
+
+                <% if current_user.isStylist? %>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <%= f.label :Brand %><br>
+                        <%= f.text_field :brand, class: "form-control" %>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <%= f.label :stylist_type, "What kind of Stylist you are?" %><br>
+                        <%= f.text_field :stylist_type, class: "form-control" , maxlength:"20" %>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <%= f.label :description, "Type of Stylist" %><br>
+                        <%= f.text_field :description, class: "form-control", maxlength:"20"%>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <%= f.label :bio, "Bio" %><br>
+                        <%= f.text_field :bio, class: "form-control",maxlength:"80" %>
+                      </div>
+                    </div>
+
+
+
+                <% end %>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-12 col-sm-12 file-upload">
+                  <div>Upload Profile Picture</div>
+                          <span>
+                             <input type="file" name="file" accept="image/*">
+                          </span> <span class="pull-right">
+                                               <%= f.submit "Update", class: "btn-confirm btn btn-small btn-primary" %>
+                          </span></div>
+              </div>
+          <% end %>
+          <div class="clearfix"></div>
+          <div class="spacer35"></div>
+          <hr/>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row transactions aAccountSettings">
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">Security</h1>
+          <span class="pull-left msg-notf-icon"><img src="<%= asset_path('icon-lock.png') %>"></span>
+
+          <div class="clearfix"></div>
+          <h5>Edit Security Settings</h5>
+        </div>
+      </div>
+
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="row">
+          <%= form_for(@user, :url => {:action => "update_password"}) do |f| %>
+              <div class="form-row">
+
+                <div>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group">
+                      <%= f.label :password, "Password" %><br/>
+                      <% if @minimum_password_length %>
+                          <em>(<%= @minimum_password_length %> characters minimum)</em><br/>
+                      <% end %>
+                      <%= f.password_field :password, :autocomplete => "off", :class => "form-control" %>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group">
+                      <%= f.label :password_confirmation %><br/>
+                      <%= f.password_field :password_confirmation, :class => "form-control" %>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-4 col-xs-12">
+                    <div class="form-group">
+                      <%= f.label :current_password %>
+                      <%= f.password_field :current_password, :class => "form-control" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group checkbox-outer"><a href="#">Forgot Password?</a>
+                  <h6 class="ps-setting">Profile Settings</h6>
+
+                  <div class="checkbox">
+                    <input type="checkbox" id="remember1" name="remember" class="" tabindex="3">
+                    <label for="remember" class="checkbox-text"> Keep My Profile Public</label>
+                  </div>
+                  <div class="checkbox pull-left">
+                    <input type="checkbox" id="remember2" name="remember" class="" tabindex="3">
+                    <label for="remember" class="checkbox-text"> Keep My Profile Public</label>
+                  </div>
+                            <span class="pull-right">
+                            <button id="btnContactUs" class="btn-confirm btn btn-small btn-primary" type="submit">
+                              Update
+                            </button>
+                            </span></div>
+              </div>
+          <%end%>
+          <div class="clearfix"></div>
+          <hr/>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="row transactions aAccountSettings">
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">Alerts</h1>
+          <span class="pull-left msg-notf-icon"><img src="<%= asset_path('icon-bell.png') %>"></span>
+          <div class="clearfix"></div>
+          <h5>Edit Notification and Message <br/>
+            Settings</h5>
+        </div>
+      </div>
+
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="row">
+          <div class="form-row">
+            <div>
+            <%= form_for @user, html: {multipart: true} do |f| %>
+                <div class="col-md-5 col-sm-8">
+                  <div class="form-group mt20">
+                    <%= f.label :phone ,"Mobile Phone Number" %><br>
+                    <%= f.text_field :phone , class: "form-control" %>
+                    </div>
+                </div>
+                  <div class="clearfix"></div>
+                  <div class="col-md-12 mt20">
+                    <div class="checkbox-outer heading">
+                      <h6>Notify Me When (Applies to Mobile & Push Notifications)</h6>
+                      <div class="checkbox">
+                        <input type="checkbox" id="checkbox3">
+                        <label for="checkbox3"> I Receive Messages From Professionals on Reddera </label>
+                      </div>
+                      <div class="spacer12"></div>
+                      <div class="checkbox">
+                        <input type="checkbox" id="checkbox4">
+                        <label for="checkbox4"> I Book a Service on Reddera</label>
+                      </div>
+                    </div>
+                    <div class="checkbox-outer heading pt25">
+                      <h6>Send Me E-mails When</h6>
+                      <div class="checkbox">
+                        <input type="checkbox" id="checkbox5">
+                        <label for="checkbox5"> Reddera Has Deals and Promotions </label>
+                      </div>
+                    </div>
+                    <div class="checkbox-outer heading">
+                      <h6>Remind Me When </h6>
+                      <div class="checkbox">
+                        <input type="checkbox" id="checkbox6">
+                        <label for="checkbox6"> I Have an Upcoming Appointment </label>
+                      </div>
+                      <div class="spacer12"></div>
+                      <div class="checkbox">
+                        <input type="checkbox" id="checkbox7">
+                        <label for="checkbox7">I Receive a New Review </label>
+                      </div>
+                    </div>
+                    <div class="form-group"> <span class="pull-right">
+                                               <%= f.submit "Update", class: "btn-confirm btn btn-small btn-primary" %>
+                          </span> </div>
+                  </div>
+
+
+
+            <%end%>
+
+            </div>
+          <div>
+
+            </div>
+          </div>
+        </div>
+        </div>
+
+    </div>
+
+
+
+
+    <div class="row transactions aAccountSettings">
+      <!-- table -content-->
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">Payment <br/>
+            Method </h1>
+          <span class="pull-left msg-notf-icon"><img src="<%=asset_path('icon-card.png')%>"></span>
+          <div class="clearfix"></div>
+          <h5>Edit or Add Payment Methods</h5>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <hr>
+        <div class="row ">
+
+           <%@cards.each do |card|%>
+
+
+                 <%=image_tag card.image_url%>&nbsp;
+
+              <%="#{card.card_type} Ending in #{card.last_4}"%>&nbsp;
+             <%=link_to "X",card_destroy_path(card.token),:class=>"btn-close btn btn-small btn-primary ",method: :get %>
+          <br/>
+          <%end%>
+
+
+        </div>
+        <hr>
+        <div class="row">
+
+
+        </div>
+        <hr>
+      </div>
+    </div>
+
+
+    <div class="row transactions aAccountSettings mt30">
+      <!-- table -content-->
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">Time Zone</h1>
+          <span class="pull-left msg-notf-icon"><img src="<%= asset_path('icon-clock.png') %>"></span>
+          <div class="clearfix"></div>
+          <h5>Edit Current Time Zone </h5>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="form-row recommendations ">
+          <div class="col-md-10">
+            <div class="form-group">
+              <label for="name"> Select Time Zone</label>
+              <select class="form-control">
+                <option>(GMT-08:00) PACIFIC TIME (US &amp; CANADA)</option>
+                <option>(GMT-08:00) PACIFIC TIME (US &amp; CANADA)</option>
+                <option>(GMT-08:00) PACIFIC TIME (US &amp; CANADA)</option>
+                <option>(GMT-08:00) PACIFIC TIME (US &amp; CANADA)</option>
+                <option>(GMT-08:00) PACIFIC TIME (US &amp; CANADA)</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <div class="pull-right pt25">
+                <button id="btnContactUs" class="btn-confirm btn btn-small btn-primary" type="submit"> Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <hr>
+      </div>
+    </div>
+  </section>
+</div>
+
+
+              <!--
+<div class="col-md-12 page-header mt20">
+  <h1>MY PROFILE </h1>
+</div>
+<div class="container">
+  <%#= form_for @user, html: {multipart: true} do |f| %>
+<%# if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%#= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+            <ul>
+              <%# @user.errors.full_messages.each do |message| %>
+                  <li><%#= message %></li>
+              <%#end %>
+            </ul>
+          </div>
+      <%# end %>
+&lt;!&ndash; Page Heading &ndash;&gt;
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <%#= f.label "Name" %>
+<%#= f.text_field :name, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <%#= f.label :phone %><br>
+          <%#= f.text_field :phone, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <%#= f.label :Address %><br>
+          <%#= f.text_field :address, class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <%#= f.label :zipcode %><br>
+          <%#= f.text_field :zipcode, class: "form-control" %>
+        </div>
+      </div>
+
+      <%# if current_user.isStylist? %>
+          <div class="row form-group">
+            <div class="col-xs-4">
+              <%#= f.label :Brand %><br>
+              <%#= f.text_field :brand, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-xs-4">
+              <%#= f.label :stylist_type, "What kind of Stylist you are?" %><br>
+              <%#= f.text_field :stylist_type, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-xs-4">
+              <%#= f.label :description, "Describe Yourself" %><br>
+              <%#= f.text_field :description, class: "form-control" %>
+            </div>
+          </div>
+      <%# end %>
+
+      <div class="field form-group">
+        <%#= f.label :image %><br>
+        <input type="file" name="file" accept="image/*">
+      </div>
+
+      <div class="actions">
+        <%#= f.submit "Save", class: "btn btn-success request-button", style: "height:40px;width:100px;margin-left:5%" %>
+      </div>
+  <%# end %>
+
+  <hr/>
+  <%#= form_for(@user, :url => {:action => "update_password"}) do |f| %>
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <#%= f.label :password, "Password" %><br/>
+          <%# if @minimum_password_length %>
+              <em>(<%#= @minimum_password_length %> characters minimum)</em><br/>
+          <%#end %>
+<%#= f.password_field :password, :autocomplete => "off",:class=>"form-control" %>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <#%= f.label :password_confirmation %><br/>
+          <%#= f.password_field :password_confirmation,:class=>"form-control" %>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-xs-4">
+          <%#= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>
+          <%#= f.password_field :current_password,:class=>"form-control" %>
+        </div>
+      </div>
+
+      <div class="action_container">
+        <%#= f.submit "Update Password",class: "btn btn-success request-button"%>
+      </div>
+  <%# end %>
+</div>
+-->
+<!--
+<script src="https://js.braintreegateway.com/js/beta/braintree-hosted-fields-beta.16.min.js"></script>
+
+<script id="braintree-client-token" type="application/json"><%#=@client_token%></script>
+<script type='text/javascript'>
+    var clientToken = document.getElementById('braintree-client-token').innerHTML;
+
+    braintree.setup(clientToken, 'custom', {
+        id: 'my-form1',
+        hostedFields: {
+            styles: {
+                'input': {
+                    'font-family': 'sans-serif',
+                    'font-size': '16pt',
+                    'color': 'black',
+                    'display': 'block',
+                    'width': '100%',
+                    'height': '34px',
+                    'padding':' 6px 12px',
+                    'font-size': '14px',
+                    'line-height': '1.42857143',
+                    'color': '#555',
+                    'background-color': '#fff',
+                    'background-image': 'none',
+                    border: '1px solid #ccc',
+                    'border-radius': '4px',
+                    '-webkit-box-shadow': 'inset 0 1px 1px rgba(0, 0, 0, .075)'
+
+                },
+                'input:focus': {
+                    'outline': 'none'
+                },
+                'input.invalid': {
+                    'color': 'tomato'
+                },
+                'input.valid': {
+                    'color': 'limegreen'
+                }
+            },
+            number: {
+                selector: '#my-credit-card-field',
+                placeholder: '4111 1111 1111 1111'
+            },
+            cvv: {
+                selector: '#my-security-code-field',
+                placeholder: '123'
+            },
+            expirationDate: {
+                selector: '#my-expiration-field',
+                placeholder: 'MM/YYYY'
+            },
+            postalCode: {
+                selector: '#my-postal-code-field',
+                placeholder: '12345'
+            }
+        },
+    });
+</script>-->
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+</script>

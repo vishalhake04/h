@@ -1,0 +1,51 @@
+<% @formlist=['15', '30', '45', '60', '75', '90', '105', '120'] %>
+
+<%= form_for :service, :url => user_service_list_path, remote: true, :html => {:method => :post} do |f| %>
+    <div class="table-responsive table-dashboard services">
+      <table class="table table-condensed latest-thum-size text-justfy">
+        <tr>
+          <div class="form-inline">
+            <td>
+
+                <%= f.text_field :name,:placeholder=>"Name", class: "form-control" %>
+            </td>
+
+            <td>
+
+
+              <%= f.text_field :description,:placeholder=>"Description", class: "form-control" %>
+            </td>
+
+            <td>
+
+              <div class="form-control">
+                <%= f.select(:time, @formlist.map { |value| [value, value] }) %>
+              </div>
+            </td>
+            <td>
+                <%= f.text_field :amount,:placeholder=>"Amount", class: "form-control" %>
+            </td>
+
+
+
+            <!--  <div class="field form-group">
+              <%#= f.label :image %><br>
+              <input type="file" name="file" accept="image/*">
+            </div>-->
+            <td>
+
+              <div class="form-group">
+                <div class="actions">
+
+
+                  <%= f.submit "+", class: "btn-close btn btn-small btn-primary pull-right" %>
+
+                </div>
+              </div>
+            </td>
+
+          </div>
+        </tr>
+      </table>
+    </div>
+<% end %>

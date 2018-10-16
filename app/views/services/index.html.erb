@@ -1,0 +1,353 @@
+
+<% @formlist=['15', '30', '45', '60', '75', '90', '105', '120','135','150','165','180','195','210','225','240'] %>
+
+<div class="tab-pane" id="manageservices">
+  <section class="container">
+    <div class="alert alert-warning alert-dismissible" id="alertWarning"role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      Some of the filed is blank
+    </div>
+    <div class="row dashboard">
+      <div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <div class="page-header">
+            <h1 class="pull-left">Services </h1>
+            <span class="pull-left msg-notf-icon"><img src='<%=asset_path('icon-service.png')%>'></span>
+            <div class="clearfix"></div>
+            <h5>Edit or Add Services</h5>
+          </div>
+        </div>
+
+          <!-- table -content-->
+
+            <div class="col-md-9 col-xs-12">
+              <div class="row" style="background-color: #f6f6f6cc;">
+                <div class="col-md-7 col-xs-12">
+                  <div class="manage-ser-select">
+                    <div class="select">
+                      <%=select_tag 'service_category', options_for_select(ServiceCategory.all.collect{ |u| [ u.name,u.id] }),:id=>"service_categories_id", :include_blank=> 'Main Category',class:"pl0",:style=>"background-color:#f6f6f6cc"%>
+
+                      <div class="select__arrow"></div>
+                    </div>
+                    <div class="select">
+
+
+                      <div id="sub_services_dropdown">
+
+                        <%= render :partial => "services/sub_services_dropdown", :sub_Services => {:sub_Services => @sub_services} %>
+
+                      </div>
+                      
+                    </div>
+                    <div class="select"> <span aria-hidden="true" class="glyphicon glyphicon-time mr5 clock-icon"></span>
+                      <%= select_tag('time', options_for_select(@formlist),:style=>"background-color:#f6f6f6cc", class:'',:id=>"time", :include_blank=> 'Duration') %>
+
+                      <div class="select__arrow"></div>
+                    </div>
+                    <div class="select"> <span aria-hidden="true" class="glyphicon fa-dollar mr5 clock-icon"></span>
+                      <%= select_tag('amount', options_for_select(getAmount()), :style=>"background-color:#f6f6f6cc",class: '',:id=>"amount", :include_blank=> 'Price') %>
+
+                      <div class="select__arrow"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 col-xs-12">
+                  <img src="<%=asset_path('2.gif')%>" id="addLoader" class="pull-right">
+
+                  <div class="location-box">
+                    <div class="location-header">
+                      <div class="mscls-btn">
+                        <div class="row m-closebtn">
+                          <div class="col-md-2">
+                            <%= submit_tag "+", class: "btn-close btn btn-small btn-primary pull-right" ,:id=>"submitbtn", :stylist_id=>current_user.id,:style=>"margin-right:10px"%>
+                          </div>
+
+                        </div>
+
+                      </div>
+                      <h1>Location</h1>
+                    </div>
+                    <div class="ms-checkbx">
+                      <input id="loc1" location-name="Manhattan" name="location" type="checkbox">
+                      <label for="loc1">Manhattan</label>
+                    </div>
+                    <div class="ms-checkbx">
+                      <input id="loc2" location-name="Queens" name="location" type="checkbox">
+                      <label for="loc2">Queens</label>
+                    </div>
+                    <div class="ms-checkbx">
+                      <input id="loc3" location-name="Brooklyn" name="location" type="checkbox">
+                      <label for="loc3">Brooklyn</label>
+                    </div>
+                    <div class="ms-checkbx">
+                      <input id="loc4" location-name="Bronx" name="location" type="checkbox">
+                      <label for="loc4">Bronx</label>
+                    </div>
+                    <div class="ms-checkbx">
+                      <input id="loc5" location-name="Jersey City" name="location" type="checkbox">
+                      <label for="loc5">Jersey City</label>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="clearfix"></div>
+              <div id="service_list">
+                <%= render :partial => "services/service_list", :locals => {:service => @services} %>
+
+              </div>
+
+              <%#if !current_page?(user_services_path(current_user))%>
+                  <div id="edit-service-modal">
+                    <%= render :partial => "services/edit_modal", :locals => {:service => @service,:edit=>@edit} %>
+
+                  </div>
+                  <%#end%>
+            </div>
+          </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <%#= form_tag  user_service_list_path(current_user), :method => :post ,:remote=>true do %>
+
+
+
+
+  </section>
+</div>
+<style>
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+    }
+    .se-pre-con{
+
+        background: url('<%=asset_path('2.gif')%>') center no-repeat #fff;
+    }
+</style>
+<script>
+    /*$('select').each(function() {
+     $(this).attr('disabled','true');
+     });*/
+    $('#addLoader').hide()
+
+
+    $('#alertWarning').hide()
+
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+
+    $('#service_time').prop('disabled',false);
+    $('#states-of-country').prop('disabled',false);
+
+/*    $('#test1').click(function() {
+        if ($('#test1').is(":checked")){
+
+
+            $('#cities-of-state1').prop('disabled',false);
+
+        }
+        else{
+            $('#cities-of-state1').prop('disabled',true);
+        }
+    });*/
+    $('#test2').click(function() {
+        if ($('#test2').is(":checked")){
+
+
+            $('#cities-of-state2').prop('disabled',false);
+
+        }
+        else{
+            $('#cities-of-state2').prop('disabled',true);
+        }
+    });
+    $('#test3').click(function() {
+        if ($('#test3').is(":checked")){
+
+
+            $('#cities-of-state3').prop('disabled',false);
+
+        }
+        else{
+            $('#cities-of-state3').prop('disabled',true);
+        }
+    });
+
+    $('#test4').click(function() {
+        if ($('#test4').is(":checked")){
+
+
+            $('#cities-of-state4').prop('disabled',false);
+
+        }
+        else{
+            $('#cities-of-state4').prop('disabled',true);
+        }
+    });
+
+    $('#test5').click(function() {
+        if ($('#test5').is(":checked")){
+
+
+            $('#cities-of-state5').prop('disabled',false);
+
+        }
+        else{
+            $('#cities-of-state5').prop('disabled',true);
+        }
+    });
+
+
+    $('#service_categories_id').change(function () {
+
+      var service_category=$(this).val();
+        if($(this).val() == "") {
+
+
+
+        } else {
+
+            $.ajax({
+                url: '/service_categories/'+$(this).val()+'/service_sub_categories/sub_service_dropdown.js',
+                type: "GET"
+
+            });
+        }
+    });
+
+    $('#states-of-country').change(function () {
+        var input_state = $(this);
+        var cities_of_state1 = $("#cities-of-state1");
+        var cities_of_state2 = $("#cities-of-state2");
+        var cities_of_state3= $("#cities-of-state3");
+        var cities_of_state4= $("#cities-of-state4");
+        var cities_of_state5= $("#cities-of-state5");
+
+        if($(this).val() == "") {
+            cities_of_state.html("");
+
+
+        } else {
+
+            $.ajax({
+                url: '/cities/' + $(this).val(),
+                type: "POST"
+
+            });
+         /*   $.ajax({
+                url: '/cities/' + $(this).val(),
+                data: {
+
+                },
+                error: function() {
+                    $('#info').html('<p>An error has occurred</p>');
+                },
+
+             /!*   success: function(data) {
+
+                    var opt = '<option value="" selected="">Select Your City</option>';
+                    console.log(data);
+                    if(data.length == 0){
+
+                    } else {
+                        for (var i=0;i<data.length;i++){
+                            opt += '<option value=' + data[i] + '> ' + data[i] + '</option>';
+                            cities_of_state1.html(opt);
+                            cities_of_state2.html(opt);
+                            cities_of_state3.html(opt);
+                            cities_of_state4.html(opt);
+                            cities_of_state5.html(opt);
+
+                            $('#cities-of-state1').prop('disabled',true);
+                            $('#cities-of-state2').prop('disabled',true);
+                            $('#cities-of-state3').prop('disabled',true);
+                            $('#cities-of-state4').prop('disabled',true);
+                            $('#cities-of-state5').prop('disabled',true);
+                        }
+
+                    }
+                },*!/
+                type: 'GET'
+            });
+*/
+        }
+    });
+
+
+
+$('#submitbtn').on("click", function () {
+    var locations=[]
+    $("input:checkbox[name=location]:checked").each(function(){
+
+        locations.push($(this).attr('location-name'));
+    });
+    var service_category = $('#service_categories_id').find(":selected").attr('value');
+    var service_sub_category = $('#sub_services').find(":selected").attr('value');
+    var time = $('#time').find(":selected").attr('value');
+    var amount = $('#amount').find(":selected").attr('value');
+    var stylist_id = $(this).attr('stylist_id');
+
+    if (service_category==""||service_sub_category=="" || time=="" || amount==""){
+        $('#alertWarning').show()
+    }
+else {
+
+        $('#addLoader').show()
+        $.ajax({
+            url: "/users/" + stylist_id + "/service_list.js",
+            type: "POST",
+            data: {
+                service: {
+                    service_category_id: service_category,
+                    service_sub_category_id: service_sub_category,
+                    time: time,
+                    amount: amount,
+                    location1: (locations[0] == undefined) ? " " : locations[0],
+                    location2: (locations[1] == undefined) ? " " : locations[1],
+                    location3: (locations[2] == undefined) ? " " : locations[2],
+                    location4: (locations[3] == undefined) ? " " : locations[3],
+                    location5: (locations[4] == undefined) ? " " : locations[4],
+
+
+                }
+            },
+            success: function (returnhtml) {
+                $('#addLoader').hide()
+
+            }
+        });
+
+    }
+
+});
+</script>
+<style>
+
+</style>

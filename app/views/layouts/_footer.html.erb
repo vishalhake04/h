@@ -1,0 +1,77 @@
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="footer-content padding-bottom-40">
+        <div class="col-lg-3 col-sm-6 col-xs-12 links">
+          <h5 class="block-heading">Main Menu</h5>
+          <ul>
+            <li><a href="<%= how_it_works_path %>">How It Works</a></li>
+            <li><a href="<%=help_path%>">Help</a></li>
+            <li><a href="<%=help_path+".html#tab-content-link"%>">FAQS</a></li>
+            <li><a href="#">Safety</a></li>
+            <%if user_signed_in?%>
+                <li><a href="<%= user_dashboard_path(current_user.id)%>">My Account</a></li>
+            <%else%>
+                <li><a href="#" class="myAccount">My Account</a></li>
+            <%end%>
+          </ul>
+        </div>
+        <%if !user_signed_in?%>
+            <div class="col-lg-3 col-sm-6 col-xs-12 links">
+              <h5 class="block-heading">Professionals</h5>
+              <ul>
+                <li><a href="<%=professional_sign_up_path%>">Become a Professional</a></li>
+
+                <li><a href="#"  class="signup">Sign Up</a>&nbsp;|&nbsp;<a href="#"  class="Login">Log In</a></li>
+              </ul>
+            </div>
+        <%end%>
+        <div class="col-lg-3 col-sm-6 col-xs-12 links">
+          <h5 class="block-heading">About</h5>
+          <ul>
+            <li><a href="<%= help_path("html#contact_us")%>">Contact Us</a></li>
+            <li><a href="#">Terms and Privacy</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-xs-12">
+          <h5>Join Us On</h5>
+          <ul class="social" style="margin-left:-40px;">
+            <li><a href="#" class="f_twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" class="f_facebook"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" class="f_instagram"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="http://linkedin.com/"><i class="fa fa-linkedin"></i></a></li>          </ul>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</footer>
+<%=render 'layouts/login'%>
+
+<%=render 'layouts/signup'%>
+
+<%=render 'layouts/stylist_signup'%>
+
+
+<script type="text/javascript">
+    $(".signup").on("click", function () {
+        $('#myModal_signup').modal('show');
+    });
+    $(".Login").on("click", function () {
+
+        $('#myModal_login').modal('show');
+    });
+    $(".stylistsignup").on("click", function () {
+        $('#myModal_stylist_signup').modal('show');
+    });
+
+    $('#close_modal').on('click', function() {
+        $('#myModal_login').modal('hide');
+    });
+
+    $(".myAccount").on("click", function () {
+        document.cookie="myaccount=logged_in";
+        $('#myModal_login').modal('show');
+    });
+
+</script>

@@ -1,0 +1,224 @@
+
+<div id="transactionhistory" class="tab-pane active">
+<section class="container">
+  <%if !@notify.blank?%>
+      <div class="alert alert-success alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%=@notify%>
+      </div>
+  <%end%>
+ <%if current_user.isStylist?%>
+  <div class="row transactions">
+    <div>
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">
+            Payout
+            <br>
+            Method
+          </h1>
+
+          <span class="pull-left msg-notf-icon">
+                <img src="<%=asset_path('icon-payment.png')%>">
+          </span>
+          <div class="clearfix"></div>
+          <h5>Edit or Add Payout Methods </h5>
+         </div>
+
+        </div>
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="row">
+          <div class="trs-ctn">
+            When you receive a payment for a service, you’ll receive a payout.Our secure payment system supports several payout methods, which can be setup and altered here. Visit the
+            <a href="#">Payout FAQ.</a>
+          </div>
+          <%= form_for @payment_info,:url=>user_payment_info_path(current_user.id)  , :method => :put do |f| %>
+          <div class="form-row mt35">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="legal_name">Legal Name</label>
+                <%= f.text_field :legal_name,  class: "form-control",:placeholder=>"Legal Name" %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="business_name">Business Name</label>
+                <%= f.text_field  :business_name,  class: "form-control",:placeholder=>"Business Name" %>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="tax_id">Tax ID</label>
+                <%= f.text_field  :tax_id,  class: "form-control",:placeholder=>"Tax ID" %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="dob">Date Of Birth</label>
+                <%= f.text_field   :dob, class: "form-control",:placeholder=>"Date Of Birth" %>
+              </div>
+            </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="ssn">SSN (Full or Last 4 Digits)</label>
+                  <%= f.text_field   :ssn,  class: "form-control",:placeholder=>"SSN (Full or Last 4 Digits)" %>
+                </div>
+              </div>
+
+              </div>
+          <div class="form-row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="account_number">Account Number</label>
+                <%= f.number_field :account_number,  class: "form-control",:placeholder=>"Account Number" %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="routing_number">Routing Number</label>
+                <%=  f.number_field :routing_number,class: "form-control",:placeholder=>"Routing Number" %>
+
+              </div>
+            </div>
+
+
+          </div>
+          <div class="form-row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="street_address">Street Address</label>
+                <%= f.text_field  :street_address, class: "form-control",:placeholder=>"Street Address" %>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="city">City</label>
+                <%= f.text_field  :city,  class: "form-control",:placeholder=>"City" %>
+
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="state">State</label>
+                <%=select_tag :state, options_for_select(us_states),class: "form-control" %>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zip_code">Zip Code</label>
+                <%= f.number_field :zipcode,  class: "form-control",:placeholder=>"Zip Code"%>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-6">
+                <div class="form-group checkbox-outer">
+                  <h6 class="terms-ctent">Braintree’s Terms</h6>
+                  <div class="checkbox">
+                    <input id="remember" class="" type="checkbox" name="remember" tabindex="3">
+                    <label class="checkbox-text" for="remember"> I accept Braintree’s Terms and Conditions.</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 mt30">
+                <span>
+                  <%= submit_tag "Update", class: "btn-confirm btn btn-small btn-primary" %>
+
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+           <%end%>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+  </div>
+  <%end%>
+
+  <div class="row dashboard">
+    <div class="col-md-3 col-sm-3 col-xs-12">
+
+      <div class="page-header">
+        <h1 class="pull-left">
+          Recent
+          <br>
+          Transactions
+        </h1>
+        <span class="pull-left msg-notf-icon">
+            <img src="<%=asset_path('icon-watch.png')%>">
+        </span>
+
+        <div class="clearfix"></div>
+        <h5>View Recent Transactions </h5>
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+          <% @transactions.each do |transaction| %>
+
+
+            <div class="table-responsive table-booking">
+
+              <table class="table table-condensed latest-thum-size text-justfy">
+                <tbody>
+                <tr>
+             <td>
+                  <%if current_user.isStylist?%>
+
+                            <a href="<%=client_path(transaction[0].user.id,transaction[0].user.first_name)%>" class="thumbnail  "><%=image_tag transaction[0].user.photo.image.url,:class=>"img-circle"%></a>
+                        <%=  transaction[0] .user.first_name%>
+
+
+                <%else%>
+                        <a href="<%=stylist_path(transaction[0].stylist.id,transaction[0].stylist.first_name) %>" class="thumbnail  "><%= image_tag transaction[0].stylist.photo.image.url,:class=>"img-circle"%></a>
+                      <%=  transaction[0].stylist.first_name%>
+
+                  <%end%>
+             </td>
+
+                  <td>
+                    <%= Booking.get_services_name_by_booking(transaction[0])%></td>
+                  <td>
+                    <%=transaction[0].dates.strftime("%a - %b. %d %Y") %>,<%= transaction[0].slots.slice(0,7) %></td>
+              <td>$<%=  get_amount_paid_for_tranaction(transaction[1]) %></td>
+
+           <td>
+                  <%#= link_to "DELETE", transaction_path(transaction.id),:class=>"btn-confirm btn btn-small btn-primary" , method: :delete %>
+         </td>
+
+
+            <br/>
+
+                  <%end%>
+      </tr>
+      </tbody>
+      </table>
+        </div>
+      </div>
+    </div>
+
+
+
+</section>
+
+
+
+
+
+    </div>
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+</script>

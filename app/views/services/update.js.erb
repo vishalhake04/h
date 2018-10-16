@@ -1,0 +1,2 @@
+$('#edit_service_modal').modal('hide')
+$('#service_list').html(" <%= j render :partial=>"services/service_list",:locals=>{:service=>@services,:message=>@message}%>");

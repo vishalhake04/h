@@ -1,0 +1,35 @@
+<%= form_for ([@previous_work.user, @previous_work]), html: {multipart: true} do |f| %>
+    <% if @previous_work.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@previous_work.errors.count, "error") %> prohibited this previous_work from being
+            saved:</h2>
+
+          <ul>
+            <% @previous_work.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="row form-group">
+      <div class="col-xs-4">
+        <%= f.label "Legend" %>
+        <%= f.text_field :legend, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-xs-4">
+        <%= f.label "Description" %>
+        <%= f.text_field :description, class: "form-control" %>
+      </div>
+    </div>
+    <div class="field form-group">
+      <%= f.label :image %><br>
+      <input type="file" name="file" accept="image/*">
+    </div>
+    <div class="row form-group">
+      <div class="actions">
+        <%= f.submit "Save", class: "btn btn-success request-button", style: "height:40px;width:100px;margin-left:5%" %>
+      </div>
+    </div>
+<% end %>

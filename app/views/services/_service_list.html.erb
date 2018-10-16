@@ -1,0 +1,39 @@
+<%if !@message.blank?%>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%=(@message)%>
+    </div>
+<%end%>
+<div class="row pt20">
+<div class="table-responsive table-dashboard services">
+    <table class="table table-condensed latest-thum-size text-justfy mzero">
+    <tbody>
+    <%if !@services.blank?%>
+        <%@services.each do |service|%>
+            <tr class="prf-offtext-services" style="background-color: #f8f8f8;">
+
+              <td> <%=service.service_category.name%>(<%=service.service_sub_category.name%>)</td>
+              <td><%=getLocationsize(service)%> Locations</td>
+              <td><span class="glyphicon glyphicon-time mr5" aria-hidden="true"></span><%=service.time%></td>
+              <td>$&nbsp;<%=service.amount%></td>
+              <td><%=button_to "X",user_destroy_service_path(current_user,service.id),id:"destroy_service",:class=>"btn-close btn btn-small btn-primary pull-right dest-service",style:"margin-left:2px",method: :put,:remote=>true  %>
+                <%=button_to "edit", edit_user_service_path(current_user,service.id),id:"edit_service",:class=>"btn-close btn btn-small btn-primary pull-right edit-service",method: :get,:remote=>true %></td>
+
+
+            </tr>
+
+
+    <%end%>
+    <%end%>
+    </tbody>
+    </table>
+
+</div>
+</div>
+<script>
+    $('.dest-service    ').bind('ajax:beforeSend', function() {
+        alert('hii')
+    });
+
+
+</script>

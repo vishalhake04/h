@@ -1,0 +1,155 @@
+<div id="profile" class="tab-pane active">
+   <section class="container">
+     <div class="row profile">
+       <div class="col-lg-12 text-center">
+         <h2 class="sh3">Client Profile</h2>
+       </div>
+       <div>
+
+         <div class="col-md-3 ">
+           <div class="user-profile-icon">
+             <%= image_tag @user.photo.image.url, :class => "" ,:crop => :fill%>
+             <br></div>
+         </div>
+
+         <div class="col-md-2 cd-ulli">
+           <ul class="list-group list-verify2">
+             <li class="list-group-item">
+               <div class="list-verify">
+                 <h3>E-mail Address</h3>
+                 <h4><%=@user.email%></h4>
+               </div>
+
+               <div class="list-verify">
+                 <%if @user.verified_number==true%>
+                     <h3>Phone Number</h3>
+                     <h4><%=@user.phone %></h4>
+                 <%else%>
+                     <h3>Phone Number</h3>
+                     <a href="#">
+            <span style="margin-left:22px">
+              <%3.times do%>
+          <i class="fa fa-times" style="color:#999">
+
+          </i>
+&nbsp;
+              <%end%>
+        </span></a>
+               <%end%>
+               </div>
+
+               <!--<div class="list-verify">-->
+                 <!--<h3>Facebook</h3>-->
+                 <!--<%#if @user.provider=="facebook"%>-->
+                 <!--<h4><%#=@user.provider%>></h4>-->
+                 <!--<%#end%>-->
+               <!--</div>-->
+             </li>
+           </ul>
+         </div>
+
+         <div class="col-md-7" style="padding-left: 10%">
+           <div class="">
+             <div class="pro-heading"><%=@user.name%></div>
+             <div class="pro-heading3">Client Since <%=@user.created_at.strftime("%b %Y")%></div>
+             <span class="prfo-noti2"><%=@booking_size%> Bookings With Reddera</span>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     <div class="row">
+       <div class="col-lg-12 text-center">
+         <h2 class="sh3">Photo Feed</h2>
+       </div>
+     </div>
+
+
+
+     <div id="myCarousel" class="carousel slide mt40" style="margin-bottom:20; overflow: hidden ! important; height: 238px;">
+       <div class="carousel-inner">
+         <div class="item active">
+
+             <% if !@portfolio.blank? %>
+                 <% @portfolio[0].each do |previous_work| %>
+<%#debugger%>
+                   <div class="recent-work">
+                     <div class="popular-boxmain">
+                       <div class="popular-box">
+                                <span>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-share.png') %>'>
+                                  </a>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-like.png') %>'>
+                                  </a>
+                                </span>
+
+                         <figure class="recent-work-images">
+                           <a id="thumb" >
+
+                             <%= image_tag previous_work.images.first[1].url  ,:class=>"portfoliomodal",:crop => :fill%>
+                           </a>
+                         </figure>
+
+
+                       </div>
+                     </div>
+                   </div>
+                 <%end%>
+             <%end%>
+
+         </div>
+         <% if !@portfolio.blank? %>
+             <div class="item" style="float: left;width: 100%" >
+
+             <% @portfolio[1].each do|portfolio| %>
+                   <%#portfolio.each do |prev|%>
+                       <div class="recent-work">
+                         <div class="popular-boxmain">
+                           <div class="popular-box">
+                                        <span>
+                                          <a href="#">
+                                            <img src='<%= asset_path('btn-share.png') %>'>
+                                          </a>
+                                          <a href="#">
+                                            <img src='<%= asset_path('btn-like.png') %>'>
+                                          </a>
+                                        </span>
+                             <figure class="recent-work-images">
+                               <a id="thumb" >
+
+                                 <%=image_tag  portfolio.images.first[1].url  ,:class=>"portfoliomodal"%>
+                               </a>
+                             </figure>
+
+
+                           </div>
+                         </div>
+
+                       </div>
+                   <%#end%>
+             <%end%>
+             </div>
+
+       <%end%>
+         <a class="left carousel-control" style="width:auto;margin-top:101px" data-target="#myCarousel" data-slide="prev">
+           <img src="<%= asset_path('left-arrow2.png') %>"></a>
+         <a class="right carousel-control" style="width:auto; top:38%;" data-target="#myCarousel" data-slide="next">
+           <img src="<%= asset_path('right-arrow2.png') %>">
+         </a>
+       </div>
+     </div>
+
+   </section>
+
+</div>
+
+
+
+<script>
+$( document ).ready(function() {
+NProgress.done();
+
+});
+</script>

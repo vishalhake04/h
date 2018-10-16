@@ -1,0 +1,105 @@
+<div id="cancelPolicyClient" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="closepolicyclient">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="panel panel-danger">
+          <div class="panel-heading">Cancellation Policy</div>
+          <div class="panel-body">
+            <div style="margin-left: 6%">
+              <p style="display: inline-block;margin-right: 0.5%"><strong>1. Within Within 5 minutes of booking : Free of charge
+
+              </strong>
+              </p>
+
+            </div>
+            <div style="margin-left: 6%">
+              <p style="display: inline-block;margin-right: 0.5%"><strong>2. Within 12 hours: 50%
+              </strong></p>
+
+            </div>
+            <div style="margin-left: 6%">
+              <p style="display: inline-block;margin-right: 0.5%"><strong>3. Within 6 hrs to Booking: Full Charge</strong></p>
+
+            </div>
+            <div style="margin-left: 6%">
+              <p style="display: inline-block;margin-right: 0.5%"><strong>4. Within 6 hours: Full Charge, unless rescheduled</strong></p>
+
+            </div>
+
+
+            <button style="margin-right: 47%"class="btn-confirm btn btn-small btn-primary pull-right " id="cancelApt" style="width: 120px;height: 35px ;margin-left: 30%">Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+    $('#appointment').hide()
+    $('#cancelPolicyClient')
+    $('.cancelAppointment').on("click", function () {
+        var bookingID= $(this).attr('booking-id');
+
+        $('#cancelPolicyClient').modal('show');
+
+        $('#cancelApt').on("click", function () {
+            cancelAptClientAJAX(bookingID)
+
+
+
+        });
+
+      $('.book').on("click", function () {
+
+          $('#reschedulePolicyClient').modal('show');
+          $("#closeme").on("click", function () {
+
+              $('#reschedulePolicyClient').modal('show');
+
+
+          })
+
+   /*  $.ajax({
+     url: "/users/" + '<%#=current_user.id%>' + "/bookings/" +  bookingID + "/reschedule/",
+     type: "PUT",
+     success: function (returnhtml) {
+     window.location.href = "/users/" + '<%#=current_user.id%>' + "/bookings/";
+     }
+
+     });*/
+
+     });
+
+    });
+    var eventsFired=0
+    function cancelAptClientAJAX(bookingID) {
+
+        if (eventsFired == 0) {
+            $.ajax({
+                url: "/users/" + '<%=current_user.id%>' + "/bookings/" + bookingID + '/booking_delete.js',
+                type: "PUT",
+                success: function (returnhtml) {
+                }
+
+            });
+            eventsFired ++
+
+        }
+    }
+
+
+</script>
+<style>
+
+</style>

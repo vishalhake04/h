@@ -1,0 +1,308 @@
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2 class="reqnow-hline" id="requestNow">Request Now</h2>
+    </div>
+  </div>
+  <div class="row">
+
+    <!-- table -content-->
+
+    <div class="col-md-5">
+      <div class="req-now-box" id="bookRequest">
+        <div class="pull-left app-sum"><img id="requestImage" alt="Generic placeholder image" src="assets/img/profile-pic3.png" class=""></div>
+        <div class="req-now pull-left">
+          <h2 >You have selected to book with:</h2>
+          <h1 id="stylist_name" style="line-height: 2">Mary Smith</h1>
+          <p id="stylist_type" style="line-height:1;vertical-align: top;max-width: 200px">Hair Stylist</p>
+          <div class="rev-rating-search">
+            <ul id="rate-star">
+
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="req-now-right" id="requestProcess">
+        <p>Start by selecting a time for this service.</p>
+        <div class="req-tab-sec"> <span>Pick Service</span> <span>Pick Pro</span> <span>Pick Time</span> <span>Request</span> </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="form">
+  <!--  <div id="myModal_book" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        &lt;!&ndash; Modal content&ndash;&gt;
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
+          </div>
+          <div class="modal-body">
+
+
+          </div>
+        </div>
+      </div>
+    </div>-->
+
+
+
+  <div class="modal fade" id="myModal_boo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="loginbox">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"  aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+            <div class="modal-body">
+              <div class="panel panel-danger">
+                <div class="panel-heading">Booking an Appointment</div>
+                <div class="panel-body">
+                  <div style="margin-left: 6%">
+                    <p style="display: inline-block;margin-right: 0.5%"><strong>Service:</strong>
+                    </p>
+                    <p id="ServiceName" style="display: inline-block;width: auto"></p>
+                  </div>
+                  <div style="margin-left: 6%">
+                    <p style="display: inline-block;margin-right: 0.5%"><strong>ServiceTime:</strong></p>
+
+                    <p style="display: inline-block;width: auto" id="ServiceTimeDetails"></p>
+                  </div>
+                  <div style="margin-left: 6%">
+                    <p style="display: inline-block;margin-right: 0.5%"><strong>ServicePrice:</strong></p>
+
+                    <p style="display: inline-block;width: auto" id="ServicePrice"></p>
+                  </div>
+
+
+                  <button class="btn btn-danger "  style="width: 120px;height: 35px ;margin-left: 30%">BOOK
+                    ME!
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+<div class="container">
+  <div id="availability">
+    <div class="col-md-12 page-header mt20">
+      <h1>AVAILABILITY</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="pull-left mr12" id="cal-icon" >
+      <img src="<%=asset_path('clnd-icon.png')%>" id="calIcon">
+    </div>
+    <div class="pull-left mr12">
+      <div class="form-group ">
+        <input type="text" id="datepicker" placeholder="Date" name="Date" style='border: 1px solid #b5b3b3; width: 90px;height:25px ; margin-left:10px ;margin-top:6px ;   display: inline;text-align: center'>
+      </div>      </div>
+
+    <div class="pull-left mr20" style="width: 500px" id="hair-curling">
+      <!--<button class="btn btn-default btn-primary hair-curling" id="hair-curling" type="submit" style="white-space: normal;width: 300px">-->
+        <!--Hair Curling - 30mins-->
+      <!--</button>-->
+    </div>
+
+    <!--<dl class="dropdown1" id="dropdown" style="margin-left:565px">-->
+
+      <!--<dt id="dt" class="usual">-->
+
+        <!--<span class="hida" id="hida">Multiple bookings</span>-->
+      <!--<p class="multiSel" id="mulsel1"></p>-->
+
+      <!--</dt>-->
+
+      <!--<dd>-->
+        <!--<div class="mutliSelect" id="multiselect1">-->
+
+        <!--</div>-->
+      <!--</dd>-->
+    <!--</dl>-->
+
+    <li class="dropdown pull-right" id="multidropdown">
+
+      <div aria-label="Vertical button group" role="group" class="btn-group-vertical">
+
+        <div role="group" class="btn-group">
+          <button aria-expanded="false" aria-haspopup="true" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button" id="btnGroupVerticalDrop1" style="white-space: normal;width:400px;margin-top:4px;">
+            <p id="addmulServiceText">Add Additional Services &nbsp;<span class="glyphicon glyphicon-plus-sign" style="color:#c82b5b"></span></p>
+            <p id="mulServiceText"></p></button>
+          <ul aria-labelledby="btnGroupVerticalDrop1" id="multiUl" class="dropdown-menu pull-left multi" style="white-space: normal;width:405px;height:300px ; margin-left:-1px;padding-top: inherit;overflow:scroll ">
+
+
+          </ul>
+        </div>
+
+
+
+
+      </div>
+    </li>
+  </div>
+
+
+
+  <div class="row mb30">
+
+    <div class="col-md-12 mp-zero">
+
+      <div class="w120 mt20 pull-left">
+
+        <ul class="days clear" style="display:none;">
+          <li>  <a id="upperbutton" >
+            <img src="<%=asset_path('up.png')%>"  class="arrow_pic" style="margin-left:40px">
+          </a>   </li>
+
+          <br/>
+          <ol class="daysOL"style="margin-top: -22px" >
+            <div id="dateColumn" ></div>
+          </ol>
+
+          <li><a id="lowerbutton"  >
+            <img src="<%=asset_path('down.png')%>" class="arrow_pic" style="margin-left:40px">
+          </a>  </li>
+        </ul>
+        <br/>
+      </div>
+
+      <div id="showDataID" style="margin-left: 17%;margin-top: 40px"></div>
+
+      <div class="clearfix"></div>
+
+      <div class="alert alert-info alert-dismissible" role="alert" id="alert" style="display:none">
+        <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+        You cannot select slot less than service time.
+      </div>
+
+
+    </div>
+
+
+
+
+    <div class="row" id="bogo">
+
+      <div class="col-md-12 text-center">
+        <h2 class="sh3">Current Offers</h2>
+      </div>
+
+      <div class="mb25	">
+        <div class="col-md-3"><div class="twitter20Box">
+          <div class="twitter20">Bogo</div>
+          <p class="text-center">Exp. 6/31</p>
+        </div></div>
+        <div class="col-md-9"><p class="prf-offtext">Book one, get one 50% off. Book a service by June 31 to receive 50% off a second booking.</p></div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="mb25">
+        <div class="col-md-3"><div class="twitter20Box">
+          <div class="twitter20">ReddGift</div>
+          <p class="text-center">Exp. 6/31</p>
+        </div></div>
+        <div class="col-md-9"><p class="prf-offtext">Book a hair service this month and receive a complimentary gift from Reddera.</p></div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="mb25">
+        <div class="col-md-3"><div class="twitter20Box">
+          <div class="twitter20">Twitter20</div>
+          <p class="text-center">Exp. 9/30</p>
+        </div></div>
+        <div class="col-md-9"><p class="prf-offtext">Follow @Reddera on Twitter and receive 20% off your next booking.</p></div>
+        <div class="clearfix"></div>
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+  </div>
+</div>
+<div class="modal fade" id="myModal_book" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+  <div class="bookingpop">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <div class="col-lg-12 text-center">
+              <h2 class="sh7">Appointment Summary</h2>
+            </div>
+            <div class="col-md-12 margin-zero">
+              <div class="row recommendations mb30">
+                <div class="margin-zero">
+                  <div class="col-md-2 col-sm-2 col-xs-12">
+                    <div class="app-sum"><img id="stylistImg"src="assets/img/dashboard-icon.png"></div>
+                  </div>
+                  <div class="col-md-10 col-sm-10 col-xs-12">
+                    <div class="table-pop-appt table-responsive app-table services">
+                      <table class="table">
+                        <thead>
+                        <tr>
+                          <td>With</td>
+                          <td>Services</td>
+                          <td>Date</td>
+                          <td>Time</td>
+                          <td>Duration</td>
+                          <td>Charge </td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                          <td id="stylistName">Mary Smith</td>
+                          <td id="serviceName" style="max-inline-size:250px" >Hair | Blow-Out</td>
+                          <td id="serviceDate">Thu - Jan. 14 2015</td>
+                          <td id="serviceSlot">10am</td>
+                          <td id="serviceDuration">50mins</td>
+                          <td id="serviceAmount">$50</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="clearfix"></div>
+                  <!-- textbox-->
+                  <input type="text" id="message" placeholder="Is there anything you'd like your professional to know? You can send your message with your request to book here." class="app-textbox mt25">
+                  <div class="clearfix"></div>
+
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="clearfix"></div>
+                <div class="form-row">
+                  <div class="col-md-12 mt30 text-right">
+                    <button id="bookAppointment" class="btn-confirm btn btn-small btn-primary" type="submit"> Request</button>
+                  </div>
+                </div>
+                <div class="clear"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

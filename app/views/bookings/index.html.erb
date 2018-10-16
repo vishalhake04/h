@@ -1,0 +1,80 @@
+
+<section class="tab">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="alert alert-info alert-dismissible" role="alert" id="alert" style="display:none">
+        <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+        You cannot cancel Appointment your profile is marked third</div>
+      <div id="content" class="mt15">
+        <div id="my-tab-content" class="tab-content">
+          <div class="tab-pane active" id="yourbookings">
+            <section class="container">
+
+                  <div id="pendings">
+                        <%=render 'bookings/pending' ,:locals=>{:pending=>@pendings}%>
+                    </div>
+              <div id="upcomings">
+                <%=render 'bookings/upcoming' ,:locals=>{:upcoming=>@upcomings}%>
+              </div>
+              <%if current_user.isClient?%>
+              <div id="reschedule_client">
+                <%=render 'bookings/reschedule_client',:locals=>{:reschedule_client=>@reschedule_client}%>
+              </div>
+              <%else%>
+                  <div id="reschedule_stylist">
+                    <%=render 'bookings/reschedule_stylist',:locals=>{:reschedule_stylist=>@reschedule_stylist}%>
+                  </div>
+              <%end%>
+              <div id ="past">
+                <%=render 'bookings/past' ,:locals=>{:past=>@past}%>
+              </div>
+
+            </section>
+            </div>
+          </div>
+
+      </div>
+      </div>
+  </div>
+</section>
+
+
+
+<%=render :partial => "bookings/avail_cal" %>
+<div style="margin-left:119px;margin-bottom:20px" id="timeRow1">
+  Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<div id="timeRow2" style="margin-left:119px;margin-bottom:51px">
+  Date:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</div>
+<button id="rescheduleStylist" class="btn btn-primary" type="submit" style="margin-left:82px;margin-bottom:57px" > Request</button>
+
+<%if current_user.isClient?%>
+<%=render :partial=>'bookings/book_calendar'%>
+<%end%>
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    })
+$('#rescheduleStylist').hide()
+$('#alert').hide()
+$('#dropdown').hide()
+$('#timeRow1').hide()
+$('#timeRow2').hide()
+$('#multidropdown').hide()
+$('#datepicker').hide()
+$('#bogo').hide()
+$('#hair-curling').hide()
+$('#cal-icon').hide()
+$('.days.clear').hide()
+$('#form').hide();
+    $('#requestNow').hide()
+$('#availability').hide();
+    $('#requestProcess').hide();
+    $('#bookRequest').hide();
+
+
+</script>
+

@@ -1,0 +1,48 @@
+<div class="row dashboard">
+  <div class="col-md-3 col-sm-3 col-xs-12">
+
+    <div class="page-header">
+      <h1 class="pull-left">
+        Favourite <br/>Stylists
+      </h1>
+        <span class="pull-left msg-notf-icon">
+            <img src="<%=asset_path('heart-icon.png')%>" style="width:45px;height:40px" >
+        </span>
+
+      <div class="clearfix"></div>
+    </div>
+  </div>
+
+  <div class="col-md-9 col-sm-9 col-xs-12">
+    <%if !@favourite_stylists.blank?%>
+        <%@favourite_stylists.each do |fav_stylist|%>
+            <div class="table-responsive table-booking">
+              <table class="table table-condensed latest-thum-size text-justfy">
+                <tbody>
+                <tr>
+                  <td>
+                    <%= link_to stylist_path(fav_stylist.stylist.id,fav_stylist.stylist.first_name), :class => "thumbnail" do %>
+                        <%= image_tag fav_stylist.stylist.photo.image.url(:thumb), :class => "img-circle" %>
+                    <% end %>
+                    <%= fav_stylist.stylist.first_name %>&nbsp;<%= fav_stylist.stylist.last_name %>
+
+                  </td>
+
+                  <td>
+                    <%= fav_stylist.stylist.stylist_type%> | <%=fav_stylist.stylist.description%>
+                  </td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        <%end%>
+
+   <%end%>
+  </div>
+  </div>
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+</script>

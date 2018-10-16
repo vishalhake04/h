@@ -1,0 +1,96 @@
+<div class="container">
+  <%if !@message.blank?%>
+      <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <%=(@message)%>
+      </div>
+  <%end%>
+  <div class="col-lg-12 text-center">
+    <h2 class="sh7">Add Promo Code</h2>
+  </div>
+
+  <%= form_for @promo_code, html: {multipart: true}  do |f| %>
+      <div class="form-row">
+        <% if @promo_code.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@promo_code.errors.count, "error") %> prohibited this user from being saved:</h2>
+              <ul>
+                <% @promo_code.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label "Name" %>
+            <%= f.text_field :name , class: "form-control" ,validate: { presence: true, uniqueness: false }%>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label "Description" %>
+            <%= f.text_field :description , class: "form-control" %>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label "Code" %>
+            <%= f.text_field :promo_code , class: "form-control",:required=>true%>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label "Service Category" %>
+            <%= text_field_tag :expiration, params[:date], class: "form-control no-border datepickersearch", placeholder: "Date", autocomplete:"off",id: 'expiry' ,:style=>"margin-top:2px;",:required=>true%>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.label "Discount" %>
+            <%=f.number_field :discount_by_percentage, :class => 'text_field' ,:required=>true%>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <span class="pull-left" style="margin-bottom: 19px;margin-top:50px ; margin-left:-256px">
+                                               <%= f.submit "Create", class: "btn-confirm btn btn-small btn-primary" %>
+            <%=link_to 'Back', rails_admin.dashboard_path, class: 'navbar-link btn-deny btn btn-primary', method: :get,:style=>"margin-bottom:8px;margin-left:10px"%>
+
+          </span></div>
+
+        </div>
+      </div>
+  <%end%>
+</div>
+<div id="code_list">
+  <%=render 'promo_codes/code_list' ,:locals=>{:code_list=>@promo_codes}%>
+
+</div>
+  <script type="text/javascript">
+
+      $('#expiry').datepicker({
+          format: "dd-mm-yyyy",
+          viewMode: 'days',
+          "startDate": new Date(),
+          todayHighlight: true
+
+          // currently picked date
+      }).on('show', function() {
+          var currentDate = $(this).val();
+      })
+          // if no date picked replace with previous date
+              .on('changeDate', function(ev) {
+
+
+                  if ($(this).val() === '' || $(this).val() === null) {
+                      $(this).val(currentDate).datepicker('update');
+                  }
+                  var a = $('#datepicker').datepicker('getDate');
+                  $(this).datepicker('hide');
+
+                  //alert(a)
+
+              });
+ </script>

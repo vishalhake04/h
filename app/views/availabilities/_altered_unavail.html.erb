@@ -1,0 +1,43 @@
+<table class="table table-bordered">
+  <thead>
+  <tr style="border:none;">
+    <th>Dates</th>
+    <th>Time Slots</th>
+    <th>Edit</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <%if !@update_alter.blank?%>
+  <%@update_alter.each do|update_avail|%>
+      <%if update_avail["dates"] != " "%>
+
+      <tr>
+        <td>
+          <%= update_avail["dates"] %>
+        </td>
+        <td>
+          <%= update_avail["time"]["0"].join(",") %>
+        </td>
+
+        <td>
+
+          <%#=link_to 'Delete', delete_unavail_path(update_avail["dates"] ) ,:class=>"btn-confirm btn btn-small btn-primary",method: :put ,:remote=>true%>
+
+          <%#=link_to 'Edit', user_edit_updated_availabilities_path(current_user.id,update_avail.id),:class=>"btn-confirm btn btn-small btn-primary",method: :get ,:remote=>true%>
+
+          <%#=link_to 'Delete',user_delete_updated_availabilities_path(current_user.id,update_avail.id),:class=>"btn-confirm btn btn-small btn-primary",method: :delete ,:remote=>true%>
+        </td>
+      </tr>
+  <%end%>
+  <%end%>
+  <%end%>
+
+  </tbody>
+</table>
+
+
+
+
+
+

@@ -1,0 +1,76 @@
+
+<%if !@message.blank?%>
+    <div class="alert alert-success alert-dismissible alert-box" role="alert" style="position: absolute">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%=@message%>
+    </div>
+<%end%>
+
+<span class="prfo-noti" style="float: left"><%=getFavouriteCount(@user)%></span>
+<span style="float: left">
+<%if check_if_favourite(current_user,@user)%>
+
+      <div class="checkbox" >
+        <label>
+          <input type="checkbox"id="favourite_stylist" checked="checked" >
+          <span class="cr fa fa-heart"><i class="cr-icon icon-heart fa fa-heart"></i></span> </label>
+      </div>
+
+
+
+<%else %>
+
+
+
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="favourite_stylist" value="false">
+        <span class="cr fa fa-heart"><i class="cr-icon icon-heart fa fa-heart"></i></span> </label>
+    </div>
+<%end%>
+
+  </span>
+<script type="text/javascript">
+
+    $("#favourite_stylist").on("click", function () {
+        <%if user_signed_in? %>
+        if ($('#favourite_stylist').is(':checked')) {
+            $.ajax({
+                url: '/create_favourite_list.js',
+                type: "POST",
+                data:{favourite_list:{ user_id:<%=current_user.id if user_signed_in?%>,stylist_id:<%=@user.id%>}},
+                success: function (returnhtml) {
+
+                }
+
+            });
+        }
+        if ($('#favourite_stylist').is(':checked')== false) {
+            $.ajax({
+                url: '/unfavourite_list.js',
+                type: "POST",
+                data:{favourite_list:{ user_id:<%=current_user.id if user_signed_in?%>,stylist_id:<%=@user.id%>}},
+                success: function (returnhtml) {
+
+                }
+
+            });
+
+        }
+        <%else%>
+        $('#myModal_login').modal('show');
+
+        <%end%>
+    });
+
+
+</script>
+<style>
+    .alert-box {
+        padding: 6px;
+        position: absolute;
+        right: 0;
+        top: 40%;
+        width: 70%;
+    }
+        </style>

@@ -1,0 +1,441 @@
+<div class="container">
+
+
+
+
+<div class="se-pre-con"></div>
+
+
+<div class="modal fade" id="addressForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <div class="col-lg-12 text-center">
+              <h2 class="sh8">Update Address</h2>
+            </div>
+            <%= form_for @user, html: {multipart: true}  do |f| %>
+                <div class="row">
+                  <div class="form-row">
+                    <div class="col-md-12">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <%= f.label :address %><br>
+                          <%= f.text_field :address, class: "form-control" ,:required=>true%>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <%= f.label :state %><br>
+                          <%= f.text_field :state, class: "form-control" ,:required=>true%>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <%= f.label :city %><br>
+                          <%= f.text_field :city, class: "form-control" ,:required=>true%>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <%= f.label :zipcode %><br>
+                          <%= f.text_field :zipcode, class: "form-control" ,:required=>true%>
+                        </div>
+                      </div>
+
+                      <%= f.hidden_field :from_transaction, :value =>true %>
+
+                    </div>
+                  <div class="text-center mt35">
+                    <%= f.submit "update", class: "btn-confirm btn btn-small btn-primary"%>
+                  </div>
+
+                </div>
+
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<section class="tab">
+  <div class="container">
+    <div class="row">
+      <!-- tab-->
+      <div id="content" class="mt15">
+        <div class="trans-box">
+          <div class="col-lg-12 text-center">
+            <h2 class="sh7">Appointment Summary</h2>
+          </div>
+          <div>
+
+            <div class="col-md-2"> <span class="app-sum"><img class="" width="90" height="90"alt="Image" src="<%=@booking.stylist.photo.image.url%>"></span></div>
+            <div class="col-md-10">
+              <div class="table-appointments table-responsive">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td><p>STYLING</p>
+                      <p><%=@booking.stylist.first_name%>&nbsp;<%=@booking.stylist.last_name%></p></td>
+                    <td><p>Service</p>
+                      <p><%=Booking.get_services_name_by_booking(@booking)%></p></td>
+                    <td><p>Date/Time</p>
+                      <p><%=@booking.dates.strftime("%a-%b. %d %Y")%></p></td>
+                    <td><p>Duration</p>
+                      <p><%=@booking.total_time%>mins</p></td>
+                    <td><p>Cost</p>
+                      <p>$<%=@booking.total_amount%></p></td>
+                  </tr>
+                  <!--<tr>-->
+                    <!--<td colspan="5" class="pr2"><p class="pull-right">-->
+                      <!--<button id="btnContactUs" class="btn-delete btn btn-small btn-primary" type="submit">Edit</button>-->
+                      <!--<button id="btnContactUs" class="btn-confirm btn btn-small btn-primary btn-close2" type="submit"> X</button>-->
+                    <!--</p></td>-->
+                  <!--</tr>-->
+                </table>
+
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="mt30">
+            <div class="col-md-6 col-xs-12 transactions">
+              <div class="promo-code">
+                <h2 class="sh3">Promo Code</h2>
+              </div>
+              <div class="form-group">
+                <label for="name"> Enter Your Promo Code Below</label>
+                <input class="form-control" id="coupon_code" placeholder="Enter code" required="" type="text">
+                <button class="btn-deny btn btn-small btn-primary pull-right book" id="code-btn" style="">Validate</button>
+
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+              <div class="promo-total">
+                <h2 class="sh3">Total</h2>
+              </div>
+              <div id="billing_amount">
+
+                <%=render 'transactions/billing_amount',:locals=>{:service_amount=>@service_amount,:taxable_amount=>@taxable_amount,:total_amount=>@total_amount,:gift_deducted_amount=>@gift_deducted_amount,:gift_amount=>@gift_amount,:pay_via_gift=>@pay_via_gift,:pay_via_credit=>@pay_via_credit}%>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<div class="row">-->
+      <!--&lt;!&ndash; tab&ndash;&gt;-->
+      <!--<div id="content" class="mt15">-->
+        <!--<div class="trans-box">-->
+          <!--<div class="col-md-12 col-xs-12 giftcard">-->
+            <!--<div class="promo-code">-->
+              <!--<h2 class="sh3">Gift Card</h2>-->
+            <!--</div>-->
+          <!--</div>-->
+          <!--<div class="mt30">-->
+            <!--<div class="col-md-6 col-xs-12 giftcard">-->
+              <!--<div class="form-group">-->
+                <!--<label for="name"> Select a Value or Enter Your Amount</label>-->
+                <!--<div class="clearfix"></div>-->
+                <!--<span>USD</span>-->
+                <!--<span><input class="form-control" id="name" placeholder="" required="" type="text"></span>-->
+                <!--<span><input class="form-control" id="name" placeholder="$25" required="" type="text"></span>-->
+                <!--<span><input class="form-control" id="name" placeholder="$50" required="" type="text"></span>-->
+                <!--<span><input class="form-control" id="name" placeholder="$100" required="" type="text"></span>-->
+                <!--<span><input class="form-control" id="name" placeholder="$250" required="" type="text"></span>-->
+                <!--<span><a href="#"> <img src="assets/img/plus-icon.png"></a></span>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-6 col-xs-12 transactions">-->
+              <!--<div class="form-group">-->
+                <!--<textarea class="form-control" id="name" placeholder="Add your message" required="" type="text"></textarea>-->
+              <!--</div>-->
+            <!--</div>-->
+            <!--<div class="clearfix"></div>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <!-- tab-->
+        <div id="content" class="mt15">
+          <div class="trans-box">
+            <div class="col-md-12 col-xs-12 address-box">
+
+              <h2 class="sh3">Address</h2>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-8 col-xs-6">
+
+              <!--<p>Jamie Smith</p>-->
+              <!--<p>12345 Main Street <br/>-->
+                <!--Apt 6F <br/>-->
+                <!--New York, NY 11001 <br/>-->
+                <!--(2120 123 - 4567)</p>-->
+
+
+
+
+              <%if @booking.user.address.blank? %>
+                  <div class="alert alert-success alert-dismissible pull-left" role="alert" id="UpdateAddressAlert" >
+                    <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                    Please  Update Your Address to proceed through transaction
+                  </div>
+                  <!--<button class="btn-deny btn btn-small btn-primary pull-right book" id="updateAddress" style="margin-top:-34px;margin-right:316px">Update Address</button>-->
+
+              <%else%>
+
+                  <p><%=@booking.user.address%><br/><%=@booking.user.state%><br/><%=@booking.user.city%><br/><%=@booking.user.zipcode%></p>
+
+
+
+              <%end%>
+
+            </div>
+            <div class="col-md-4 col-xs-6">
+              <button class="btn-deny btn btn-small btn-primary pull-right book" id="updateAddress" style="">Update Address</button>
+            </div>
+
+
+
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6 col-xs-12">
+        <!-- tab-->
+        <div id="content" class="mt15">
+          <div class="trans-box">
+            <div class="col-md-12 address-box-stylist">
+
+              <h2 class="sh3">Phone Number</h2>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 transactions">
+              <div class="form-group">
+                <%if current_user.verified_number!=true%>
+
+                    <div class="alert alert-success alert-dismissible pull-right" role="alert" id="verifyNumberAlert">
+                      <button type="button" class="close"  data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      Please Verify you number
+                    </div>
+                <%end%>
+                <div id="verifications">
+
+                  <%=render :partial=>"users/verfications",:locals=>{:user=>@user}%>
+
+                </div>              </div>
+            </div>
+
+
+            <div class="clearfix"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <%if !@booking.user.address.blank? %>
+
+    <div class="row">
+      <!-- tab-->
+      <div id="Payment" class="mt15">
+        <div class="trans-box">
+          <div class="col-md-12 col-xs-12 payment-box">
+
+            <h2 class="sh3">Payment</h2>
+
+          </div>
+          <div class="clearfix"></div>
+          <div class="mt30">
+            <%if !@message.blank?%>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                  <button type="button" class="close" id="rejectMessage" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <%=@message%>
+                </div>
+            <%end%>
+
+          <%=form_for :transaction, :url => {:action => "create", :controller => "transactions"} do |f|%>
+                <%= render 'customer_form' unless current_user.has_payment_info? %>
+                <br/>
+                <%#debugger%>
+                <%= hidden_field_tag "pay_half_trans_and_full_gift",@pay_half_trans_and_full_gift.blank? ? false:true %>
+                <%#= hidden_field_tag "discounted_amount",@discounted_amount.blank? ? nil:discounted_amount %>
+                <%#= hidden_field_tag "gift_deducted_amount",@gift_deducted_amount.blank? ? nil:gift_deducted_amount %>
+                <%= hidden_field_tag "amount_to_be_payed", @total_amount %>
+
+                <div id="dropin" style="width:500px;margin-left:20px"></div>
+                <br/>
+                <div class="actions row text-center">
+                  <%=f.submit "Pay for Service", class: "btn-confirm btn btn-small btn-primary requesting",:id=>"transSubmit"%>
+                </div>
+                <br/>
+            <%end%>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%end%>
+    <!--<div class="row text-center mb20">-->
+      <!--<button id="btnContactUs" class="btn-delete btn btn-small btn-primary req-btn" type="submit">Request</button>-->
+    <!--</div>-->
+  </div>
+</section>
+</div>
+<%= render "users/verify"%>
+<%= render "users/verify_pin_modal" %>
+<style>
+    /* Paste this css to your style sheet file or under head tag */
+    /* This only works with JavaScript,
+    if it's not present, don't show loader */
+    .no-js #loader { display: none;  }
+    .js #loader { display: block; position: absolute; left: 100px; top: 0; }
+    .se-pre-con {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: url('<%=asset_path('loader64.gif')%>') center no-repeat #fff;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/voucherify.js/1.4.5/voucherify.min.js"></script>
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script type='text/javascript'>
+    if(typeof gon != undefined){
+        braintree.setup(gon.client_token,'dropin', {container: 'dropin'});
+    }
+
+    //paste this code under the head tag or in a separate js file.
+    // Wait for window load
+    $(window).load(function() {
+        // Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
+
+
+
+</script>
+
+<script type="text/javascript">
+    $("#updateAddress").on("click", function () {
+        $('#addressForm').modal('show')
+    });
+
+
+    $(document).ready(function() {
+        NProgress.done();
+
+        // executes when HTML-Document is loaded and DOM is ready
+       <%if !@message.blank? %>
+        $('html,body').animate({
+                    scrollTop: $("#rejectMessage").offset().top},
+                'slow')
+        <%end%>
+    });
+  <%if @booking.user.address.blank? || current_user.verified_number!=true%>
+    $('#Payment').hide()
+    <%else%>
+    $('#Payment').show()
+
+    <%end%>
+
+    $("#send-pin").hide()
+    $('#verify-pin').hide()
+    $("#verify").on("click", function () {
+
+
+        $('#myModal_sendpin').modal('show');
+
+
+        $("#send-pin").show()
+        $('#sms').hide()
+        $('#tag').hide()
+
+    });
+    $("#sms").on("click", function () {
+    });
+
+
+    $("[data-hide]").on("click", function(){
+        $(this).closest("." + $(this).attr("data-hide")).hide();
+    });
+
+
+    $("#code-btn").on("click", function () {
+        $(function(){
+
+        });
+        <%if @booking.user.address.blank? || current_user.verified_number!=true%>
+        $('#UpdateAddressAlert').show()
+        $('#verifyNumberAlert').show()
+
+        $('html,body').animate({
+                    scrollTop: $(".address-box").offset().top},
+                'slow')
+
+        <%else%>
+            $.ajax({
+                url: "/discounted_price",
+                type: "POST",
+                data: {
+                    coupon_code: $('#coupon_code').val(),
+                    service_amount:<%=@service_amount%>
+                },
+                success: function (returnhtml) {
+                }
+            });
+        <%end%>
+    });
+
+
+
+
+    var value = $('.service-amount').text().split('$')[1];
+    var basePrice =value;
+
+    function showPrice(initialValue, discountedValue) {
+        var initialPriceElem = document.getElementById("initial");
+        var discountedPriceElem = document.getElementById("discounted");
+
+        initialPriceElem.innerHTML = "$" + initialValue.toFixed(2);
+        if (discountedValue) {
+            initialPriceElem.className = "deprecated";
+            discountedPriceElem.innerHTML = "$" + discountedValue.toFixed(2);
+        }
+    }
+
+    Voucherify.initialize(
+            "39e6bc55-ddc8-4a36-a78f-e9bdb3461a58",
+            "1248ca14-ab2d-4e21-947c-3c76e3fb2281"
+    );
+    //Voucherify.setIdentity("swapnil.b@consultadd.com");
+    Voucherify.render("#voucher-checkout", {
+        textPlaceholder: "e.g. Testing7fjWdr",
+        onValidated: function(response) {
+
+            var newPrice = Voucherify.utils.calculatePrice(basePrice, response);
+
+        }
+    });
+
+</script>

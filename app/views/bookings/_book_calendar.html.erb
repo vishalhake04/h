@@ -1,0 +1,915 @@
+
+
+
+<script type="text/javascript">
+    $('#alert').hide()
+    $('#dropdown').hide()
+    $('#multidropdown').hide()
+
+    $('#datepicker').hide()
+    // $('#bogo').hide()
+    $('#hair-curling').hide()
+    $('#cal-icon').hide()
+    $('.days.clear').hide()
+    $('#form').hide();
+    $('#availability').hide();
+    $('#requestNow').hide();
+    $('#bookRequest').hide();
+    $('#requestProcess').hide();
+
+
+    var multiple_services_name=[];
+    var multiple_services_id=[];
+    var service_amount
+    var service_time;
+    var allSpanAmount=[];
+    var allSpan=[];
+    var service_amount_chip
+    var service_duration
+    var eventsTriggered=0
+
+    $(".book").on("click", function () {
+        multiple_services_name=[]
+        multiple_services_id=[]
+        var dyn_dates=[];
+        var upper_li;
+        var lower_li;
+        var multiple_service_names=[];
+        $('#mulServiceText').innerHTML=""
+        $('#hair-curling').parent().find('.hair').remove();
+        $('#datepicker').show();
+        $('#bogo').show()
+        $('.days.clear').show();
+        $('#cal-icon').show()
+        $('#multidropdown').show()
+        $('#hair-curling').show()
+        $('#availability').show();
+        $('#dropdown').show();
+        $("#dt").show()
+
+        $('.hida').show();
+        var days = ['sun','mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        var dyn_days=[]
+        var title_with_time;
+        var title_with_amount;
+        var title_with_service_id;
+        var stylist_img=$(this).attr('stylist-img');
+        var stylist_name = $(this).attr('stylist-name');
+        var service_id = $(this).attr('service-id');
+        service_amount = $(this).attr('service-amount');
+        var service_amount_initial=$(this).attr('service-amount');
+        service_duration = $(this).attr('service-duration');
+        var service_name = $(this).attr('service-name');
+        var stylist_id = $(this).attr('stylist-id');
+        var forReschedulebookingId=$(this).attr('booking-id')
+        var availableList = $(this).attr('availiable-list');
+        var specific_day_avail_stylist = $(this).attr('stylist_specific_day_avail');
+        var bookingList = $(this).attr('booking-list');
+        var stylistServices=$(this).attr('stylist-services');
+        var stylist_type=$(this).attr('stylist_type');
+        var stylist_description=$(this).attr('stylist_description');
+        var avg_rating=parseInt($(this).attr('avg-rating'))
+        service_time=service_duration/15
+
+        var time_titles = [];
+        var FirstSevenDays = [];
+        var final_date;
+        var services= JSON.parse(stylistServices);
+
+        $('#requestNow').show();
+        $('#bookRequest').show();
+        $('#requestProcess').show();
+        createStarRatingUser()
+        function createStarRatingUser(){
+            var img = document.getElementById('requestImage')
+            img.src = stylist_img
+            var td = document.getElementById('stylist_name')
+            td.innerHTML = stylist_name
+            var td = document.getElementById('stylist_type')
+            td.innerHTML=stylist_type +" " +"|"+ " "+ stylist_description
+            var ulStar=document.getElementById('rate-star');
+            ulStar.innerHTML=""
+            for(var i=0;i<avg_rating;i++){
+                var li=document.createElement('li')
+                li.className="liactive"
+                ulStar.appendChild(li)
+            }
+            for(var i=0;i<(5-avg_rating);i++){
+                var li=document.createElement('li')
+                li.className=""
+                ulStar.appendChild(li)
+            }}
+
+
+
+        var el = document.getElementById('hair-curling');
+        var service_name_first_selected=service_name + " "+service_duration+" "+"-"+" "+"mins"
+        el.innerHTML=""
+        var html = '<div class="chip" title="' + service_name_first_selected+" " + '" id='+service_id+'servicesspan>' + service_name_first_selected +"<span class=closebtn-chip >×</span>"+ '</div>';
+        $('#hair-curling').append(html);
+        multiple_services_name.push(service_name);
+        allSpan.push(service_duration)
+        allSpanAmount.push(service_amount_initial)
+
+//        var buttonCLass= $(this).attr('class')
+//
+//
+//
+//        $(".dropdown1 dt").on('click', function() {
+//            $(".dropdown1 dd ul").show();
+//
+//        });
+//
+//
+//        $(".dropdown1 dd ul li ").on('click', function() {
+//
+//        });
+//
+//        function getSelectedValue(id) {
+//            return $("#" + id).find("dt  span.value").html();
+//        }
+
+
+        //el.firstChild.data = service_name + ' ' + '-' + ' ' + service_duration +' '+'mins';
+//        $("body").click
+//        (
+//                function(e)
+//                {
+//                    if(e.target.className != "usual" && e.target.className != "dude" )
+//                    {
+//                        $('#multiselect1').hide()
+//                    }
+//                    else{$('#multiselect1').show()
+//
+//                    }
+//                }
+//        );
+//        $('ul.dropdown-menu').on('click', function(event){
+//            // The event won't be propagated up to the document NODE and
+//            // therefore delegated events won't be fired
+//            event.stopPropagation();
+//        });
+
+
+        var nowDate = new Date();
+        var today = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate(), 0, 0, 0, 0);
+
+        var currentDate;
+        $('#datepicker').datepicker({
+            format: "mm-dd-yyyy",
+            viewMode: 'days',
+            todayHighlight: true,
+            startDate:new Date(),
+            setDate:new Date()
+            // currently picked date
+        }).on('show', function() {
+            currentDate = $(this).val();
+        })
+            // if no date picked replace with previous date
+                .on('changeDate', function(ev) {
+
+
+                    if ($(this).val() === '' || $(this).val() === null) {
+                        $(this).val(currentDate).datepicker('update');
+                    }
+                    var a = $('#datepicker').datepicker('getDate');
+                    $(this).datepicker('hide');
+
+                    CreateDates(a)
+
+                });
+
+        CreateDates(nowDate)
+        function CreateDates(nowDate) {
+
+            var date1=new Date()
+//            date1.setHours(0, 0, 0, 0);
+//            nowDate.setHours(0, 0, 0, 0);
+            var a_string="hello"
+            var inp =  $('#datepicker').val();
+
+
+
+
+            var CurrentDate;
+//                if (nowDate < date1 || nowDate > date1 || typeof (inp) != typeof a_string) {
+//                    CurrentDate = nowDate
+//                }
+//                else {
+//                    CurrentDate = new Date(inp);
+//
+//
+//                }
+            CurrentDate=nowDate
+
+            var SelectedDate = CurrentDate.getDate();
+
+
+            var  date= new Date(new Date(CurrentDate.getTime() + CurrentDate.getTimezoneOffset()*60000 +0).toUTCString());
+            var yyyy = date.getFullYear().toString();
+            var mm = (date.getMonth() + 1).toString();
+            var dd = date.getDate().toString();
+            // CONVERT mm AND dd INTO chars
+            var mmChars = mm.split('');
+            var ddChars = dd.split('');
+            // CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+            var datestring = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+            FirstSevenDays[0] =  datestring;
+
+            dyn_days[0]=days[new Date(FirstSevenDays[0]).getDay()]
+            dyn_dates[0] =mm+'/'+dd
+
+
+            for (var i = 1; i < 7; i++) {
+
+                createFirstSevenDays(new Date(FirstSevenDays[i-1]),SelectedDate, i)
+            }
+            CreateCalendar(FirstSevenDays, service_time, days);
+        }
+
+        function createFirstSevenDays(CurrentDate,SelectedDate,itterationValue){
+            /*
+             var date = new Date(new Date(CurrentDate.setDate(SelectedDate + itterationValue)).toUTCString());
+             */
+
+
+            //'Mar 11 2015' current.getTime() = 1426060964567
+
+            var date = new Date(new Date(CurrentDate.getTime() + CurrentDate.getTimezoneOffset()*60000 +86400000));// + 1 day in ms
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var yyyy = date.getFullYear().toString();
+            var mm = (date.getMonth() + 1).toString();
+            var dd = date.getDate().toString();
+            // CONVERT mm AND dd INTO chars
+            var mmChars = mm.split('');
+            var ddChars = dd.split('');
+            // CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+            var datestring = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+
+            FirstSevenDays[itterationValue] =  datestring;
+
+            dyn_days[itterationValue]= days[new Date(FirstSevenDays[itterationValue]).getDay()]
+            dyn_dates[itterationValue]=mm+"/"+dd
+            //console.log(days[new Date(FirstSevenDays[itterationValue]).getDay()])
+        }
+
+        function CreateCalendar(FirstSevenDays, service_time, days) {
+
+            var availList = JSON.parse(availableList);
+            var bookedList = JSON.parse(bookingList);
+            var stylist_spec_day_avail_list = JSON.parse(specific_day_avail_stylist);
+            console.log(stylist_spec_day_avail_list)
+
+            var classArr = ['t00', 't15', 't30', 't45'];
+            var time_data = ['06AM', '07AM', '08AM', '09AM', '10AM', '11AM', '12PM', '01PM', '02PM', '03PM', '04PM', '05PM', '06PM', '07PM', '08PM', '09PM', '10PM', '11PM'] //Added because it was missing... no idea what the original should have been
+            var data1 = time_data.length
+            var tablearea = document.getElementById('showDataID');
+            var dateColoumn = document.getElementById('dateColumn');
+            var table = document.createElement('table');
+            table.className = 'grid';
+            var thead = document.createElement('thead');
+            var tr = document.createElement('tr');
+            for (var i = 0; i < data1; i++) {
+                var headerTxt = document.createTextNode(time_data[i]);
+                var th = document.createElement('th');
+                th.setAttribute('colspan', '4');
+                th.appendChild(headerTxt);
+                tr.appendChild(th);
+            }
+
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            dateColoumn.innerHTML = "";
+            for (var i = 0; i < FirstSevenDays.length; i++) {
+
+                var tr = document.createElement('tr');
+                var tr1 = document.createElement('tr');
+                tr1.className = "gridRow padding";
+                tr.className = "gridRow data";
+                var headerTxt = document.createTextNode(dyn_dates[i]);
+                var allDaysweek = document.createTextNode(dyn_days[i]);
+                var li = document.createElement('li');
+                li.className="pcdt";
+                li.setAttribute('dates',FirstSevenDays[i])
+                li.id= i + "date";
+                var span = document.createElement('span');
+                var span2 = document.createElement('span');
+                span.className="pdate";
+                span2.className="pday";
+                span2.appendChild(allDaysweek);
+                span.appendChild(headerTxt);
+                li.appendChild(span2);
+                li.appendChild(span);
+                dateColoumn.appendChild(li);
+                var count = 0;
+                var timeCount = 0;
+                for (var k = 0; k < data1 * 4; k++) {
+                    var td = document.createElement('td');
+                    var td1 = document.createElement('td');
+                    td.id = i + "-" + k;
+
+                    var td_id = td.id.toString().split('-')
+                    if (td_id[1] > 23) {
+                        td.title = time_data[timeCount].replace(/[A-Z]/g, '') + "." + classArr[count].slice(1, 3) + "PM";
+                    } else {
+                        td.title = time_data[timeCount].replace(/[A-Z]/g, '') + "." + classArr[count].slice(1, 3) + "AM";
+                    }
+                    /*
+                     var dp=new Date(FirstSevenDays[i].toString()+'T'+td.title.replace('.',':').slice(0,5).toString()+':'+'00');
+                     */
+
+
+                    var dateTime=new Date(FirstSevenDays[i].toString()+'T'+getTwentyFourHourTime(td.title.replace('.',':').slice(0,5).toString()+' '+td.title.replace('.',':').slice(5,7).toString()));
+
+
+
+                    var latestDate=new Date()
+
+                    if ((isBooked(bookedList, FirstSevenDays[i], td.title, count, classArr[count]).indexOf("mustCall") !== -1  || dateTime < latestDate) || is_specific_day_unavail(stylist_spec_day_avail_list, FirstSevenDays[i], td.title, count, time_data[timeCount],classArr[count]).indexOf("mustCall") !== -1  ) {
+
+                        td.className = classArr[count] + " mustCallToBook";
+
+                    }
+
+                    else{
+                        td.className = isAvail(availList, dyn_days[i],FirstSevenDays[i],td.title ,time_data[timeCount], count, classArr[count]);
+                    }
+
+                    if (count == 3) {
+                        count = 0;
+                        timeCount++;
+                    } else {
+                        count++;
+                    }
+
+                    tr.appendChild(td);
+//                    tr1.appendChild(td1);
+                }
+                table.appendChild(tr);
+                table.appendChild(tr1);
+            }
+
+            //var mulSel=document.getElementById('multiselect1');
+
+            var ul=document.getElementById('multiUl');
+            ul.innerHTML=""
+            multiple_service_names=[];
+            multiple_services_id=[];
+            $('#mulServiceText').empty();
+            $("#addmulServiceText").show();
+            services.forEach(function (service) {
+                var li=document.createElement('li');
+                //li.className="dude";
+                var checkbox=document.createElement('input');
+                checkbox.type="checkbox";
+                checkbox.value= service.service_time+ "," + service.service_amount +","+service.id;
+                checkbox.id=service.id+"services"
+                checkbox.setAttribute("service-name",service.service_name + " "+service.service_time+" "+"-"+" "+"mins")
+                checkbox.setAttribute("service-amount",service.service_amount)
+
+                var label=document.createElement('label');
+                label.setAttribute("for",service.id+"services");
+                label.setAttribute('style',"margin-left:12px");
+                label.setAttribute("class","checkbox-text");
+                label.innerHTML = service.service_name + " "+service.service_time+" "+"-"+" "+"mins"
+                li.appendChild(checkbox);
+                li.appendChild(label);
+                ul.appendChild(li);
+
+                //                       var label=document.createElement('label')
+//                        var checkbox=document.createElement('input')
+//                        checkbox.type=checkbox
+//                        checkbox.name="option[]"
+//                        checkbox.value=service.name
+//                        label.appendChild(checkbox)
+//                        x.appendChild(label)
+//                        var c = document.createElement("option");
+//                        c.text=service.name
+//                        x.appendChild(c)
+
+                dropdownMultiselect()
+
+            });
+            //mulSel.innerHTML="";
+            //mulSel.appendChild(ul);
+
+            tablearea.innerHTML = "";
+            tablearea.appendChild(table);
+            $("#lowerbutton").prop('disabled',false);
+            $("#upperbutton").prop('disabled',false);
+
+
+//                    upper_li =document.getElementById("0").childNodes[1].innerHTML;
+//                    lower_li = document.getElementById("6").childNodes[1].innerHTML;
+
+            $('td').mouseenter(
+                    function () {
+
+                        if ((this.className).indexOf("available") !== -1) {
+                            var ClassAvailable = this.className;
+                            $(this).removeClass(this.className.toString() + " " + "available");
+                            $(this).addClass(ClassAvailable + " selectable" + " selected");
+                            if (this.className.indexOf("selectable selected") !== -1) {
+                                var SelectableSelected = this.className;
+
+
+                            }
+                            ClassAdder(this.id, SelectableSelected);
+                            final_date = FirstSevenDays[ this.id.toString().split('-')[0]];
+
+                        }
+
+
+                    }
+            );
+
+
+
+
+            $('td').mouseleave(
+                    function () {
+                        if ((this.className).indexOf("selectable selected") !== -1) {
+                            var p = this.className.toString()
+                            var b = p.slice(0, 3);
+                            $(this).removeClass(this.className + " available" + " selectable" + " selected");
+                            $(this).addClass(b + " available");
+
+                            ClassAdder(this.id, b + " available")
+
+                        }
+                    }
+            );
+
+
+
+
+            tdSelection()
+
+
+        }
+
+        tdSelection()
+
+
+        $("#upperbutton").on("click", function () {
+            upper_li =$('#0date').attr('dates')
+
+            $(this).prop('disabled',true);
+            var dateSelected= new Date(upper_li)
+            var latestDate = new Date();
+            var todayDate=dateSelected.getDate();
+
+            var date = new Date(dateSelected.getTime() + dateSelected.getTimezoneOffset()*60000 - 86400000)
+            CreateDates(date)
+
+            allSpan=[]
+            allSpanAmount=[]
+            multiple_services_id=[]
+            multiple_services_name=[]
+            service_time=service_duration/15
+            service_amount=service_amount_initial
+            dropdownMultiselect()
+        });
+
+
+        $(function(){
+            $("[data-hide]").on("click", function(){
+                $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        })
+
+        $("#lowerbutton").on("click", function () {
+            lower_li = $('#6date').attr('dates')
+
+            $(this).prop('disabled',true);
+            var dateSelected= new Date(lower_li)
+            var latestDate = new Date();
+            var todayDate=dateSelected.getDate()
+          ///  $('span').remove('.hair');
+            var date = new Date(dateSelected.getTime() + dateSelected.getTimezoneOffset()*60000+ 86400000)
+
+            CreateDates(date)
+            allSpan=[]
+            allSpanAmount=[]
+            multiple_services_id=[]
+            multiple_services_name=[]
+            service_time=service_duration/15
+            service_amount=service_amount_initial
+            dropdownMultiselect()
+
+
+        });
+        $('html,body').animate({
+                    scrollTop: $("#requestNow").offset().top},
+                'slow')
+
+
+
+
+
+        /*    function convertTotime(time){
+         if (time.slice(5,7)=="PM"){
+         time.slice()
+         var time1  = date("H:i", strtotime( time.replace('.',':').slice(0,5).toString()+' '+"PM"));
+         return time1
+         }
+         else {
+         var time= time.replace('.',':').slice(0,5).toString()
+         return time
+         }
+
+
+
+
+
+         }*/
+
+        function getTwentyFourHourTime(amPmString) {
+            var d = new Date("1/1/2013 " + amPmString);
+            d.getHours() + ':' + d.getMinutes();
+            if (d.getMinutes()==0){
+                var min= d.getMinutes()+'0'
+            }else{
+                var min=d.getMinutes()
+            }
+
+            if  ( isDigit(d.getHours())){
+                var hours='0'+d.getHours()
+            }else{
+                var hours=d.getHours()
+            }
+            return hours + ':' + min + ':'+'00'
+        }
+        function isDigit(val) {
+            return String(+val).charAt(0) == val;
+        }
+
+        function ClassAdder(id, className) {
+
+            time_titles=[];
+            time_titles[0] = document.getElementById(id).title;
+            var td_ids = [];
+            var clicked_id = id.toString().split('-')
+            for (var i = 1; i < service_time; i++) {
+                var f = parseInt(clicked_id[1]);
+                var f1 = f + i;
+                td_ids[i] = clicked_id[0] + "-" + f1
+                if ((document.getElementById(td_ids[i]).className).indexOf("available") == -1){
+
+                    break;
+                }
+                else if ((document.getElementById(td_ids[i]).className).indexOf("selectable selected") !== -1 || (document.getElementById(td_ids[i]).className).indexOf("available") !== -1) {
+                    (document.getElementById(td_ids[i]).className) += className;
+
+                    time_titles[i] = document.getElementById(td_ids[i]).title;
+
+
+                }
+
+
+
+            }
+
+
+
+        }
+        function tdSelection(){
+
+            $('td').bind("click", function () {
+                <% if user_signed_in? %>
+
+                var ids;
+                //  var checking_ids = []
+
+                if ((this.className).indexOf("selectable selected") !== -1) {
+                    if (time_titles.length == service_time) {
+                        $('.dropdown1').hide()
+                        $("#showDataID").hide();
+                        $(".days.clear").hide();
+                        $('#datepicker').hide();
+                        $('#cal-icon').hide()
+                        $('#hair-curling').hide()
+                        $('#bogo').hide()
+                        $('#form').show();
+                        $('#dt').hide()
+                        $('#myModal_book').modal('show');
+                        $('#myModal_book').modal({backdrop: 'static', keyboard: false})
+                        var img = document.getElementById('stylistImg')
+                        img.src = stylist_img
+                        var td = document.getElementById('stylistName')
+                        td.innerHTML = stylist_name;
+                        var td = document.getElementById('serviceName')
+                        td.innerHTML = (multiple_services_name.length==0) ? service_name : multiple_services_name
+                        var td = document.getElementById('serviceDate');
+                        td.innerHTML = final_date;
+                        var td = document.getElementById('serviceDuration');
+                        td.innerHTML = parseInt(service_time*15)+"mins"
+                        var p = document.getElementById('serviceSlot');
+                        p.innerHTML = time_titles[0];
+                        var td = document.getElementById('serviceAmount');
+                        td.innerHTML = "$"+service_amount
+                        $("#bookAppointment").on("click", function () {
+                            var message = $('#message').val();
+
+
+
+
+
+
+
+
+                            if(forReschedulebookingId==null){
+                                if (eventsTriggered==0) {
+
+                                    $.ajax({
+                                    url: "/users/" + stylist_id + "/services/" + service_id + "/bookings.js",
+                                    type: "POST",
+                                    data: {
+                                        booking: {
+                                            message: message,
+                                            slots: time_titles.toString(),
+                                            dates: final_date,
+                                            multiple_services: (multiple_services_id.length ==0) ? [service_id]:multiple_services_id,
+                                            total_amount:service_amount,
+                                            total_time:(service_time*15),
+                                            stylist_id: stylist_id,
+                                            forReschedulebookingId: forReschedulebookingId
+
+                                        }
+                                    },
+                                    success: function (returnhtml) {
+                                    }
+                                });
+                                    eventsTriggered ++
+
+                                }
+                            }else{
+                                if (eventsTriggered==0) {
+
+                                    $.ajax({
+                                    url: "/users/" + stylist_id + "/services/" + service_id + "/reschedule_booking_client.js",
+                                    type: "POST",
+                                    data: {
+                                        booking: {
+                                            message: message,
+                                            slots: time_titles.toString(),
+                                            dates: final_date,
+                                            multiple_services: service_id,
+                                            stylist_id: stylist_id,
+                                            total_amount:service_amount,
+                                            forReschedulebookingId: forReschedulebookingId
+                                        }
+                                    },
+                                    success: function (returnhtml) {
+                                    }
+                                });
+                                    eventsTriggered ++
+
+                            }
+                            }
+
+
+                        });
+
+
+                    }
+                    else {
+                        if ((this.className).indexOf("selectable selected") !== -1) {
+                            $('html,body').animate({
+                                        scrollTop: $("#alert").offset().top},
+                                    'slow')
+                            $('#alert').show()
+                        }
+                    }
+
+
+                }
+
+                <%else%>
+                $('.dropdown1').hide()
+                $('#myModal_login').modal('show');
+                $("#closeModalLogin").on("click", function () {
+                    $('.dropdown1').show()
+
+
+                });
+
+                <%end%>
+            });
+
+        }
+
+
+
+
+        function dropdownMultiselect(){
+            $('.dropdown-menu input[type="checkbox"]').unbind('click').click( function() {
+               var count= $("[type='checkbox']:checked").length;
+
+                var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+
+                        title = $(this).val() ;
+                var id=$(this).attr('id')+'span';
+                var this_service_name=$(this).attr('service-name');
+                title_with_time=title.split(',')[0];
+                title_with_amount=title.split(',')[1];
+                title_with_service_id=title.split(',')[2];
+                if ($(this).is(':checked')) {
+                    var html = '<div class="chip" title="' + this_service_name + '" id='+id+ '>' + this_service_name +"<span class=closebtn-chip onClick=deleteChip(this.id); id="+id+"chip>×</span>"+ '</div>';
+                    // $('#addmulServiceText').hide();
+//                    alert(multiple_services_name.length = 0)
+                    if(multiple_services_name.length == 0) {
+
+                        var el = document.getElementById('hair-curling');
+                        el.firstChild.data = " ";
+                    }
+
+
+                    $('#hair-curling').append(html);
+                    $(".hida").hide();
+                    // alert(multiple_service_names)
+                    allSpan.push(title_with_time);
+                    allSpanAmount.push(title_with_amount)
+
+                    multiple_services_id.push(title_with_service_id)
+                    multiple_services_name.push(this_service_name)
+
+                    service_time = add_array_service_time_or_amount(allSpan)/15
+                    service_amount=add_array_service_time_or_amount(allSpanAmount)
+                    //alert(service_amount)
+
+
+                } else {
+
+                    removeItem(multiple_service_names,this_service_name );
+                    // alert(multiple_service_names)
+                    $('div[id="' + $(this).attr('id') +'span'+'"]').remove();
+                    var ret = $(".hida");
+                    $('.dropdown-menu').append(ret);
+
+                    allSpan.pop(title_with_time)
+                    allSpanAmount.pop(title_with_amount);
+                    multiple_services_id.pop(title_with_service_id)
+                    multiple_services_name.pop(this_service_name)
+                    service_time = add_array_service_time_or_amount(allSpan)/15;
+                    service_amount=add_array_service_time_or_amount(allSpanAmount)
+
+                    if (service_time == 0 || multiple_service_names.length == 0){
+                        //  $("#addmulServiceText").show();
+                        service_time=service_duration/15
+
+                    }
+                    if(multiple_service_names.length == 0){
+                        var el = document.getElementById('hair-curling');
+                        el.firstChild.data = service_name + ' ' + '-' + ' ' + service_duration +' '+'mins';
+                    }
+                }
+
+                function removeItem(array, item){
+                    for(var i in array){
+                        if(array[i]==item){
+                            array.splice(i,1);
+                            break;
+                        }
+                    }
+                }
+
+
+            })
+
+        }
+
+        function isBooked(list, date, time, count, classArr) {
+            var b = 0;
+
+
+
+            var booked = classArr;
+
+            list.forEach(function (book) {
+
+
+
+                var bookedTime = book.time;
+                var all_slots = bookedTime.toString().split(',');
+                if ((book.date == date &&  (jQuery.inArray(time, all_slots) != -1)) == true  ) {
+                    booked = booked + " mustCallToBook";
+                    //console.log(booked)
+                }
+            });
+            return booked;
+        }
+        function is_specific_day_unavail(list, date,td_title, count, time, classArr){
+
+            var booked = classArr;
+            list.forEach(function (book) {
+                if (book.date == date && !(jQuery.inArray(time,book.time) != -1)){
+                    booked = booked + " mustCallToBook";
+                }else{
+                    booked = booked + " available";
+                }
+
+            });
+           return booked
+        }
+        function isAvail(avail, day,date,td_time, time, count, classArr) {
+            var avaliable = classArr;
+
+            /*  alert((td_time.slice(0,5).replace('.',':') +':'+ '00' + " "+td_time.slice(5,7)).toString())
+             alert((new Date().toLocaleTimeString()))
+             alert(((td_time.slice(0,5).replace('.',':') +':'+ '00' + " "+td_time.slice(5,7)).toString()) < (new Date().toLocaleTimeString()))*/
+
+            avail.forEach(function (book) {
+
+                if (book.time == time && book[day] == true )  {
+                    if (!avaliable.indexOf("available") != -1) {
+                        avaliable = avaliable + " available";
+                    }
+                }
+
+
+            });
+            return avaliable;
+        }
+
+
+
+    });
+    function add_array_service_time_or_amount(allSpan){
+        if (allSpan.length > 0){
+            var dropdownTimes=[]
+
+
+            for (var i=0;i<allSpan.length;i++){
+                var onlytimings = allSpan[i]
+                // alert(onlytimings)
+                dropdownTimes[i]=parseInt(allSpan[i])
+
+
+
+            }
+            //alert(dropdownTimes)
+            var total=0
+            var serviceTimeresult=dropdownTimes.reduceRight(function(a,b){return a+b;})
+            //alert(serviceTimeresult)
+            return (serviceTimeresult)
+
+        }
+        else{
+
+            return " ";
+        }
+    }
+
+
+
+    function deleteChip(id){
+        var span=document.getElementById(id)
+        $('#'+id).parent('div').remove();
+
+        var checkbox_id=id.split('spanchip')[0]
+        $('#'+checkbox_id).prop('checked', false);
+        service_name=$('#'+checkbox_id).attr('service-name')
+        service_amount_chip=$('#'+checkbox_id).attr('service-amount')
+        multiple_services_name.pop(service_name)
+        multiple_services_id.pop(checkbox_id)
+        allSpan.pop(service_name.split(" ")[3])
+        allSpanAmount.pop(service_amount_chip)
+        service_time = add_array_service_time_or_amount(allSpan)/15;
+        //alert(service_time)
+        service_amount=add_array_service_time_or_amount(allSpanAmount)
+        // alert(service_amount)
+      
+
+        if (service_time == 0 || multiple_services_name.length == 0){
+            //  $("#addmulServiceText").show();
+            service_time=service_duration/15
+
+        }
+        if(multiple_services_name.length == 0){
+            var el = document.getElementById('hair-curling');
+            el.firstChild.data = service_name + ' ' + '-' + ' ' + service_duration +' '+'mins';
+        }
+    }
+
+
+
+    $("#close").on("click", function () {
+
+
+        $("#showDataID").show();
+        $(".days.clear").show();
+        $('#datepicker').show();
+        $('#cal-icon').show()
+        $('#hair-curling').show()
+        $('#bogo').show()
+        $('#dt').show()
+        $('#alert').hide()
+        $('.dropdown1').show()
+
+    });
+
+
+</script>
+

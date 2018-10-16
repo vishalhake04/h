@@ -1,0 +1,113 @@
+<div class="row dashboard">
+  <div>
+    <div class="col-md-3 col-sm-3 col-xs-12">
+      <div class="page-header">
+        <h1 class="pull-left">Reschedule </h1><span class="pull-left msg-notf-icon"><img src='<%=asset_path("icon-notification.png")%>'></span><span class="pull-left msg-notf"><%=@reschedule_stylist.size()%></span>
+        <div class="clearfix"></div>
+        <h5>View, Confirm or Deny</h5>
+      </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+      <%#=will_paginate @pendings,:param_name => 'pending_page'  %>
+      <% @reschedule_stylist.each do |reschedule_stylist| %>
+
+          <div class="table-responsive table-booking">
+
+            <table class="table table-condensed latest-thum-size text-justfy">
+              <tbody>
+              <tr>
+                <td>
+                  <%if current_user.isClient?%>
+                      <%= link_to stylist_path(reschedule_stylist.stylist.id,reschedule_stylist.stylist.first_name), :class => "thumbnail" do %>
+                          <%= image_tag reschedule_stylist.stylist.photo.image.url, :class => "img-circle" %>
+                      <% end %>
+                      <%= reschedule_stylist.stylist.first_name %>
+                  <%else %>
+                      <%=link_to client_path(reschedule_stylist.user.id,reschedule_stylist.user.first_name), :class => "thumbnail" do %>
+                          <%= image_tag reschedule_stylist.user.photo.image.url, :class => "img-circle" %>
+                      <% end %>
+                      <%= reschedule_stylist.user.first_name %>
+                  <%end%>
+                </td>
+                <td><h4><%= Booking.get_services_name_by_booking(reschedule_stylist)%></h4>
+                  <h6> <%=reschedule_stylist.dates.strftime("%a-%b. %d %Y")%>, <%=reschedule_stylist.slots.slice(0,7)%></h6>
+
+                </td>
+                <td><span aria-hidden="true" class="glyphicon glyphicon-time mr5"></span><%=reschedule_stylist.total_time  %></td>
+                <td>$<%=reschedule_stylist.total_amount%></td>
+                <%if current_user.isStylist?%>
+
+                    <td><%=link_to "Confirm", user_reschedule_confirm_by_stylist_path(current_user,reschedule_stylist.id),:class => "btn-confirm btn btn-small btn-primary pull-right ",:style=>"min-width:120px;min-height:35px; ",method: :put,:remote=>true %>
+                      <br/>  <%if current_user.marked.to_i <3 %>
+
+                          <button class="btn-deny btn btn-small btn-primary pull-right cancelAppointment" booking-id ="<%=reschedule_stylist.id%>"  style="width: 120px;height: 35px ;margin-left: 30%">Deny
+                          </button></td>
+                      <%else %>
+                          <button class="btn-deny btn btn-small btn-primary pull-right cancelAptshowAlert" booking-id ="<%=reschedule_stylist.id%>"  style="width: 120px;height: 35px ;margin-left: 30%">Cancel
+                          </button></td>
+                      <%end%>
+
+                <%else%>
+                    <td><button class="btn-deny btn btn-small btn-primary pull-right cancelAppointment" booking-id ="<%=reschedule_stylist.id%>"  style="width: 120px;height: 35px ;margin-left: 30%">Deny
+                    </button></td>
+                <%end%>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+      <%end%>
+      <%#=will_paginate @pendings,:param_name => 'pending_page'%>
+
+      <hr/>
+
+    </div>
+    <%if current_user.isClient?%>
+        <%=render partial: 'bookings/cancelPolicyClient' %>
+    <%else%>
+        <%=render partial: 'bookings/cancelPolicyStylist' %>
+
+    <%end%>
+
+
+
+  </div>
+</div>
+
+<script>
+    $('.cancelAptshowAlert').on("click", function () {
+        $('html,body').animate({
+                    scrollTop: $("#tabs").offset().top},
+                'slow');
+        $('#alert').show();
+
+    });
+    $(function(){
+        $("[data-hide]").on("click", function(){
+            $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+
+    /*
+     $(function() {
+     $(".pagination a").on("click", function() {
+     var geturl=this.href
+     $.ajax({
+     url:geturl ,
+     type: "GET",
+     dataType : 'script'
+     });           return false;
+     });
+     });*/
+    $(".pagination a").on("click", function() {
+        var geturl=this.href
+        var my_parent=$(this).parent()
+        var container_id = my_parent.attr('id');
+        if (container_id=="pending"){
+            $.ajax({
+                url:geturl ,
+                type: "GET",
+                dataType : 'script'
+            });
+        }
+    });
+</script>

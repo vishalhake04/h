@@ -1,0 +1,20 @@
+
+<div class="col-lg-12 col-sm-12 col-xs-12 text-center"> <span>
+          <h2 class="sh7">Please enter your personal details</h2>
+          </span>
+</div>
+<div class="row">
+
+    <div class="col-xs-3">
+      <%= text_field_tag :first_name, "",placeholder: "First Name", class: "form-control" ,:value=>current_user.first_name%>
+    </div>
+
+    <div class="col-xs-3">
+      <%= text_field_tag :last_name, "",placeholder: "Last Name", class: "form-control" ,:value=>current_user.last_name%>
+    </div>
+
+    <div class="col-xs-3">
+      <%= text_field_tag :phone, "",placeholder: "Phone", class: "form-control" ,:value=>current_user.phone%>
+    </div>
+
+</div>

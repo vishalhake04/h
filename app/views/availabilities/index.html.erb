@@ -1,0 +1,391 @@
+<div class="tab-pane active" id="manageschedule">
+  <section class="container">
+    <%if !@confirmed.blank?%>
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%=@confirmed%>
+        </div>
+    <%end%>
+    <div class="row dashboard">
+      <div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+          <div class="page-header">
+            <h1 class="pull-left">Schedule</h1>
+            <span class="pull-left msg-notf-icon"><img src="<%=asset_path('icon-shedule.png')%>"></span>
+            <div class="clearfix"></div>
+            <h5>Edit Availability </h5>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+          <p class="shedule-text">Select ‘All Day’ button to prefill all time slots or manually (de)select each in the general weekly schedule. Use the monthly calendar to indicate all day unavailability or alter availability for a specific day.</p>
+            <%= form_for :availability, :url =>  user_availability_update_path , :html => {:method => :put} do |f| %>
+              <div class="pull-right">
+                <span>
+                        <button id="btnContactUs" class="btn-available btn btn-small btn-primary" type=""></button>
+                        </span> <span class="available-text">Available</span> <span>
+                           <%= f.submit "Submit", class: "btn-confirm btn btn-small btn-primaryy" %>
+               </span>
+              </div>
+              <div class="clearfix"></div>
+              <div class="box">
+
+
+      <div class="box-body no-padding manageSchedule">
+        <table class="table table-striped">
+          <thead>
+            <tr style="border:none;">
+              <th>&nbsp;</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th>All Day </th>
+
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_mon" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_tue" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_wed" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_thu" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_fri" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_sat" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            <td><div class="checkbox"><label style=""><input id="avaliabilties_all_sun" type="checkbox" value="true" name="allDay"> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+            </tr>
+            <% @availabilities.each_with_index do |av, index| %>
+              <tr>
+                <%= hidden_field_tag "avaliabilties[#{index}][id]", av.id %>
+                <td><%= av.time %></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][mon]",true, av.mon%> <span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][tue]", true, av.tue %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][wed]", true, av.wed %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][thu]", true, av.thu %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][fri]", true, av.fri %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][sat]", true, av.sat %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+                <td><div class="checkbox"><label style=""><%= check_box_tag "avaliabilties[#{index}][sun]", true, av.sun %><span class="cr">
+                  <i class="cr-icon fa fa-circle"></i>
+                  </span></label></div></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+              </div>
+    <% end %>
+          <div class="col-md-6">
+
+            <p class="cld-desc">Potential Weekly Earnings Based on Availability: $<%=@expected_income_current_week%></p>
+          </div>
+          </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+<div class="container">
+<div class="row">
+  <div class="col-md-3 col-sm-3 col-xs-12">&nbsp;</div>
+  <div class="col-md-9 col-sm-9 col-xs-12 sch">
+
+    <div name="myDate" id="datepickerAvail">
+
+     </div>
+  </div>
+  <!-- Professional_Manage Schedule_6ss clander -- new -->
+      <div class="row manage-schedule" style="margin-right: 5%">
+    <div class="col-md-3"></div>
+    <div class="col-md-9">
+
+      <div class="col-md-4">
+        <div class="pt20">
+          <label class="control control--radio">&nbsp;
+            All Day Unavailability
+            <input type="radio" name="radio" id="allDay" checked="checked">
+            <div class="control__indicator" ></div>
+          </label>
+        </div>
+        <div class="">
+          <label class="control control--radio">&nbsp;
+              Altered Availability
+            <input type="radio" name="radio" id="alter">
+            <div class="control__indicator"></div>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-2 pt20">
+        <button type="submit" class="btn-confirm btn btn-small btn-primary" id="update"> Update</button>
+      </div>
+    </div>
+
+
+  </div>
+
+</div>
+  </div>
+<!--<div style="margin-left: 20%">
+<div id = "datepickerAvail" name="myDate" ></div>
+</div>
+<div class=""style="margin-left:50%">
+  <label class="control control&#45;&#45;radio">
+    Altered Availability
+    <input type="radio" name="radio" id="alter" checked="checked">
+    <div class="control__indicator"></div>
+  </label>
+
+</div>
+
+<div class="" style="margin-left:50%">
+
+  <label class="control control&#45;&#45;radio">
+  AllDayUnavailability
+  <input type="radio" name="radio" id="allDay" >
+  <div class="control__indicator"></div>
+</label>
+
+
+
+</div>
+  <button class="btn-confirm btn btn-small btn-primaryy" id="update" style="margin-left: 60%;">Update</button>-->
+
+
+<div>
+
+
+
+  <div>
+<!--
+  <button class="btn btn-danger " id="update" style="width: 120px;height: 35px ;margin-left: 30%">Update</button>
+-->
+</div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="myModal_avail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"  data-backdrop="static" data-keyboard="false" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="row modal-body">
+
+            <%if !@availabilities.blank? %>
+                <%@availabilities.each do |av|%>
+                    <div class="col-md-2 col-edit">
+                      <input id="<%=av.time%>" type="checkbox" value="<%=av.time%>" name="slots" style="margin-left: 50%">
+                      <label for="<%=av.time%>"><%=av.time%></label>
+                    </div>
+                <%end%>
+                <br/>
+
+            <%end%>
+          </div>
+            <br/>
+          <div class="row text-center">
+            <button class="btn-confirm btn btn-small btn-primary" id="altertimes" style="">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="alert">
+  <%#= render :partial=>"availabilities/alert",:locals=>{:service=>@alert}%>"
+</div>
+
+
+
+<div class="container">
+  <div id="allDayUnavailability">
+    <%=  render :partial=>"availabilities/allday_unavailable",:locals=>{:update_unvail_allDay=>@update_unvail_allDay}%>
+  </div>
+</div>
+
+<div id="edit_update_avail">
+  <%#= render :partial=>"availabilities/edit_form",:locals=>{:update_availability=>@update_availability}%>
+
+</div>
+<script>
+
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+
+
+    $('input[name="allDay"]').click(function(){
+        //do stuff
+        var day=$(this).attr("id").slice(17,21)
+        if ($("#"+$(this).attr("id")).is(":checked")) {
+
+            for(var i=0;i<18;i++){
+                ($('#avaliabilties_'+ i.toString() +day)).prop('checked', true);
+            }
+        }else if ($("#"+$(this).attr("id")).prop("checked",false    )){
+            for(var i=0;i<18;i++){
+                ($('#avaliabilties_'+ i.toString() +day)).prop('checked', false);
+            }
+        }
+    });
+
+
+     var JSONarray=[]
+    var allDates=[]
+    $('#datepickerAvail').datepicker({
+        multidate: true,
+        autoclose:true,
+        "startDate": new Date()
+    });
+    $('#datepickerAvail').datepicker().on('changeDate', function(e) {
+        //$('#other-input').val(e.format(0,"dd/mm/yyyy"));
+        //alert(e.date);
+        //alert(e.format(0,"dd/mm/yyyy"));
+        //console.log(e.date);
+
+
+        var loop= $('#datepickerAvail').datepicker('getDates');
+        var CurrentDate=new Date()
+        for (var i=0;i<loop.length;i++){
+            var day=loop[i].getDate().toString()
+            var mm=loop[i].getMonth()
+            var month =(mm +1).toString()
+            var year=loop[i].getFullYear().toString();
+            var mmChars = month.split('');
+            var ddChars = day.split('');
+            var datestring = year + '-' + (mmChars[1] ? month : "0" + mmChars[0]) + '-' + (ddChars[1] ? day : "0" + ddChars[0]);
+            allDates.push({date:datestring})
+        }
+        var stylist_id=<%=current_user.id if user_signed_in?%>
+
+        if ($('#alter').is(':checked')) {
+            if (alteredDate() == null) {
+
+            }
+            else { $('#myModal_avail').modal('show');
+
+            var times = [];
+            $("#altertimes").on("click", function () {
+                $('#myModal_avail').modal('hide');
+                $.each($("input[name='slots']:checked"), function () {
+
+                    times.push($(this).val());
+
+                });
+                alternativeDate(stylist_id,alteredDate(),times)
+
+            });
+          }
+        }
+
+        if ($('#allDay').is(':checked')){
+            $("#update").on("click", function () {
+               alldayAjax(stylist_id,allDates)
+            });
+        }
+
+        function alteredDate(){
+            var singleDate = $('#datepickerAvail').datepicker('getDate');
+
+            var day = singleDate.getDate().toString()
+            var mm = singleDate.getMonth()
+            var month = (mm + 1).toString()
+            var year = singleDate.getFullYear().toString();
+            var mmChars = month.split('');
+            var ddChars = day.split('');
+            var alteredDate = year + '-' + (mmChars[1] ? month : "0" + mmChars[0]) + '-' + (ddChars[1] ? day : "0" + ddChars[0]);
+           // alert(alteredDate)
+            return alteredDate
+
+        }
+    });
+    var eventsTriggered=0
+    function alternativeDate(stylist_id,date,times){
+        if (eventsTriggered==0) {
+            $.ajax({
+                url: "/users/" + stylist_id + "/update_availability.html",
+                type: "POST",
+                data: {
+                        dates:[{date:date,time:times}]
+                },
+                success: function (returnhtml) {
+
+                }
+            });
+            eventsTriggered++
+        }
+    }
+    var eventsFired = 0;
+function alldayAjax(stylist_id,dates){
+    alert(JSON.stringify(allDates))
+    if (eventsFired==0) {
+        $.ajax({
+            url: "/users/" + stylist_id + "/update_availability.html",
+            type: "POST",
+            data: {
+                dates:allDates
+            },
+            success: function (returnhtml) {
+                $('#alert').show();
+
+            }
+
+        });
+        eventsFired ++
+    }
+    }
+
+
+
+    function createJsonDateTime(dates){
+        for (var i=0;i<dates.length;i++){
+            JSONarray.push({date:dates[i]})
+        }
+
+        return JSONarray
+    }
+
+
+
+
+
+
+
+
+</script>

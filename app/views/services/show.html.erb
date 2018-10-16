@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+  <p>
+    <strong>Name:</strong>
+    <%= @service.name %>
+
+    <strong>Service:</strong>
+
+    <%= image_tag @service.photo.image.url(:medium) %><br>
+    <br>
+    <strong>Description</strong>
+    <%= @service.description %><br>
+    <br>
+    <strong>Amount:</strong>
+    <%= @service.amount %>
+
+  </p>
+</div>

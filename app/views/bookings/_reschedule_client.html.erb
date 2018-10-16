@@ -1,0 +1,123 @@
+<div class="row dashboard">
+
+<div class="col-md-3 col-sm-3 col-xs-12">
+    <div class="page-header">
+      <h1 class="pull-left">Reschedule </h1><span class="pull-left msg-notf-icon"><img src='<%=asset_path("icon-notification.png")%>'></span><span class="pull-left msg-notf"><%=@reschedule_client.blank? ?  0 : @reschedule_client.size()%></span>
+      <div class="clearfix"></div>
+      <h5>View, Confirm or Deny</h5>
+    </div>
+  </div>
+
+
+  <div class="col-md-9 col-sm-9 col-xs-12">
+    <%#=will_paginate @pendings,:param_name => 'pending_page'  %>
+<%if !@reschedule_client.blank? %>
+    <% @reschedule_client.each do |reschedule| %>
+
+        <div class="table-responsive table-booking">
+
+          <table class="table table-condensed latest-thum-size text-justfy">
+            <tbody>
+            <tr>
+              <td>
+                <%if current_user.isClient?%>
+                    <%= link_to stylist_path(reschedule.stylist.id,reschedule.stylist.first_name), :class => "thumbnail" do %>
+                        <%= image_tag reschedule.stylist.photo.image.url, :class => "img-circle " %>
+                    <% end %>
+                    <%= reschedule.stylist.first_name %>
+                <%else %>
+                    <%=link_to client_path(reschedule.user.id,reschedule.user.first_name), :class => "thumbnail" do %>
+                        <%= image_tag reschedule.user.photo.image.url, :class => "img-circle " %>
+                    <% end %>
+                    <%= reschedule.user.first_name %>
+                <%end%>
+              </td>
+              <td><h4><%=Booking.get_services_name_by_booking(reschedule)%></h4>
+                <h6> <%=reschedule.dates.strftime("%a-%b. %d %Y")%>, <%=reschedule.slots.slice(0,7)%></h6>
+
+              </td>
+              <td><span aria-hidden="true" class="glyphicon glyphicon-time mr5"></span><%=reschedule.total_time%></td>
+              <td>$<%=get_amount_paid_for_transaction_booking(reschedule)%></td>
+
+                  <td><%#=link_to "Confirm",,:class => "btn-confirm btn btn-small btn-primary pull-right ",:style=>"min-width:120px;min-height:35px; ",method: :put,:remote=>true %>
+                    <button class="btn-confirm btn btn-small btn-primary pull-right" id="<%="confirm#{reschedule.id}"%>">Confirm
+                    </button>
+                  </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-responsive table-booking">
+          <table class="table table-condensed latest-thum-size text-justfy">
+            <tbody>
+            <tr>
+              <td>
+                <h4>Reschedule </h4>
+              </td>
+              <td>
+                <div class=""style="margin-top:-30px">
+                <label class="control control--radio">&nbsp;
+                  <h6 style=""> <%=reschedule.rescheduled_time[0]["date1"].to_date.strftime("%a-%b. %d %Y")%>,<%=reschedule.rescheduled_time[0]["time1"].split(',')[0] %></h6>
+                  <input type="radio" name="radio" id="<%="time1#{reschedule.id}" %>"bookingID="<%=reschedule.id%>"   stylist_id="<%=reschedule.stylist.id%>" selectedTime="<%=reschedule.rescheduled_time[0]["time1"]%>" selectedDate="<%=reschedule.rescheduled_time[0]["date1"]%>">
+                  <div class="control__indicator" style="margin-left:-28px;margin-top:50px;"></div>
+                </label>
+
+
+              </div>
+                <div class="" style="margin-top:-39px">
+                  <label class="control control--radio">&nbsp;
+                    <h6 > <%=reschedule.rescheduled_time[0]["date2"].to_date.strftime("%a-%b. %d %Y")%>,<%=reschedule.rescheduled_time[0]["time2"].split(',')[0]  %></h6>
+                    <input type="radio" name="radio"  id="<%="time2#{reschedule.id}"%>" bookingID="<%=reschedule.id%>" stylist_id="<%=reschedule.stylist.id%>" selectedTime="<%=reschedule.rescheduled_time[0]["time2"]%>" selectedDate="<%=reschedule.rescheduled_time[0]["date2"]%>">
+                    <div class="control__indicator" style="margin-left:-28px;margin-top:50px;"></div>
+                  </label>
+
+
+                </div>
+              </td>
+              <td>
+                &nbsp;
+              </td>
+              <td>
+                &nbsp;
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+    <%end%>
+    <%#=will_paginate @pendings,:param_name => 'pending_page'%>
+<%end%>
+    <hr/>
+
+  </div>
+  </div>
+
+  <script>
+
+
+
+
+    $('input[name="radio"]').click(function(){
+        //do stuff
+
+        if ($("#"+$(this).attr("id")).is(":checked")) {
+            var bookingID=$(this).attr('bookingID')
+            var stylistID=$(this).attr('stylist_id')
+           var selectedTime=$(this).attr('selectedTime')
+           var selectedDate=$(this).attr('selectedDate')
+            $('#confirm'+bookingID).on("click",function(){
+                $.ajax({
+                   url:'/users/'+stylistID+'/bookings/'+bookingID+'/reschedule_confirm.js',
+                    type: "PUT",
+                    data:{booking:{selectedTime:selectedTime,date:selectedDate}},
+
+                });
+
+            });
+
+        }
+    });
+
+  </script>

@@ -1,0 +1,115 @@
+<div id="recommendations" class="tab-pane active">
+  <section class="container">
+
+    <div class="row dashboard">
+      <div class="col-md-3 col-sm-3 col-xs-12">
+        <div class="page-header">
+          <h1 class="pull-left">
+            Client
+            <br>
+            <span style="font-size:16px;">Recommendations </span>
+          </h1>
+
+            <span class="pull-left msg-notf-icon">
+                <img src="<%=asset_path('icon-client.png')%>">
+            </span>
+          <div class="clearfix"></div>
+
+          <h5>
+            Review Client Ratings and
+            <br>
+            Comments
+          </h5>
+
+        </div>
+      </div>
+
+      <div class="col-md-9 col-sm-9 col-xs-12">
+        <!--<div class="pull-right">-->
+
+
+          <!--&lt;!&ndash;<span>&ndash;&gt;-->
+            <!--&lt;!&ndash;<button id="btnContactUs" class="btn-confirm btn btn-small btn-primary" type="submit"> Filter</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+          <!--&lt;!&ndash;<span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button id="btnContactUs" class="btn-confirm gray btn btn-small btn-primary" type="submit"> Short</button>&ndash;&gt;-->
+            <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+
+        <!--</div>-->
+        <div class="clearfix"></div>
+        <hr/>
+        <div class="recommendations">
+          <%@reviews.each do |review|%>
+              <div class="row mb50 mt35">
+                <div>
+                  <div class="col-md-2 np-nm text-center">
+                    <li class="thumbnail"><%=image_tag review.user.photo.image.url%></li>
+                  </div>
+
+                  <div class="col-md-3 np-nm" style="">
+                    <p class="tr-heading-name"> <%= review.user.first_name%>&nbsp;<%= review.user.last_name%></p>
+
+                  </div>
+
+                  <div class="col-md-2 np-nm ">
+                    Quality
+                    <div class="rev-rating-search">
+                      <ul>
+
+                        <%review.timing.to_i.times do%>
+                            <li class="liactive">&nbsp;</li>
+                        <%end%>
+                        <%(5-review.timing.to_i).times do%>
+                            <li class="">&nbsp;</li>
+                        <%end%>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 np-nm ">
+                    Professionalism
+                    <div class="rev-rating-search">
+                      <ul>
+
+                        <%review.timing.to_i.times do%>
+                            <li class="liactive">&nbsp;</li>
+                        <%end%>
+                        <%(5-review.timing.to_i).times do%>
+                            <li class="">&nbsp;</li>
+                        <%end%>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2 np-nm ">
+                    Timing
+                    <div class="rev-rating-search">
+                      <ul>
+
+                        <%review.timing.to_i.times do%>
+                            <li class="liactive">&nbsp;</li>
+                        <%end%>
+                        <%(5-review.timing.to_i).times do%>
+                            <li class="">&nbsp;</li>
+                        <%end%>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="">
+                  <p class="tr-heading">"<%=review.comments%>"</p>
+                </div>
+              </div>
+          <%end%>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

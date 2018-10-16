@@ -1,0 +1,201 @@
+<div class="table-responsive table-dashboard services mselectboxmain">
+  <table class="table table-condensed latest-thum-size brdn">
+    <tr>
+      <td>
+        <div class="">
+          <input id="test1" type="checkbox" name="type[]">
+          <label for="test1"></label>
+          <div class="LselectBox w1120 rcolor-text">
+          <% if get_cities_of_new_york.blank? %>
+                <select id="cities-of-state5" name="location5">
+                  <option value="" selected=""></option>
+                </select>
+          <% else %>
+              <select id="cities-of-state1" name="location1">
+                <option value>Select location1</option>
+
+                <% get_cities_of_new_york.each do |loc| %>
+                    <option value=<%= loc.to_s %>><%= loc %></option>
+                <% end %>
+              </select>
+          <% end %>
+            </div>
+          <div class="clearfix"></div>
+        </div>
+      </td>
+
+      <td>
+
+      <div class="">
+        <input id="test2" type="checkbox" name="type[]">
+        <label for="test2"></label>
+        <div class="LselectBox w1120 rcolor-text">
+
+        <% if get_cities_of_new_york.blank? %>
+
+              <select id="cities-of-state5" name="location5">
+                <option value="" selected=""></option>
+              </select>
+
+        <% else %>
+
+              <select id="cities-of-state2" name="location2">
+                <option value>Select location2</option>
+
+                <% get_cities_of_new_york.each do |loc| %>
+                    <option value=<%= loc.to_s %>><%= loc %></option>
+                <% end %>
+              </select>
+
+        <% end %>
+        </div>
+        <div class="clearfix"></div>
+
+
+      </div>
+      </td>
+
+
+      <td>
+        <div class="">
+          <input id="test3" type="checkbox" name="type[]">
+          <label for="test3"></label>
+          <div class="LselectBox w1120 rcolor-text">
+
+          <% if get_cities_of_new_york.blank? %>
+
+                <select id="cities-of-state5" name="location5">
+                  <option value="" selected=""></option>
+                </select>
+
+          <% else %>
+
+                <select id="cities-of-state3" name="location3">
+                  <option value>Select location3</option>
+
+                  <% get_cities_of_new_york.each do |loc| %>
+                      <option value=<%= loc.to_s %>><%= loc %></option>
+                  <% end %>
+                </select>
+
+
+          <% end %>
+
+          </div>
+          <div class="clearfix"></div>
+
+        </div>
+      </td>
+
+
+      <td>
+        <div class="">
+          <input id="test4" type="checkbox" name="type[]">
+          <label for="test4"></label>
+          <div class="LselectBox w1120 rcolor-text">
+
+          <% if get_cities_of_new_york.blank? %>
+
+                <select id="cities-of-state5" name="location5">
+                  <option value="" selected=""></option>
+                </select>
+
+          <% else %>
+
+                <select id="cities-of-state4" name="location4">
+                  <% get_cities_of_new_york.each do |loc| %>
+                      <option value=<%= loc.to_s %>><%= loc %></option>
+                  <% end %>
+                </select>
+
+          <% end %>
+          </div>
+          <div class="clearfix"></div>
+
+        </div>
+      </td>
+
+
+      <td>
+
+        <div class="pull-left">
+          <input id="test5" type="checkbox" name="type[]">
+          <label for="test5"></label>
+          <div class="LselectBox w1120 rcolor-text">
+
+          <% if get_cities_of_new_york.blank? %>
+                <select id="cities-of-state5" name="location5">
+                  <option value="" selected=""></option>
+                </select>
+          <% else %>
+
+                <select id="cities-of-state5" name="location5">
+                  <option value>Select Location5</option>
+                  <% get_cities_of_new_york.each do |loc| %>
+                      <option value=<%= loc.to_s %>><%= loc %></option>
+                  <% end %>
+                </select>
+          <% end %>
+          </div>
+
+
+        </div>
+      </td>
+
+    </tr>
+  </table>
+</div>
+
+
+<script>
+    $('#cities-of-state1').prop('disabled',true);
+    $('#cities-of-state2').prop('disabled',true);
+    $('#cities-of-state3').prop('disabled',true);
+    $('#cities-of-state4').prop('disabled',true);
+    $('#cities-of-state5').prop('disabled',true);
+
+    $('#test1').click(function() {
+        if ($('#test1').is(":checked")){
+            $('#cities-of-state1').prop('disabled',false);
+        }
+        else{
+            $('#cities-of-state1').prop('disabled',true);
+        }
+    })
+
+    $('#test2').click(function() {
+        if ($('#test2').is(":checked")){
+            $('#cities-of-state2').prop('disabled',false);
+        }
+        else{
+            $('#cities-of-state2').prop('disabled',true);
+        }
+    })
+
+    $('#test3').click(function() {
+        if ($('#test3').is(":checked")){
+            $('#cities-of-state3').prop('disabled',false);
+        }
+        else{
+            $('#cities-of-state3').prop('disabled',true);
+        }
+    })
+
+    $('#test4').click(function() {
+        if ($('#test4').is(":checked")){
+            $('#cities-of-state4').prop('disabled',false);
+        }
+        else{
+            $('#cities-of-state4').prop('disabled',true);
+        }
+    })
+
+    $('#test5').click(function() {
+        if ($('#test5').is(":checked")){
+            $('#cities-of-state5').prop('disabled',false);
+        }
+        else{
+            $('#cities-of-state5').prop('disabled',true);
+        }
+    })
+</script>

@@ -1,0 +1,47 @@
+<%if session[:booking_id]==nil%>
+<li class="list-group-item">
+  <%if @user.verified_number== true%>
+      <div class="list-verify">
+        <h3>Phone Number</h3>
+
+        <h5><%= @user.phone %></h5>
+
+      </div>
+      <div class="pull-right action-buttons arrow-right">
+        <a href="#"><span><img src='<%= asset_path('check-icon.png') %>'></span></a></div>
+  <%else%>
+      <div class="list-verify">
+        <h3>Phone Number</h3>
+
+
+        <h5 style=""><a href="#" id="verify">verify Phone Number</a></h5>
+      </div>
+
+      <div class="pull-right action-buttons arrow-right">
+          <a href="#">
+            <span>
+          <i class="fa fa-times" style="color:#999">
+
+          </i>
+        </span></a></div>
+      <%end%>
+</li>
+
+<% else %>
+    <%if @user.verified_number== true%>
+        <div class="list-verify">
+
+          <h5><%= @user.phone %></h5>
+
+        </div>
+
+    <%else%>
+        <div class="list-verify">
+
+
+          <h5 style=""><a href="#" id="verify">verify Phone Number</a></h5>
+        </div>
+
+
+    <%end%>
+  <%end%>

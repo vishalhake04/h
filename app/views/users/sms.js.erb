@@ -1,0 +1,15 @@
+$('#hidden_phone_number').val('<%= @phone_number.phone %>' )
+$('#myModal_sendpin').modal('hide');
+
+
+<%if @response.include? "not a valid"%>
+
+$('#myModal_Verify').modal('hide');
+$('#status-box').removeClass()
+$('#status-box').addClass('alert alert-warning')
+$('#status-message').text("<%=@response%>")
+$('#status-box').show()
+<% else %>
+$('#myModal_Verify').modal('show')
+$('#status-box').hide()
+<% end %>

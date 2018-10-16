@@ -1,0 +1,36 @@
+
+
+<div id="myModal_message" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="panel panel-danger">
+          <div class="panel-heading">Message Me</div>
+          <div class="panel-body">
+            <%= form_tag  message_path , :method => :post do %>
+                <%= hidden_field_tag "user_id", @user.id %>
+                <%= text_field_tag :message, params[:message], class: "form-control no-border ", placeholder: "Message" ,style:"width: 300px;height:120px" %>
+                <br/>
+                <%= submit_tag "send", class: "btn btn-default btn-primary red-btn",:style=>"width:60px;height:40px" %>
+
+          <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,45 @@
+<div style="background:#c92a5c; padding:6px; width:600px; margin:0px auto;">
+  <div style="margin:0px auto; width:auto; height:auto; background:#fff; border:solid 1px #f2f2f2; padding:25px;">
+    <table style="font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:24px; " width="" cellspacing="0" cellpadding="0" border="0">
+      <tbody><tr>
+        <td><p align="center"><img class="transparent" src="https://ucarecdn.com/6634bebf-572f-4de0-ae64-48f013916cc9/Reddera_logo.png" alt="https://i.imgsafe.org/8ef4375dbb.png" style="width:239px;margin-left:150px">
+        </p></td>
+      </tr>
+      <tr>
+        <td>
+          <p style="font-size:20px"><font color="black">Customer Information</font> </p>
+          <div align="center">
+
+
+          </div>
+
+          <p style="margin-left:20px">1.Name : <%=@details[:information][:name]%> </p>
+          <p style="margin-left:20px">2.Company : <%=@details[:information][:company]%> </p>
+          <p style="margin-left:20px">3.Email :  <%=@details[:information][:email]%></p>
+          <p style="margin-left:20px">4.Phone: <%=@details[:information][:phone]%> </p>
+
+
+        </td>
+      </tr>
+      <br/>
+
+
+      <tr style="padding:10px">
+        <td><p style="font-size:20px"><font color="black">Inquiry About</font></p>
+
+          <%@details[:complaints].each do |complaint|%>
+              <p style="margin-left:20px"><%=@details[:complaints].index(complaint).to_i + 1%>: <%=complaint%></p>
+          <%end%>
+        </td>
+      </tr>
+
+      <tr style="padding:10px">
+        <td><p style="font-size:20px"><font color="black">Inquiry Details</font></p>
+
+          <p style="font-size:14px"><%=@details[:complaint_details]%></p>
+        </td>
+      </tr>
+      </tbody></table>
+  </div>
+</div>
+

@@ -1,0 +1,82 @@
+
+
+<div id="cancelPolicyStylist" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" id="close">&times;</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="panel panel-danger">
+          <div class="panel-heading">Cancellation Policy</div>
+          <div class="panel-body">
+            <div style="margin-left: 6%">
+              <p style="display: inline-block;margin-right: 0.5%"><strong>Your Profile will be marked <%=current_user.marked.to_i <=3 ?  current_user.marked.to_i+1:current_user.marked.to_i %>
+              </strong>
+              </p>
+
+            </div>
+
+
+            <button style="margin-right: 47%"class="btn-confirm btn btn-small btn-primary pull-right " id="cancelApt" style="width: 120px;height: 35px ;margin-left: 30%">Confirm
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $('.cancelAppointment').on("click", function () {
+        var bookingID= $(this).attr('booking-id');
+
+        $('#cancelPolicyStylist').modal('show');
+
+        $('#cancelApt').on("click", function () {
+            $('#cancelPolicyStylist').modal('hide');
+
+            cancelAptAJAX(bookingID)
+        });
+
+    });
+
+
+var eventsFired=0;
+    function cancelAptAJAX(bookingID){
+        if (eventsFired==0) {
+            $.ajax({
+                url: "/users/" + '<%=current_user.id%>' + "/bookings/" + bookingID + '/booking_delete.js',
+                type: "PUT",
+                success: function (returnhtml) {
+                    window.location.href = "/users/" + '<%=current_user.id%>' + "/bookings/";
+                }
+
+            });
+            eventsFired ++
+
+        }
+    }
+
+
+    $('.rescheduleAppointment').on("click", function () {
+        var bookingID= $(this).attr('booking-id');
+        $.ajax({
+            url: "/users/" + '<%=current_user.id%>' + "/bookings/" +  bookingID + "/reschedule/",
+            type: "PUT",
+            success: function (returnhtml) {
+                window.location.href = "/users/" + '<%=current_user.id%>' + "/bookings/";
+            }
+
+        });
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,344 @@
+
+<%#= hidden_field_tag :service_names, :id=>"serviceNames",:service_list => getServiceNameList%>
+<!--<input type="hidden" name="authenticity_token" id="serviceNames" service_list="<%#=getServiceNameList%>">-->
+  <!-- Header -->
+<%if current_page?(root_path)||check_page_for_nav_bar(request.original_url)%>
+    <nav class="navbar navbar-default navbar-fixed-top affix navbar-wrapper" id="mainNav">
+<%else%>
+    <nav class="navbar navbar-default navbar-fixed-top affix " id="mainNav">
+<%end%>
+
+
+<div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+
+
+        <%if user_signed_in? && current_user.isStylist?%>
+
+          <div class="navbar-header">
+            <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+
+            <%= link_to user_dashboard_path(current_user) do %>
+                <%=image_tag ('logo.png')%>
+            <% end %>
+          </div>
+
+            <%elsif user_signed_in? && current_user.isClient?%>
+           <%if current_page?(root_path) || check_current_page(request.original_url)%>
+              <div class="navbar-header">
+                <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+
+                <%= link_to root_path do %>
+                    <%=image_tag ('logo.png')%>
+                <% end %>
+              </div>
+              <%else%>
+                  <div class="col-md-6 col-xs-12">
+                    <div class="navbar-header">
+                      <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+
+                          <a class="navbar-brand page-scroll" href="<%=root_path%>">
+                            <img src="<%=asset_path('logo.png')%>">
+                          </a>
+
+
+                          <div id="imaginary_container">
+                              <%= form_tag search_path, :method => :get do %>
+                                <div class="input-group stylish-input-group">
+
+                                <%= text_field_tag :name, params[:name], class:"js-typeahead-country_v2-e-search form-control", placeholder: "Search a Service or Professional" %>
+                                  <span class="input-group-addon">
+                                 <button type="submit"> <span class="glyphicon glyphicon-search"></span> </button>
+                                 </span>
+                                </div>
+
+                          <%end%>
+                          </div>
+                      </div>
+                  </div>
+              <%end%>
+             <%else %>
+          <div class="navbar-header">
+            <button data-target="#bs-example-navbar-collapse-1" data-toggle="collapse" class="navbar-toggle collapsed" type="button"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+
+            <%= link_to root_path do %>
+                <%=image_tag ('logo.png')%>
+            <% end %>
+           </div>
+      <%end%>
+
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+        <% if user_signed_in? %>
+            <% if current_user.isStylist? %>
+
+
+              <ul class="nav navbar-nav navbar-right">
+
+
+
+                <li><a href="<%=gift_cards_path%>"><i class="fa fa-gift" style="color:#c82b5b"aria-hidden="true"></i>&nbsp;Gift Card</a></li>
+
+                <li class="dropdown" style="margin-right:9px;margin-top:9px">
+
+
+
+
+                            <div id="messages">
+                              <%=render 'layouts/inbox_messages',:locals=>{:messages=>@messages}%>
+                            </div>
+
+
+
+                </li>
+
+
+                <li>
+                  <div class="dropdown">
+
+
+                      <div id="notifications">
+                        <%=render 'layouts/notifications',:locals=>{:notifications=>@notifications}%>
+
+                      </div>
+
+
+                  </div>
+                </li>
+
+                  <li class="dropdown" >
+                  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-top: -4px"><%=current_user.first_name%><%= image_tag current_user.photo.image.url(:thumb), :class => "img-circle" ,:style=>"height:40px;width:40px;border-radius:10px"%>
+                    <span class="caret"></span></a>
+                  <ul class="dropdown-menu scrollable-menu" >
+
+                    <li><%= link_to 'Logout', destroy_user_session_path, :data => { :no_turbolink => true }%></li>
+
+                  </ul>
+                </li>
+
+              </ul>
+                <%end%>
+
+            <% if current_user.isClient?%>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="<%=gift_cards_path%>"><i class="fa fa-gift" style="color:#c82b5b"aria-hidden="true"></i>&nbsp;Gift Card</a></li>
+
+                  <li class="dropdown" style="margin-right:9px;margin-top:9px">
+
+
+
+                      <div id="messages">
+                        <%=render 'layouts/inbox_messages',:locals=>{:messages=>@messages}%>
+                      </div>
+
+
+
+                  </li>
+                  <li>
+                  <div class="dropdown">
+
+
+                      <div id="notifications">
+                        <%=render 'layouts/notifications',:locals=>{:notifications=>@notifications}%>
+
+                      </div>
+
+                  </div>
+                  </li>
+                  <li class="dropdown">
+                    <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-top: -8px"><%=current_user.first_name%> <%= image_tag current_user.photo.image.url(:thumb), :class => "img-circle" ,:style=>"height:40px;width:40px;border-radius:10px" %>
+                      <span class="caret"></span></a>
+                    <ul class="dropdown-menu scrollable-menu  ">
+                      <li><%= link_to "View Dashboard",   user_dashboard_path(current_user) %></li>
+                      <li><%= link_to 'Logout', destroy_user_session_path, :data => { :no_turbolink => true }%></li>
+
+
+                    </ul>
+                  </li>
+
+                </ul>
+
+            <%end%>
+
+            <% if current_user.isAdmin?%>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><%= link_to 'Logout', destroy_user_session_path%></li>
+                    </ul>
+            <% end %>
+
+        <% else %>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="<%= how_it_works_path %>" style="margin-top:0px">How It Works<img src='<%= asset_path('icon-setting.png') %>'></a></li>
+              <li><a href="<%=help_path%>" style="margin-top:0px">Help<img src='<%= asset_path('icon-help.png')  %>'></a></li>
+              <li><a href="<%= professional_sign_up_path %>" class="">Become A Pro<img src='<%=asset_path("icon-becom.png")%>'></a></li>
+              <li><a href="<%= corporate_path%>">Corporate <img src='<%=asset_path("corporate-icon.png")%>'></a></li>
+              <!--<li><a><img src='<%#= asset_path('icon-setting.png') %>'></a></li>-->
+              <!--<li ><a ></a></li>-->
+              <li class="pull-left"><a class="signup" style="margin-top: 2px">Sign-Up </a> <a  class="Login" >Login<img src='<%=asset_path("icon-sign.png")%>'></a></li>
+
+            </ul>
+
+            <!--<ul class="nav navbar-nav navbar-right">-->
+              <!--<li><a href="<%#= how_it_works_path %>" style="margin-top:0px">How It Works<img src='<%#= asset_path('icon-setting.png') %>'></a></li>-->
+              <!--<li><a href="<%#= professional_sign_up_path %>" class="">Become A Pro<img src='<%#=asset_path("icon-becom.png")%>'></a></li>-->
+              <!--<li><a href="<%#= corporate_path%>">Corporate &nbsp;<img src='<%#=asset_path("corporate-icon.png")%>'></a></li>-->
+              <!--&lt;!&ndash;<li><a><img src='<%#= asset_path('icon-setting.png') %>'></a></li>&ndash;&gt;-->
+              <!--<li><a href="<%#=help_path%>" style="margin-top:0px">Help<img src='<%#= asset_path('icon-help.png')  %>'></a></li>-->
+              <!--&lt;!&ndash;<li ><a ></a></li>&ndash;&gt;-->
+              <!--<li class="pull-left"><a class="signup" style="float: left;margin-top: 2px;cursor: pointer">Sign-Up</a><a  class="Login" style="margin-top: 0px;float: left;cursor: pointer">Login<img src='<%=asset_path("icon-sign.png")%>'></a></li>-->
+
+            <!--</ul>-->
+        <%end%>
+            <!-- /.navbar-collapse -->
+    </div>
+      </div>
+    <!-- /.container-fluid -->
+  </nav>
+
+  <%if !current_user.blank? && current_user.isStylist?%>
+      <%=render :partial=>'users/stylist_login'%>
+  <%end%>
+  <%if !current_user.blank? && current_user.isClient?%>
+    <%#debugger%>
+    <%# if current_page?(root_path) || current_page?(search_path) ||  current_page?(new_transaction_path) ||  request.original_url.include?('help') || current_page?(how_it_works_path)     %>
+
+        <% if current_page?(root_path) || check_current_page(request.original_url)   %>
+
+          <%else%>
+             <%=render :partial=>'users/client_login'%>
+          <%end%>
+  <%end%>
+
+<%=render 'layouts/login'%>
+
+<%=render 'layouts/signup'%>
+
+<%=render 'layouts/stylist_signup'%>
+
+  <%=render 'layouts/forgot_password'%>
+
+
+<script type="text/javascript">
+    $(".signup").on("click", function () {
+        $('#myModal_signup').modal('show');
+    });
+    $(".Login").on("click", function () {
+        $('#myModal_login').modal('show');
+    });
+    $(".stylistsignup").on("click", function () {
+        $('#myModal_stylist_signup').modal('show');
+    });
+
+    $('#close_modal').on('click', function() {
+        $('#myModal_login').modal('hide');
+    });
+
+    $('.forgotPassword').on('click', function() {
+        $('#myModal_login').modal('hide');
+
+        $('#myModal_forgot_password').modal('show');
+    });
+
+    $('#serviceNames').attr("service_list")
+    $.typeahead({
+        input: '.js-typeahead-country_v2-e-search',
+        order: "desc",
+        source: {
+            data:["obama","US"]
+        },
+        callback: {
+            onInit: function (node) {
+                console.log('Typeahead Initiated on ' + node.selector);
+            }
+        }
+    });
+
+
+    
+//    var interval = 1000 * 60 * 5;
+//    function refresh() {
+//        // make Ajax call here, inside the callback call:
+//        $.ajax({
+//            url: '/inbox.js',
+//            type: "GET"
+//        });
+//
+//             setTimeout(refresh, interval);
+//        // ...
+//    }
+//    setTimeout(refresh, interval);
+
+
+</script>
+
+  <style>
+      .scrollable-menu {
+          height: auto;
+          max-height: 200px;
+          overflow-x: hidden;
+      }
+
+      .dropdown {
+          display:inline-block;
+          margin-left:20px;
+          padding:10px;
+      }
+
+
+      .glyphicon-bell {
+
+          font-size:1.5rem;
+      }
+
+      .notifications {
+          min-width:320px;
+      }
+
+      .notifications-wrapper {
+          overflow:auto;
+          max-height:250px;
+      }
+
+      .menu-title {
+          color:#c82b5b;;
+          font-size:1.5rem;
+          display:inline-block;
+      }
+
+      .glyphicon-circle-arrow-right {
+          margin-left:10px;
+      }
+
+
+      .notification-heading, .notification-footer  {
+          padding:2px 10px;
+      }
+
+
+      .dropdown-menu.divider {
+          margin:5px 0;
+      }
+
+      .item-title {
+
+          font-size:1.3rem;
+          color:#000;
+
+      }
+
+      .notifications a.content {
+          text-decoration:none;
+          background:#ccc;
+
+      }
+
+      .notification-item {
+          padding:10px;
+          margin:5px;
+          background:#e6e6e6;
+          border-radius:4px;
+      }
+  </style>
+
+

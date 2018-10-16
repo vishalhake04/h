@@ -1,0 +1,9 @@
+development:
+  access_key_id: AKIAJ4ZPFALB7VG6V53Q
+  secret_access_key: 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
+production:
+  access_key_id: AKIAJ4ZPFALB7VG6V53Q
+  secret_access_key: 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
+staging:
+    access_key_id: AKIAJ4ZPFALB7VG6V53Q
+    secret_access_key: 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
