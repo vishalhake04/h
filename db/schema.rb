@@ -258,7 +258,10 @@ ActiveRecord::Schema.define(version: 20170307153456) do
   add_index "transactions", ["stylist_id"], name: "index_transactions_on_stylist_id", using: :btree
 
   create_table "update_availabilities", force: :cascade do |t|
+<<<<<<< HEAD
     t.date     "date"
+=======
+>>>>>>> 83aeee528f4ab4b67b6858f59b3c350845c6c01d
     t.boolean  "is_not_available",           default: false
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
