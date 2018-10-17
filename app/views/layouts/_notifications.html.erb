@@ -1,0 +1,76 @@
+<a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
+  <span class="pull-left msg-notf-icon" style="margin-left:-8px"><img src='<%=asset_path("icon-notification.png")%>'> <span class="pull-right msg-not-icons"><%=read_notification().try(:size)%></span></span>
+
+</a>
+
+<ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+  <div class="notification-heading"><h4 class="menu-title">Notifications</h4>
+  </div>
+<li class="divider"></li>
+<div class="notifications-wrapper">
+
+    <% if !read_notification().blank? %>
+        <% read_notification().each do |notify| %>
+          <a class="content" href='<%=user_bookings_path(current_user)%>'>
+
+            <div class="row notf-rowbox">
+              <div class="pull-left notifyLeft">
+      <span class="noti-image"><img class="" alt="Image" src="<%=current_user.photo.image.url%>">
+
+      <h1><%=notify[:sent_person_name].split(' ')[0].capitalize.slice(0,1)%>&nbsp;<%=notify[:sent_person_name].split(' ')[1].capitalize%></h1>
+    </span>
+
+              </div>
+              <div class="pull-right notifyRight">
+
+                <p><%=notify[:message]%></p>
+                <p class="pull-right ndt"><%=notify[:created_at]%></p>
+
+              </div>
+            </div>
+            <div class="divider2"></div>
+          </a>
+
+        <%end%>
+    <%end%><hr/>
+
+<%#if booking.status==Booking::CANCELLED || booking.status==Booking::CONFIRM %>
+  <!--<li role ='presentation'>-->
+    <!--<div class='media'>-->
+      <!--<div class='pull-left'>-->
+        <!--#{notifier_img}-->
+      <!--</div>-->
+
+        <!--<h6 class='media-heading'>-->
+          <!--<small>-->
+                    <!--<span style='text-color:blue;'>-->
+                      <!--#{booking.user.first_name.split(' ')[0]} has #{purpose}-->
+                    <!--</span><br/>-->
+          <!--</small>-->
+        <!--</h6>-->
+        <!--<h6 class=media-heading>-->
+          <!--<small>-->
+                    <!--<span>-->
+                      <!--Booking for service #{Booking.get_services_name_by_booking(booking)} for #{booking.slots.slice(0,7)}-->
+                    <!--</span>-->
+            <!--<br/></small>-->
+        <!--</h6>-->
+        <!--<h6 class='media-heading' style= 'margin-top:6px;'>-->
+          <!--<small style='color:grey;'>#{Time.now.strftime('%d %b %Y %I:%S%p')}</small>-->
+        <!--</h6></div>-->
+    <!--</div></li>-->
+
+  <%#elsif booking.status==Booking::RESCHEDULE_CLIENT%>
+
+   <%#elsif booking.status==Booking::RESCHEDULE_STYLIST %>
+
+  <%#elsif booking.status == "rescheduled_booking_confirmed_by_client"%>
+
+  <%#end%>
+
+
+
+
+</div>
+
+</ul>

@@ -1,0 +1,120 @@
+<%if !@edit.blank?%>
+    <% @formlist=['15', '30', '45', '60', '75', '90', '105', '120','135','150','165','180','195','210','225','240'] %>
+
+    <div class="modal fade" id="edit_service_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <div class="col-lg-12 text-center">
+              <h2 class="sh8">Login</h2>
+            </div>
+
+            <%= form_for @service, url: user_service_path(current_user.id,@service.id) ,method: :put, remote:true,:id=>"zipCodeForm" do |f| %>
+                <div class="col-md-9 col-xs-12">
+                  <div class="row" style="background-color: #f6f6f6cc;">
+                    <div class="col-md-7 col-xs-12">
+                        <div class="manage-ser-select">
+                          <div class="select">
+                              <%=select_tag 'service[service_category_id]', options_for_select(ServiceCategory.all.collect{ |u| [ u.name,u.id] },:selected=>@service.service_category.id),:id=>"service_categories_edit_id", :include_blank=> 'Main Category',class:"pl0",:style=>"background-color:#f6f6f6cc"%>
+
+                              <div class="select__arrow"></div>
+                         </div>
+
+                          <div class="select">
+                              <div id="sub_services_dropdown_edit">
+
+                                <%= render :partial => "services/sub_services_dropdown", :sub_Services => {:sub_Services => @sub_services} %>
+
+                              </div>
+                          </div>
+                          <div class="select"> <span aria-hidden="true" class="glyphicon glyphicon-time mr5 clock-icon"></span>
+                            <%= select_tag('service[time]', options_for_select(@formlist,:selected=>@service.time.to_i.to_s),:style=>"background-color:#f6f6f6cc", class:'',:id=>"time", :include_blank=> 'Duration') %>
+
+                            <div class="select__arrow"></div>
+                          </div>
+
+                          <div class="select"> <span aria-hidden="true" class="glyphicon fa-dollar mr5 clock-icon"></span>
+                            <%= select_tag('service[amount]', options_for_select(getAmount(),:selected=>@service.amount), :style=>"background-color:#f6f6f6cc",class: '',:id=>"amount", :include_blank=> 'Price') %>
+
+                            <div class="select__arrow"></div>
+                          </div>
+
+                     </div>
+                     </div>
+
+
+                    <div class="col-md-5 col-xs-12">
+                      <!--<img src="<%#=asset_path('2.gif')%>" id="addLoader" class="pull-right">-->
+
+                      <div class="location-box">
+                        <div class="location-header">
+                          <div class="mscls-btn">
+                            <div class="row m-closebtn">
+                              <div class="col-md-2">
+                                <%= submit_tag "+", class: "btn-close btn btn-small btn-primary" ,:id=>"submitbtn", :stylist_id=>current_user.id,:style=>"margin-left:37px"%>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <h1>Location</h1>
+                        </div>
+                        <div class="ms-checkbx">
+                          <%= check_box_tag "service[location1]","Manhattan",get_checked_value_location(@service.location1) %>
+                          <label for="service_location1">Manhattan</label>
+                        </div>
+                        <div class="ms-checkbx">
+                          <%= check_box_tag "service[location2]","Queens",get_checked_value_location(@service.location2) %>
+                          <label for="service_location2">Queens</label>
+                        </div>
+                        <div class="ms-checkbx">
+                          <%= check_box_tag "service[location3]","Brooklyn",get_checked_value_location(@service.location3) %>
+                          <label for="service_location3">Brooklyn</label>
+                        </div>
+                        <div class="ms-checkbx">
+                          <%= check_box_tag "service[location4]", "Bronx",get_checked_value_location(@service.location4) %>
+                          <label for="service_location4">Bronx</label>
+                        </div>
+                        <div class="ms-checkbx">
+                          <%= check_box_tag "service[location5]","Jersey City",get_checked_value_location(@service.location5)%>
+                          <label for="service_location5">Jersey City</label>
+                        </div>
+
+                      </div>
+
+                    </div>
+                     </div>
+                </div>
+
+          <%end%>
+
+                </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%end%>
+
+<script type="text/javascript">
+    $('#service_categories_edit_id').change(function () {
+        var service_category=$(this).val();
+
+        if($(this).val() == "") {
+
+
+
+        } else {
+
+            $.ajax({
+                url: '/service_categories/'+$(this).val()+'/service_sub_categories/modal_edit_sub_service_dropdown.js',
+                type: "GET"
+
+            });
+        }
+    });
+
+</script>

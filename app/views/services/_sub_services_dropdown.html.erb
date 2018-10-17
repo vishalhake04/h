@@ -1,0 +1,32 @@
+
+        <% if @sub_services.blank? %>
+            <!--< id="sub_services" name="sub_services">-->
+              <%#get_service_sub_cat_by_first_service_cat().each do |service| %>
+                  <%#=select_tag 'service[service_sub_category_id]', options_for_select(get_service_sub_cat_by_first_service_cat().collect{ |u| [ u.name,u.id] }),:id=>"sub_services",:name=>"sub_services", :include_blank=> 'Service',class:"pl0",:style=>"background-color:#f6f6f6cc"%>
+            <select id="sub_services" name="service[service_sub_category_id]" class="pl0" style="background-color:#f6f6f6cc">
+              <option value="">Service</option>
+
+            </select>
+            <div class="select__arrow"></div>
+
+
+              <!--<option value="" selected=""></option>-->
+
+        <% else %>
+            <%if @sub_services.size == 1%>
+                <select id="sub_services" name="service[service_sub_category_id]" class="pl0" style="background-color:#f6f6f6cc">
+                  <% @sub_services.each do |service| %>
+                      <option value=<%= service.id %>><%= service.name %></option>
+                  <% end %>
+                </select>
+                <div class="select__arrow"></div>
+            <%else%>
+            <select id="sub_services" name="service[service_sub_category_id]" class="pl0" style="background-color:#f6f6f6cc">
+              <option value="">Service</option>
+              <% @sub_services.each do |service| %>
+                  <option value=<%= service.id %>><%= service.name %></option>
+              <% end %>
+            </select>
+            <div class="select__arrow"></div>
+             <%end%>
+        <% end %>

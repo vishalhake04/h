@@ -1,0 +1,14 @@
+<div style="margin-bottom:10px;color:grey;"><div style="border-top:1px solid;width:45%;margin-top:8px;margin-right:3px;" class="pull-left"></div>OR<div class="pull-right" style="border-top:1px solid;width:45%;margin-top:8px;"></div></div>
+<div style="text-align:center;">
+  <%- if devise_mapping.omniauthable? %>
+      <%- resource_class.omniauth_providers.each do |provider| %>
+          <a href="<%=omniauth_authorize_path(resource_name, provider)%>" style="text-decoration:none;">
+            <%if provider == :google_oauth2 %>
+                <%= image_tag "g1.jpg",:style =>"height:40px;width:40px;margin-left:20px;"%>
+            <%elsif provider == :facebook%>
+                <%= image_tag "fb.jpg",:style =>"height:40px;width:40px;margin-left:20px;"%>
+            <%end%>
+          </a>
+      <% end -%>
+  <% end -%>
+</div>

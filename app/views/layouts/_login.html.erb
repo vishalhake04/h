@@ -1,0 +1,87 @@
+
+
+
+
+
+
+
+<div class="modal fade" id="myModal_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <div class="col-lg-12 text-center">
+              <h2 class="sh8">Login</h2>
+            </div>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <div class="row">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="cols-sm-2 control-label" for="email">E-mail</label>
+                    <div class="cols-sm-10">
+                      <div class="input-group"> <span class="input-group-addon"><i aria-hidden="true" class="fa fa-envelope fa"></i></span>
+                        <%= f.email_field :email, autofocus: true, class: "form-control",:required=>true%>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="cols-sm-2 control-label" for="password">Password</label>
+                    <div class="cols-sm-10">
+                      <div class="input-group"> <span class="input-group-addon"><i aria-hidden="true" class="fa fa-lock fa-lg"></i></span>
+                        <%= f.password_field :password, autocomplete: "off", class: "form-control",:required=>true%>                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mt35">
+                <%= f.submit "Log In", class: "btn-confirm btn btn-small btn-primary"%>
+              </div>
+              <div class="text-center mt15 small"> Not Registered? Sign Up here as <a href="<%= professional_sign_up_path %>" class="">Stylist</a> | <a href="#" class="signup">Client</a>  <br />
+               <br/>
+                <div class="text-center mt15 small"><a href="#" class="forgotPassword">Forgot password</a> </div><br />
+
+                  <div style="margin-bottom:10px;color:#99999a;"><div class="pull-left" style="border-top:1px solid;width:45%;margin-top:8px;margin-right:3px;"></div>OR<div style="border-top:1px solid;width:45%;margin-top:8px;" class="pull-right"></div></div> </div>
+              <div class="clear"></div>
+            </div>
+            <div class="row mt35">
+              <%- if devise_mapping.omniauthable? %>
+                  <%- resource_class.omniauth_providers.each do |provider| %>
+
+                        <% if provider == :facebook %>
+                        <div class="col-md-6">
+                          <div class="input-group"> <span class="input-group-addon addon-facebook"> <i class="fa fa-fw fa-2x fa-facebook fa-fw"></i> </span> <a class="btn btn-lg btn-block btn-facebook" href="<%= omniauth_authorize_path(resource_name, provider,role_id:"not_registered") %>" > Login with Facebook</a> </div>
+                          </div>
+                        <%elsif provider == :google_oauth2 %>
+                          <div class="col-md-6">
+                            <div class="input-group"> <span class="input-group-addon addon-google"> <i class="fa fa-fw fa-2x fa-google fa-fw"></i> </span> <a class="btn btn-lg btn-block btn-google" href="<%= omniauth_authorize_path(resource_name, provider,role_id:"not_registered") %>"> Login with Google</a> </div>
+                          </div>
+                       <%end%>
+                      <%end%>
+              <%end%>
+            </div>
+          <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+    $(".stylistsignup").on("click", function () {
+        if($('.Login').is(':visible')){
+            $('#myModal_login').modal('hide');
+            $('#myModal_stylist_signup').modal('show');
+        }
+    });
+    $(".signup").on("click", function () {
+        if($('.Login').is(':visible')){
+            $('#myModal_login').modal('hide');
+            $('#myModal_signup').modal('show');
+        }
+    });
+</script>

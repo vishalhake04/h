@@ -1,0 +1,290 @@
+
+<div class="modal fade" id="gift_card" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="bookingpop">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+
+                          <div class="row mb30">
+                            <div class="col-lg-12 col-sm-12 col-xs-12 text-center"> <span>
+                                  <h2 class="sh7">Gift Cards</h2>
+                                  </span>
+                            </div>
+                            <%= form_tag  user_gift_cards_path(current_user) , :html => {:method => :post} do %>
+
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                <label for="name">Email</label>
+                                <%= email_field_tag :email, params[:email], class: "form-control no-border ",:required=>true%>
+                              </div>
+                            </div>
+
+                            <div class="col-md-3">
+                              <div class="form-group">
+                                <div class="manage-ser-select">
+
+                                <label for="name">Amount</label>
+                                <div class="select"> <span aria-hidden="true" class="glyphicon fa-dollar mr5 clock-icon"></span>
+                                  <%= select_tag('amount', options_for_select(getAmount()), :style=>"background-color:#f6f6f6cc",:id=>"amount", :include_blank=> 'Price')%>
+
+                                  <div class="select__arrow"></div>
+                                </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-8">
+                              <div class="form-group">
+                                <label for="name">Gift Note</label>
+                                <%= text_field_tag :message, params[:message], class: "app-textbox mt25 form-control no-border ",:required=>true%>
+
+                            </div>
+                            </div>
+                                <div class="col-md-8">
+
+                                <%= submit_tag "Save", class: " btn-close btn  btn-primary mt30" ,:id=>"submitbtn",:style=>"margin-right:10px"%>
+                                 </div>
+                          </div>
+
+
+                            <%end%>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%if !@alert.blank?%>
+    <div class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <%=@alert%>
+    </div>
+
+<%end%>
+
+    <section class="giftcard-banner">
+      <!-- heading 1-->
+      <div class="container text-center">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="caption-bg giftbox2">
+              <h2>GIVE THE GIFT OF ‘ME TIME’</h2>
+              <h3>GIVE THE GIFT OF REDDERA</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Service Offerings-->
+    <section>
+      <!-- 4 box-->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-xs-12 text-center gift-box">
+            <h2>Our platform offers a variety of services and an even bigger array of Professionals
+              for booking on demand whenever, wherever.
+            </h2>
+
+
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+          <div class="srv-off-img">
+            <figure data-wow-delay=".1s" class="wow bounceIn text-primary" style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;"><img src="<%=asset_path('sev-off-img-1.png')%>"></figure>
+
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+          <div class="srv-off-img">
+            <figure data-wow-delay=".1s" class="wow bounceIn text-primary" style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;"><img src="<%=asset_path('sev-off-img-2.png')%>"></figure>
+
+          </div>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+          <div class="srv-off-img">
+            <figure data-wow-delay=".1s" class="wow bounceIn text-primary" style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;"><img src="<%=asset_path('sev-off-img-3.png')%>"></figure>
+
+          </div>
+        </div>
+      </div>
+      <!-- 4 images box -->
+    </section>
+
+    <section class="mb50">
+      <!-- heading 1-->
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12 col-xs-12 text-center">
+            <h2 class="sh9">Service Offerings</h2>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-xs-12">
+
+
+              <div class="row">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-1.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>women’s hair</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From blow-outs to twist-outs. <br>Prices start at $50. </p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-2.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>Hair extentions</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From cornrow extentions to vixen sew-ins. <br>Prices start at $50. </p>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-3.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>Men’s Grooming</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From styled cuts to beard trims.<br>Prices start at $20.</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-4.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>Massage</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From aromatherapy to prenatal massages.<br>Prices start at $50. </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- right panel -->
+
+            <div class="col-lg-6 col-xs-12">
+
+
+              <div class="row">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-5.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>makeup</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From eyelash extensions to bridal makeup. <br />Prices start at $75.</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-6.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>Nails</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From gel manis to spa pedis. <br>Prices start at $35. </p>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-7.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>Hair removal</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From brow sculpts to bikini waxes. <br />Prices start at $30.</p>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row mt40">
+                <div data-wow-delay="0.5s" class="gift-off-iconL wow fadeInUp animated" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                  <img src="<%=asset_path('gift-p-s-icon-8.png')%>"> </div>
+
+                <div class="gift-off-panelR">
+                  <div data-wow-delay="0.6s" class="wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                    <h4>facials</h4>
+                  </div>
+                  <div data-wow-delay="0.7s" class="no-padding wow  fadeInUp animated" style="visibility: visible; animation-delay: 0.7s; animation-name: fadeInUp;">
+                    <p>From anti-aging to acne purifying facials. <br>Prices start at $80. </p>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+            </div>
+
+          </div>
+
+
+
+
+
+        </div>
+        </div>
+    </section>
+
+    <section class="mb50">
+      <!-- heading 1-->
+      <div class="container">
+
+        <p class="ready-to-use">Special occasion or not, your special someone will love
+          the gift of Reddera.</p>
+
+        <div class="text-center mt35"><button type="submit" class="btn-confirm btn btn-small btn-primary p-all" id="gift-btn"> Purchase Gift Card</button></div>
+      </div>
+    </section>
+
+<script type="text/javascript">
+  $('#gift-btn').on("click", function () {
+   $('#gift_card').modal('show')
+
+  });
+</script>

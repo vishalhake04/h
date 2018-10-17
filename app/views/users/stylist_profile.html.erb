@@ -1,0 +1,522 @@
+
+<div class="tab-pane active" id="profile">
+  <!-- Reddera-Dashboard-Profile-->
+
+  <section class="container">
+    <div class="row profile">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="sh3">Professional Profile</h2>
+        </div>
+      </div>
+      <!-- table -content-->
+      <div>
+
+        <div class="col-md-3 ">
+          <div class="user-profile-icon">
+            <%= image_tag @user.photo.image.url, :class => "" %>
+            <br></div>
+        </div>
+
+
+        <!--<div class="profile-box">-->
+          <!--<div class="pro-heading">Mary Smith</div>-->
+          <!--<div class="pro-heading2">Hair Stylist | Nail Tech</div>-->
+          <!--<span class="prfo-noti">6</span> <span><img src="assets/img/icon-hert.png"></span>-->
+          <!--<span class="prfo-noti">Rec.</span> <span><img src="assets/img/icon-chat.png"></span>-->
+
+          <!--<div>-->
+            <!--<span class="w70p pull-left text-profile">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation u llamco laboris nisi ut aliquip ex ea commodo consequat.</span> <span class="pull-right">-->
+<!--<button type="submit" class="btn-deny btn btn-small btn-primary pull-right margin-zero" id="btnContactUs"> Message-->
+<!--</button>-->
+<!--<br>-->
+<!--<button type="submit" class="btn-confirm btn btn-small btn-primary pull-right mt15" id="btnContactUs"> Request</button>-->
+<!--</span></div>-->
+        <!--</div>-->
+        <div class="col-md-9">
+          <div class="profile-box">
+            <div class="pro-heading"><%= @user.first_name.upcase  %> <%=@user.last_name.blank? ?  " ":@user.last_name.upcase %></div>
+            <div class="pro-heading2"><%= @user.stylist_type %> | <%= @user.description %></div>
+
+            <%# if !current_user.blank? && current_user.isClient? && current_user != @user %>
+               <div style="">
+
+
+
+                <%if user_signed_in? && current_user.isClient?%>
+                     <%if check_booking_user_with_stylist(current_user)%>
+                         <span class="prfo-noti" style="float: left"><%=getFavouriteCount(@user)%></span>
+                         <span style="float: left">
+                             <div class="checkbox" >
+                               <label>
+                                 <span class="cr fa fa-heart"><i class="cr-icon icon-heart fa fa-heart"></i></span>
+                               </label>
+                             </div>
+                         </span>
+                         &nbsp;
+
+                         <a id="scroll-reviews"><span class="prfo-noti" style="cursor:pointer;">Reviews<span>
+                        <img src="<%=asset_path('icon-chat.png')%>">
+                           <button id="book_a_service_first" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                             Add a Review
+                           </button>
+
+                    </span></span></a>
+                         <button id="reviews" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                           Add a Review
+                         </button>
+                     <%else%>
+                         <div id="favourite">
+                           <%=render :partial =>'users/favourite' ,:locals=>{:user=>@user} %>
+                         </div>
+                         &nbsp;
+                        <a id="scroll-reviews" style="cursor: grab"><span class="prfo-noti" >Reviews<span>
+                            <img src="<%=asset_path('icon-chat.png')%>">
+                        </span></span>
+                         </a>
+                         <button id="reviews" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                           Add a Review
+                         </button>
+                     <%end%>
+                <%else%>
+                     <%if user_signed_in? && current_user.isStylist?%>
+
+                         <span class="prfo-noti" style="float: left"><%=getFavouriteCount(@user)%></span>
+                         <span style="float: left">
+                             <div class="checkbox" >
+                               <label>
+                                 <span class="cr fa fa-heart"><i class="cr-icon icon-heart fa fa-heart"></i></span> </label>
+                             </div>
+                         </span>
+                         &nbsp;
+                         <a id="scroll-reviews" style="cursor: grab"><span class="prfo-noti" >Reviews<span>
+                            <img src="<%=asset_path('icon-chat.png')%>">
+                        </span></span>
+                         </a>
+                     <%else%>
+
+                         <span class="prfo-noti" style="float: left"><%=getFavouriteCount(@user)%></span>
+                         <span style="float: left">
+                             <div class="checkbox" >
+                               <label>
+
+                                 <span class="cr fa fa-heart"><i class="cr-icon icon-heart fa fa-heart"></i></span> </label>
+                             </div>
+                         </span>
+                         &nbsp;
+
+
+                     <a id="scroll-reviews"><span class="prfo-noti" style="cursor:pointer;">Reviews<span>
+                        <img src="<%=asset_path('icon-chat.png')%>">
+                    </span></span></a>
+                         <button id="reviewAlert" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                           Add a Review
+                         </button>
+                     <%end%>
+
+               <%end%>
+                 <div class="alert alert-success alert-dismissible alert-box" role="alert" style="position: absolute;display: none" id="alertReview">
+                   <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <p id="text-message"> Please Login to write Reviews</p>
+                 </div>
+
+                </div>
+                <div class="clear"></div>
+          <%# else %>
+
+
+
+            <%# end %>
+            <div>
+                <span class="w70p pull-left text-profile"><%=@user.bio%></span>
+
+
+              <% if user_signed_in? && current_user.isClient? %>
+
+  <span class="pull-right">
+                        <button id="btnMessage" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                          Message
+                        </button>
+                        <br>
+
+                        </span>
+              <% else %>
+   <span class="pull-right">
+                        <button id="btnMessageoflline" class="btn-deny btn btn-small btn-primary pull-right margin-zero" type="submit">
+                          Message
+                        </button>
+                        <br>
+
+                        </span>
+
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="sh3">Recent Work</h2>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div id="myCarousel" class="carousel slide mt40">
+          <div class="carousel-inner">
+            <div class="item active">
+                <div class="recent-work">
+                <% if !@previous_works.blank? %>
+
+                    <% @previous_works.each do |previous_work| %>
+
+                        <div class="popular-boxmain">
+                          <div class="popular-box">
+                                <span>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-share.png') %>'>
+                                  </a>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-like.png') %>'>
+                                  </a>
+                                </span>
+
+                            <figure class="recent-work-images">
+                              <a id="thumb" data-toggle="modal" data-target="#lightbox">
+
+                              <%= image_tag previous_work.photo.image.url ,:class=>"portfoliomodal",:id=>previous_work.id,:previous_works=> get_previous_works(@previous_works).to_json,:photos=>get_photos_by_previous_works(@previous_works)%>
+                              </a>
+                            </figure>
+
+
+                          </div>
+                        </div>
+                    <% end %>
+
+                <% end %>
+            </div>
+            </div>
+            <div class="item">
+              <div class="recent-work">
+                <% if !@previous_works.blank? %>
+
+                    <% @previous_works.each do |previous_work| %>
+
+                        <div class="popular-boxmain">
+                          <div class="popular-box">
+                                <span>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-share.png') %>'>
+                                  </a>
+                                  <a href="#">
+                                    <img src='<%= asset_path('btn-like.png') %>'>
+                                  </a>
+                                </span>
+
+                            <figure class="recent-work-images">
+                              <%= image_tag previous_work.photo.image.url ,:class=>"portfoliomodal",:id=>previous_work.id,:previous_works=> get_previous_works(@previous_works).to_json,:photos=>get_photos_by_previous_works(@previous_works)%>
+
+                            </figure>
+
+
+                          </div>
+                        </div>
+                    <% end %>
+
+                <% end %>
+              </div>
+            </div>
+          <a class="left carousel-control" style="width:auto; top:38%;" href="#myCarousel" data-slide="prev">
+            <img src="<%= asset_path('left-arrow2.png') %>"></a>
+          <a class="right carousel-control" style="width:auto; top:38%;" href="#myCarousel" data-slide="next">
+            <img src="<%= asset_path('right-arrow2.png') %>">
+          </a></div>
+      </div>
+      <div class="service">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="sh3">Services</h2>
+          </div>
+        </div>
+        <% if !@services.blank? %>
+
+            <div>
+              <div class="col-md-3">
+                <h5>SERVICES</h5>
+              </div>
+              <div class="col-md-5">
+                <h5>DESCRIPTION</h5>
+              </div>
+              <div class="col-md-2">
+                <h5>DURATION</h5>
+              </div>
+              <div class="col-md-1">
+                <h5>COST</h5>
+              </div>
+              <div class="col-md-1">
+              </div>
+              <% @services.each do |service| %>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <ul>
+                        <% if !service.service_category.name.blank? %>
+                            <li><%= link_to service.service_category.name %><%=link_to "(#{service.service_sub_category.name})"%></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                    <div class="col-md-5">
+                      <ul>
+                        <% if !service.service_sub_category.description.blank? %>
+                            <li><%= link_to service.service_sub_category.description %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+
+                    <div class="col-md-2">
+                      <ul>
+                        <% if !service.time.blank? %>
+                            <li><%= link_to "#{service.time}"+" "+"min."%></li>
+                        <% end %>                    </ul>
+                    </div>
+                    <div class="col-md-1">
+                      <ul>
+                        <% if !service.amount.blank? %>
+                            <li><%= link_to "$#{service.amount}" %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                    <% if current_user.blank? || current_user.isClient? %>
+                        <div class="col-md-1">
+                          <div class="request-btn">
+
+                            <button class="btn-confirm btn btn-small btn-primary book" avg-rating="<%=getReviewAverageRating(service.user)%>"  stylist_specific_day_avail="<%=get_updated_availability(service.user)%>" stylist-services="<%=getServiceName(service.user,service.id)%>" stylist_type="<%=service.user.stylist_type%>" stylist_description="<%=service.user.description%>"  stylist-img="<%=service.user.photo.image.url%>" stylist-name="<%= service.user.first_name%>" stylist-id="<%= service.user.id %>" service-id="<%= service.id %>" service-amount="<%= service.amount %>" booking-list="<%= getuserBooking(service.user) %>" availiable-list="<%= getuserAvaliability(service.user) %>" service-duration="<%= service.time %>" service-name="<%= service.service_sub_category.name %>" user-id="
+                        <% current_user.id if user_signed_in? %>"type="submit">Add Service</button>
+                          </div>
+                        </div>
+
+                    <% end %>
+                  </div>
+              <% end %>
+            </div>
+        <% end %>
+      </div>
+
+
+        <%=render :partial => 'reviews/all_reviews' ,:locals => {:reviews => @reviews} %>
+        <%=render :partial => 'bookings/avail_cal'%>
+
+      <%= render :partial => 'bookings/book_calendar' %>
+    </div>
+        </div>
+  </section>
+
+</div>
+</div>
+
+
+
+
+
+<div class="container text-center">
+
+
+  <div class="modal fade" id="portfolioCarousel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="get-inspired-popup-box">
+      <div class="modal-dialog bgbrbs" role="document">
+        <div class="modal-content bgbrbs">
+          <div class="modal-header bgbrbs">
+            <button type="button" class="close" id="getInspClose"  data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><img src="<%=asset_path('close-btn.png')%>"></span> </button>
+            <div class="modal-body">
+              <div class="col-md-12">
+                <div id="myCarousel2" class="carousel slide" data-ride="carousel" data-interval="false">
+                  <!-- Indicators -->
+
+
+
+                  <!-- Wrapper for slides -->
+          <div class="carousel-inner" id="innerCarousel">
+
+            <!--<%#@previous_works.each do |previous_work|%>-->
+                <!--<div class="item" id="<%#="#{previous_work.id}carousel"%>">-->
+                  <!--<%#= image_tag previous_work.photo.image.url ,:class => "img-responsive" ,:style=>"width:500px;height:500px;margin-left:200px;"%>-->
+                  <!--&lt;!&ndash;<div class="carousel-caption">&ndash;&gt;-->
+                    <!--&lt;!&ndash;Another Image&ndash;&gt;-->
+                  <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+            <!--<%#end%>-->
+            <!--&lt;!&ndash;<div class="item">&ndash;&gt;-->
+            <!--&lt;!&ndash;<img class="img-responsive" src="http://placehold.it/1200x600/fcf00c/000&text=Three" alt="...">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="carousel-caption">&ndash;&gt;-->
+            <!--&lt;!&ndash;Another Image&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          </div>
+                  <a class="left carousel-control" style="width:auto; top:38%;" href="#myCarousel2" data-slide="prev">
+                    <img src="<%= asset_path('port-left.png') %>" style="width: 40px"></a>
+                  <a class="right carousel-control" style="width:auto; top:38%;" href="#myCarousel2" data-slide="next">
+                    <img src="<%= asset_path('port-right.png') %>"style="width: 40px">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+</div>
+<%= render :partial => 'message' %>
+
+<%= render :partial => 'reviews/new' %>
+
+
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+    $('#alertReview').hide()
+    $('#btnMessage').on("click", function () {
+        $('#myModal_message').modal('show');
+
+    });
+
+    $('#portfolio').carousel({
+        interval: false
+    });
+
+    var $carousel = $('#carousel-example-generic');
+    $('.portfoliomodal').on("click", function () {
+        var carouselActive=document.getElementById('innerCarousel')
+        carouselActive.innerHTML=""
+        var previous_works=$(this).attr('previous_works');
+        var photos=$(this).attr('photos');
+          previous_works=JSON.parse(previous_works)
+       // alert(JSON.stringify(previous_works))
+        //alert($(this).attr('id'))
+        var clickedImgID=$(this).attr('id')
+      // alert(JSON.stringify(previous_works["previous_works"]))
+     var previous_worksjson=JSON.stringify(previous_works)
+
+
+     // alert(previous_works.length)
+        for  (var i = 0, len = previous_works.length; i < len; ++i){
+           // alert(previous_works["previous_works"][i])
+            if (previous_works[i]["id"]==clickedImgID){
+                // alert(previous_works["previous_works"][i]["id"]+"true")
+//                var img=document.createElement('img')
+//                img.src=previous_works["previous_works"][i]["photo"]
+//                img.className="img-responsive"
+//                img.style="width: 400px; height: 400px; margin-left: 240px;"
+//                var div=document.createElement('div')
+//                div.className="item active"
+//
+//                div.appendChild(img)
+//                carouselActive.appendChild(div)
+
+
+                var divgetInspired=document.createElement('div')
+                divgetInspired.className="get-inspired-popup"
+                var img=document.createElement('img')
+                img.src=previous_works[i]["photo"]
+                divgetInspired.appendChild(img)
+                var p=document.createElement('p')
+                p.className="getlook-info-text"
+                p.innerHTML="Lorem ispum"
+                var divBtn=document.createElement('div')
+                var btn =document.createElement('btn')
+                btn.className="btn-profile btn-getthis-look"
+                divBtn.appendChild(btn)
+                var div=document.createElement('div')
+                div.className="item active"
+                div.appendChild(divgetInspired)
+                div.appendChild(p)
+                //div.appendChild(divBtn)
+                carouselActive.appendChild(div)
+            }else
+            {
+                //  alert(previous_works["previous_works"][i]["id"])
+
+
+
+
+
+
+                var divgetInspired=document.createElement('div')
+                divgetInspired.className="get-inspired-popup"
+                var img=document.createElement('img')
+                img.src=previous_works[i]["photo"]
+                divgetInspired.appendChild(img)
+                var p=document.createElement('p')
+                p.className="getlook-info-text"
+                p.innerHTML="Lorem ispum"
+                var divBtn=document.createElement('div')
+                var btn =document.createElement('btn')
+                btn.className="btn-profile btn-getthis-look"
+                divBtn.appendChild(btn)
+                var div=document.createElement('div')
+                div.className="item"
+                div.appendChild(divgetInspired)
+                div.appendChild(p)
+                //div.appendChild(divBtn)
+                carouselActive.appendChild(div)
+
+            }
+
+        }
+
+       // console.log(previous_works)
+
+
+//        $('body').removeClass('modal-open')
+
+        $('body').addClass('port-blur')
+
+       $('#portfolioCarousel').modal('show');
+        $('#portfolioCarousel').data('bs.modal').$backdrop.css('background-color','white')
+        $('#getInspClose').on("click", function () {
+            $('body').removeClass('port-blur')
+            $('body').addClass('')
+        });
+
+    });
+      <%if user_signed_in? == false ||  !current_user.isStylist?%>
+        $('#tabs').hide()
+
+      <%end%>
+    $('#reviewAlert').on("click", function () {
+
+                $('#text-message').text('Please Login to write Reviews')
+                $('#alertReview').show()
+    });
+    $('#scroll-reviews').on("click", function () {
+
+        $('html,body').animate({
+                    scrollTop: $("#recommendations").offset().top},
+                'slow')
+    });
+
+    $('#book_a_service_first').on("click", function () {
+        $('#text-message').text('Please book a service to write Reviews')
+        $('#alertReview').show()
+    });
+
+    $(function(){
+        $("[data-hide]").on("click", function(){
+            $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+
+   $('#btnMessageoflline').on("click", function(){
+       $('#text-message').text('Please Login to write Message')
+       $('#alertReview').show()
+
+
+   });
+        
+</script>

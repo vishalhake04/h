@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+    <%= @previous_work.user.name %>
+    <%= @previous_work.user.role.name %>
+    <%= @previous_work.user.email %>
+    <%= @previous_work.description    %>
+<strong>Previous Work:</strong>
+<%= image_tag @previous_work.photo.image.url(:medium)  %><br>
+<br>
+    <%= link_to 'Edit', edit_previous_work_path(@previous_work) %> <br >

@@ -1,0 +1,393 @@
+<div id="my-tab-content" class="tab-content">
+  <div class="alert alert-info alert-dismissible"  role="alert" id="status-box" style="display:none">
+    <button type="button" class="close" data-hide="alert"  aria-label="Close"><span aria-hidden="true">&times;</span>
+    </button>
+   <p id="status-message"></p></div>
+
+  <div class="tab-pane active" id="dashboard">
+    <div class="container-fluid header-dashboard">
+      <div class="container p70">
+        <div class="col-md-4">
+          <div class="dashboard-icon"><%= image_tag @user.photo.image.url(:medium) %>></div>
+          <div class="name-title"><%= @user.name %></div>
+        </div>
+        <div class="col-md-8">
+          <div class="dashboard-header-content">
+            <p><%=@user.bio if !@user.bio.blank?%></p>
+
+            <p class="text-right"> - Reddera</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="container">
+
+    <div class="row dashboard">
+      <div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+          <div class="page-header">
+            <h1>Verifications</h1>
+          </div>
+
+          <ul class="list-group list-verify2">
+            <li class="list-group-item">
+
+              <div class="list-verify">
+                <h3>E-MAIL ADDRESS</h3>
+
+                <h5><%= @user.email %></h5>
+              </div>
+                <div class="pull-right action-buttons arrow-right">
+                  <a  href="#"><span><img src='<%= asset_path('check-icon.png') %>'></span></a>
+                </div>
+
+
+
+
+
+            </li>
+            <div id="verifications">
+              <%=render :partial=>"users/verfications",:locals=>{:user=>@user}%>
+
+              </div>
+            <%if current_user.isStylist?%>
+            <li class="list-group-item">
+              <div class="list-verify">
+                <h3>Positive Reviews</h3>
+                <h5>8 Positive Reviews</h5>
+              </div>
+              <div class="pull-right action-buttons arrow-right">
+                <a href="#"><span><img src='<%= asset_path('check-icon.png') %>'></span></a></div>
+            </li>
+                <%end%>
+          </ul>
+        </div>
+
+
+        <div class="col-md-8 col-sm-8 col-xs-12">
+          <div class="recommendations">
+            <div class="page-header">
+              <h1>Pending Bookings </h1>
+            </div>
+            <% if !@pendings.blank? %>
+
+                <% @pendings.each do |pending| %>
+
+                    <div class="row mt35">
+
+                          <% if current_user.isStylist? %>
+                              <div class="col-md-3 np-nm text-center">
+                                  <span>
+                                        <a href="<%= client_path(current_user.id,current_user.first_name) %>" class="thumbnail"><%= image_tag pending.user.photo.image.url,:class=>"img-circle-new" ,style:"width:40px;height:40px"%></a>
+                                    <%= pending.user.first_name %> <%= pending.user.last_name %>
+                                  </span>
+                              </div>
+
+                          <% else %>
+                              <div class="col-md-3 np-nm text-center">
+                      <span>
+                        <a href="<%= stylist_path(pending.stylist.id,pending.stylist.first_name) %>" class="thumbnail "><%= image_tag pending.stylist.photo.image.url,:class=>"img-circle" ,style:"width:40px;height:40px" %></a>
+
+                        <%= pending.stylist.first_name %> <%= pending.stylist.last_name %>
+                      </span>
+                              </div>
+                          <% end %>
+                        <div class="col-md-4 np-nm text-center"><%= Booking.get_services_name_by_booking(pending) %>   </div>
+                        <div class="col-md-5 np-nm text-center np-left"> <%= pending.dates.strftime("%a - %b. %d %Y") %>, <%= pending.slots.slice(0, 7) %>
+                       </div>
+                    </div>
+
+
+                <% end %>
+                <%end%>
+                </div>
+
+
+          <div class="recommendations mt35">
+            <div class="page-header">
+              <h1>Upcoming Bookings </h1>
+            </div>
+            <% if !@upcomings.blank? %>
+
+                <% @upcomings.each do |upcoming| %>
+
+                    <div class="row mt35">
+
+                      <% if current_user.isStylist? %>
+                          <div class="col-md-3 np-nm text-center">
+                                  <span>
+                                        <a href="<%=client_path(current_user.id,current_user.first_name) %>" class="thumbnail"><%= image_tag upcoming.user.photo.image.url ,:class=>"img-circle-new" ,style:"width:40px;height:40px"%></a>
+                                    <%= upcoming.user.first_name %> <%= upcoming.user.last_name %>
+                                  </span>
+                          </div>
+
+                      <% else %>
+                          <div class="col-md-3 np-nm text-center">
+                      <span>
+                        <a href="<%= user_path(upcoming.stylist.id) %>" class="thumbnail "><%= image_tag upcoming.stylist.photo.image.url ,:class=>"img-circle",style:"width:40px;height:40px"%></a>
+                        <%= upcoming.stylist.first_name %> <%= upcoming.stylist.last_name %>
+                      </span>
+                          </div>
+                      <% end %>
+                      <div class="col-md-4 np-nm text-center"><%= Booking.get_services_name_by_booking(upcoming) %>  </div>
+                      <div class="col-md-5 np-nm text-center np-left"> <%= upcoming.dates.strftime("%a - %b. %d %Y") %>, <%= upcoming.slots.slice(0, 7) %>
+                      </div>
+                    </div>
+
+
+                <% end %>
+            <%end%>
+          </div>
+
+          <% if current_user.isStylist? %>
+
+          <div class="recommendations mt35">
+            <div class="page-header">
+              <h1>Past Bookings </h1>
+            </div>
+            <% if !@past.blank? %>
+
+                <% @past.each do |past| %>
+
+                    <div class="row mt35">
+
+
+                          <div class="col-md-3 np-nm text-center">
+                                  <span>
+                                        <a href="<%= client_path(current_user.id,current_user.first_name)%>" class="thumbnail "><%= image_tag past.user.photo.image.url ,:class=>"img-circle-new" ,style:"width:40px;height:40px"%></a>
+                                    <%= past.user.first_name %> <%= past.user.last_name %>
+                                  </span>
+                          </div>
+
+
+                      <div class="col-md-4 np-nm text-center"><%= Booking.get_services_name_by_booking(past) %>  </div>
+                      <div class="col-md-5 np-nm text-center np-left"> <%= past.dates.strftime("%a - %b. %d %Y") %>, <%= past.slots.slice(0, 7) %>
+                      </div>
+                    </div>
+
+
+                <% end %>
+            <%end%>
+          </div>
+          <%end%>
+
+
+
+        </div>
+
+
+                </div>
+                </div>
+                <hr/>
+
+
+                <% if current_user.isStylist? %>
+
+        <div class="row page-header" style="display:inline"><div class="col-md-2"><h1>Requests:</h1></div><div class="col-md-2"><h3 style="margin-top:5px"><%=@requests.blank? ? 0 : @requests%></h3></div></div>
+          <div class="row page-header" style="display:inline"><div class="col-md-2"><h1>Appointments:</h1></div><div class="col-md-2"><h3 style="margin-top:5px"><%=@appointments.blank? ? 0 : @appointments%></h3></div></div>
+
+          <table class="table table-bordered">
+          <thead>
+          <tr style="border:none;">
+            <th>Month</th>
+            <th>Total Earnings to Date </th>
+            <th>Expected Earning this Month</th>
+            <th>Total Earnings In this Month</th>
+
+          </tr>
+          </thead>
+          <tbody>
+
+
+
+              <tr>
+                <td>
+                  <%= @my_earnings[:month]%>
+                </td>
+                <td>
+                  <%if !@my_earnings[:tot_earnings_till_date].blank? %>
+
+                     $<%= @my_earnings[:tot_earnings_till_date]%>
+                      <%else%>
+                      <p>no earnings yet</p>
+                  <%end%>
+                </td>
+                <td>
+                 $<%= @my_earnings[:tot_expected_earnings]%>
+
+
+                </td>
+                <td>
+                  $<%= @my_earnings[:total_earnings]%>
+                </td>
+
+                  <!--
+                            <button id="AlteringavailEdit" class="btn-confirm btn btn-small btn-primary" type="submit"> Edit</button>
+                  -->
+                  <%#=link_to 'Edit', user_edit_updated_availabilities_path(current_user.id,update_avail.id),:class=>"btn-confirm btn btn-small btn-primary",method: :get ,:remote=>true%>
+
+                  <%#=link_to 'Delete',user_delete_updated_availabilities_path(current_user.id,update_avail.id),:class=>"btn-confirm btn btn-small btn-primary",method: :delete ,:remote=>true%>
+
+              </tr>
+
+          </tbody>
+        </table>
+                    <div class="row dashboard">
+                      <!-- table -content-->
+                      <div>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                          <div class="page-header">
+                            <h1>Professional Badges</h1>
+                            <h4>More Bookings, More Badges</h4>
+                          </div>
+                          <div class="prof-Badges"><span><img src='<%= asset_path('prf-bdf-rating.png') %>'></span>
+                            <span><img src='<%= asset_path('prf-bdf-rating.png') %>'></span>
+                            <span><img src='<%= asset_path('prf-bdf-rating2.png') %>'></span>
+                            <span><img src='<%= asset_path('prf-bdf-rating2.png') %>'></span>
+                            <span><img src='<%= asset_path('prf-bdf-rating2.png') %>'></span>
+
+                            <div class="clearfix"></div>
+                            <p>Level 2: Lorem Ipsum</p>
+                          </div>
+                          <div>
+                            <div class="progress">
+                              <div data-percentage="0%" style="width: 20%;" class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <p class="text-level3">Your Progress to Level 3.</p>
+                          </div>
+                        </div>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                          <div class="table-responsive table-dashboard">
+                            <div class="page-header">
+                              <h1>Tips For Successful Service </h1>
+                            </div>
+                            <div class="tips-service">
+                              <ol>
+                                <li><strong>Early is on time.</strong> Consider arriving to your destination 10 minutes
+                                  prior to your appointment.
+                                </li>
+                                <li><strong>Always greet the client </strong>by name and with a warm smile! This subtle
+                                  detail makes all the
+                                  difference when it comes to making the experience personal.
+                                </li>
+                                <li><strong>Setup in the right place. </strong>Ask the client where their ideal setup
+                                  location is.
+                                </li>
+                                <li><strong>Consult with the client</strong>  before beginning the service to make sure
+                                  you’re on the same page.
+                                </li>
+                                <li><strong>Be mindful of time</strong> and how you utilize your time with each client.
+                                </li>
+                                <li><strong>Check in with the client</strong> during the appointment to make sure their
+                                  needs are being met.
+                                </li>
+                                <li><strong>Assess the service.</strong> When the appointment is close to ending ask the
+                                  client if they are
+                                  satisfied with the service and if not, how you can fix it. 
+                                <li><strong>Have a quick and tidy cleanup. </strong>A clean home is a happy home.</li>
+                                <li><strong>Thank the client</strong> for choosing Reddera and selecting you as
+                                  their  professional.
+                                </li>
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="gap60"></div>
+
+
+  <% else %>
+
+
+
+                    <!-- table -content-->
+                    <div class="row dashboard">
+                      <div>
+                      <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="page-header">
+                          <h1>Client Badges</h1>
+                          <h4>More Bookings, More Badges</h4>
+                        </div>
+                        <div class="prof-Badges"><span><img src="<%= asset_path('client-badge.png') %>"></span>
+                          <span><img src="<%= asset_path('client-badge-d.png') %>"></span>
+                          <span><img src="<%= asset_path('client-badge-d.png') %>"></span>
+                          <span><img src="<%= asset_path('client-badge-d.png') %>"></span>
+                          <span><img src="<%= asset_path('client-badge-d.png') %>"></span>
+
+                          <div class="clearfix"></div>
+                          <p>Level 2: Lorem Ipsum</p>
+                        </div>
+                        <div>
+                          <div class="progress">
+                            <div data-percentage="0%" style="width: 20%;" class="progress-bar progress-bar-danger" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="text-level3">Your Progress to Level 3.</p>
+                        </div>
+                      </div>
+                        </div>
+                    </div>
+
+
+                <% end %>
+    <hr/>
+  
+
+                </section>
+
+</div>
+
+
+<%= render "users/verify"%>
+<%= render "users/verify_pin_modal" %>
+
+
+
+
+
+
+<!--<header class='page-header'>-->
+  <!--<span class='nprogress-logo fade out'></span>-->
+  <!--<h1>NProgress<i>.js</i></h1>-->
+  <!--<p class='fade out brief big'>A nanoscopic progress bar. Featuring realistic-->
+    <!--trickle animations to convince your users that something is happening!</p>-->
+<!--</header>-->
+
+<script>
+   // $('.version').text(NProgress.version);
+
+
+   $( document ).ready(function() {
+       NProgress.done();
+
+   });
+
+    $("#send-pin").hide()
+    $('#verify-pin').hide()
+    $("#verify").on("click", function () {
+
+
+        $('#myModal_sendpin').modal('show');
+
+
+        $("#send-pin").show()
+            $('#sms').hide()
+            $('#tag').hide()
+
+    });
+    $("#sms").on("click", function () {
+    });
+
+
+   $(function(){
+       $("[data-hide]").on("click", function(){
+           $(this).closest("." + $(this).attr("data-hide")).hide();
+       });
+   });
+
+
+
+</script>

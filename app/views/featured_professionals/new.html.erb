@@ -1,0 +1,24 @@
+<div class="row">
+  <%@featured_professional.each do |rec_booked|%>
+      <div class="col-md-2 col-md-offset-1">
+
+        <div class="user-profile-icon">
+          <%=image_tag rec_booked.user.photo.image.url, :class => "" %>
+          <div class="pro-recently-booked-heading"><%= rec_booked.user.first_name.upcase  %> <%=rec_booked.user.last_name.blank? ?  " ":rec_booked.user.last_name.upcase %></div>
+        </div>
+        <br/>
+        <%= form_tag(featured_professionals_update_path(rec_booked.id), :method => :put )  do %>
+
+            <%=select_tag 'user', options_for_select(User.where(:role_id=>Role::STYLIST).collect{ |u| [ u.first_name,u.id] }),:id=>"user_id_#{rec_booked.id}",:style=>"margin-left:30px"%>
+            <br/>
+            <%= submit_tag "Update", class: "btn-close btn btn-small btn-primary" ,:id=>"submitbtn", :stylist_id=>current_user.id,:style=>"margin-top:7px;margin-left:37px"%>
+        <%end%>
+      </div>
+
+  <%end%>
+
+
+
+
+</div>
+<br/>

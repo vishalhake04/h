@@ -1,0 +1,537 @@
+<main class="wrapper">
+<%if !@errors.blank?%>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%=parse_error(@errors)%>
+    </div>
+<%end%>
+
+<%if !@confirmed.blank?%>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%=@confirmed%>
+    </div>
+<%end%>
+<%if !@alert.blank?%>
+    <div class="alert alert-success alert-info" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%=@alert%>
+    </div>
+<%end%>
+<!-- section banner -->
+
+<%=render 'services/stylist_search'%>
+
+<section>
+  <!-- heading 1-->
+  <div class="container">
+
+
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-xs-12 text-center">
+        <p class="typo-c text-center"></p>
+      </div>
+    </div>
+<div style="position: relative">
+    <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+      <div class="howreddera-box" >
+        <figure data-wow-delay=".1s" class="wow bounceIn text-primary pull-right" style="visibility: visible;margin-right: 62px; animation-delay: 0.1s; animation-name: bounceIn;"><img class="lazy" src="<%=asset_path('browse.png')%>"></figure>
+        <!--<h3><span class="nhc">1.</span>&nbsp;Browse</h3>-->
+        <div class="clearfix"></div>
+        <p class="text-muted">Browse through Reddera's menu of<br /> professionals and services.</p>
+      </div>
+
+    </div>
+
+    <span class="arrow-pos"><img src="<%=asset_path('arrowright.png')%>"></span>
+
+    <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+      <div class="howreddera-box">
+        <figure data-wow-delay=".2s" class="wow bounceIn text-primary" style="visibility: visible; animation-delay: 0.2s; animation-name: bounceIn;"><img class="lazy"  src="<%=asset_path('select-req.png')%>"></figure>
+        <!--<h3><span class="nhc">2.</span>&nbsp;Select</h3>-->
+        <p class="text-muted">Select your appointment time and location <br />and securely pay through our platform.</p>
+      </div>
+    </div>
+
+  <span class="arrow-pos1"><img src="<%=asset_path('arrowright.png')%>"></span>
+
+  <div class="col-lg-4 col-sm-4 col-xs-12 text-center">
+      <div class="howreddera-box">
+        <figure data-wow-delay=".3s" class="wow bounceIn text-primary pull-right" style="visibility: visible; margin-right: 44px;animation-delay: 0.3s; animation-name: bounceIn;"><img class="lazy"  src="<%=asset_path('getpam.png')%>"></figure>
+        <!--<h3><span class="nhc">3.</span>&nbsp;Get<br/>-->
+          <!--Pampered</h3>-->
+        <div class="clearfix"></div>
+        <p class="text-muted">Get pampered by your Reddera <br />professional, wherever, whenever.</p>
+      </div>
+    </div>
+
+  </div>
+  </div>
+  <!-- Popular Services heading 2-->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 text-center  pm-zero">
+        <h2 class="sh2">Popular Services</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 pm-zero">
+
+        <%@popular_services.each do |popular_service|%>
+            <div class="popular-boxmain">
+              <div class="popular-box"><span><%=popular_service.service_sub_category.name%></span>
+                <div class="service-img"><%=image_tag popular_service.photo.image.url,:class=>"lazy"%></div>
+              </div>
+            </div>
+        <%end%>
+
+
+      </div>
+    </div>
+  </div>
+  <!-- Recently Booked heading 2-->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center pm-zero">
+        <h2 class="sh3">Recently Booked</h2>
+      </div>
+    </div>
+    <div class="row searchresult">
+      <%@recently_booked.each do |recently_booked|%>
+          <div class="col-md-4 col-xs-12 no-pad3">
+            <%service_amount=" "%>
+            <%service_name=" "%>
+            <%service_time=" "%>
+            <%if !recently_booked.user.services.first.blank?%>
+                <%service_amount= recently_booked.user.services.first.amount%>
+                <%service_name=recently_booked.user.services.first.service_sub_category.name %>
+                <%service_time=recently_booked.user.services.first.time%>
+            <%end%>
+          <div class="recently-box">
+            <div class="recently-box-inner">
+              <%=image_tag recently_booked.user.previous_works.first.photo.image.url,:class=>"lazy"%>
+            </div>
+            <div class="photo-one">
+              <%#=image_tag service.photo.image.url(:medium),:style=>'width:900px;height:900px;'%>
+              <div class="prof-pic-main">
+                <span class="price-info-recently-booked ">$<%=service_amount %></span>
+                <span class="profile-pic">
+                    <%= link_to stylist_path(recently_booked.user.id,recently_booked.user.first_name), :class => "" do %>
+                      <%= image_tag recently_booked.user.photo.image.url,:style=>"width:72px;height:72px",:class=>"lazy"%>
+                  <%end%>
+                  <div class="rev-rating">
+                    <ul>
+                      <%getReviewAverageRating(recently_booked.user).times do%>
+                          <li class="liactive">&nbsp;</li>
+                      <%end%>
+                      <%(5-getReviewAverageRating(recently_booked.user)).times do%>
+                          <li class="">&nbsp;</li>
+                      <%end%>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                </span>
+
+              </div>
+              <div class="book-details">
+                <div class="bool_dtls_left">
+                  <span class="info-mid"><%=service_name%>
+
+                  <p class="info-samll"><%#=recently_booked.user.services.first.service_sub_category.description%></p>
+                   </span>
+
+                  <span class="time-mid"><%=service_time%> &nbsp;mins.</span><br/>
+
+
+                </div>
+                <div class="bool_dtls_right">
+                    <span class="headingsearch">
+
+                        <%=recently_booked.user.first_name%>&nbsp;<%=recently_booked.user.last_name%>  <div class="clearfix"></div>
+
+
+                    </span>
+                </div>
+
+                <div class="btn-bottom">
+                  <p class="text-left margin-btn">
+                    <!--<button class="btn-profile btn-view-profile  book">Request Now</button>-->
+                  </p>
+                  <%= button_to "View Profile",stylist_path(recently_booked.user.id,recently_booked.user.first_name),class:"btn-profile view-profile-btn pull-right",method: :get%>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <%end%>
+
+
+  </div>
+  </div>
+
+  <!-- Featured Professional heading 2-->
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-12  col-sm-12 col-xs-12 text-center pm-zero">
+        <h2 class="sh4">Featured Professional</h2>
+      </div>
+    </div>
+
+        <%@featured_professional.each do |feat_prof|%>
+          <div class="col-md-4 col-xs-12 no-pad3 text-center">
+        <div class=" ">
+          <div class="fit-bphoto" style="background: url('<%= feat_prof.user.previous_works.first.photo.image.url%>') no-repeat;background-size: 100% auto">
+
+            <div class="fcolor">
+              <div class="Fimg-info "><span> <%=image_tag feat_prof.user.photo.image.url,:class => "feat-user-profile"%></span>&nbsp;<span><img src="<%=asset_path('meenu-fetu.png')%>" ></span> </div>
+              <div class="Ftitle"><%=feat_prof.user.first_name%>&nbsp;<%=feat_prof.user.last_name%></div>
+              <div class="Fsubstyle"><%=feat_prof.user.stylist_type%> |<%=feat_prof.user.description%></div>
+              <div class="info-num">   <div class="rev-rating">
+                <ul>
+                  <%getReviewAverageRating(feat_prof.user).times do%>
+                      <li class="liactive">&nbsp;</li>
+                  <%end%>
+                  <%(5-getReviewAverageRating(feat_prof.user)).times do%>
+                      <li class="">&nbsp;</li>
+                  <%end%>
+                </ul>
+                <div class="clearfix"></div>
+              </div>
+              </div>
+              <p class="details"><%=feat_prof.user.bio%></p>
+              <%= link_to stylist_path(feat_prof.user.id,feat_prof.user.first_name) do  %>
+                  <button class="btn-profile-feat">View Profile</button>
+              <%end%>
+            </div>
+          </div>
+        </div>
+          </div>
+
+        <%end%>
+      </div>
+
+
+
+</section>
+
+
+<!--<section>-->
+  <!--&lt;!&ndash; Get Inspired heading 2&ndash;&gt;-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="col-lg-12  col-sm-12 col-xs-12 text-center pm-zero">-->
+        <!--<h2 class="sh6">Get Inspired</h2>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="container gal-container">-->
+
+
+    <!--<%#@instagram_images.each do |instagram|%>-->
+        <!--<div class="col-md-4 col-sm-6 co-xs-12 gal-item">-->
+          <!--<div class="box">-->
+            <!--<div class="get-inspired-box">-->
+              <!--<div class="get-inspired-box-details">-->
+                <!--<span class="heart-icon-2"><img src="<%#=asset_path('heart-icon-2.png')%>"> </span>-->
+                <!--<span class="text-get"> <%#=instagram.likes["count"]%></span>-->
+
+          <!--</span> <span class="pull-right">-->
+              <!--<button class="btn-profile btn-view-profile getLook"   current_image="<%#=instagram.images.first[1].url %>" allImages=<%#=getInstaImages(@instagram_images)%>>Get This Look</button>-->
+              <!--<%#=button_tag "View",class:"btn-profile btn-view-profile getLook", current_caption:instagram.caption.text,current_image:instagram.images.first[1].url ,allImages:getInstaImages(@instagram_images),allCaption:getInstaCaption(@instagram_images)%>-->
+              <!--</span> </div>-->
+
+         <!--</div>-->
+          <!--<p style="font-size:12px"></p>-->
+            <!--<div class="get-inspired-img"><%#=image_tag instagram.images.first[1].url %></div>-->
+
+
+        <!--</div>-->
+        <!--</div>-->
+
+  <!--<%#end%>-->
+
+    <!--</div>-->
+  <!--</section>-->
+
+
+
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="bookingpop">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+
+            <div class="col-md-12">
+              <div class="thanyou">
+                <figure style='margin-left:290px;'><img src="<%=asset_path('thank-you.png')%>"></figure>
+                <h1 style="text-align: center">Thank You</h1>
+                <%if !@booking.blank?%>
+                     <p>for booking with Reddera. Your <%=Booking.get_services_name_by_booking(@booking)%> appointment with<%=@booking.stylist.name%> on <%@booking.dates%> at <%=@booking.slots.slice(0,7)%> will be confirmed shortly.</p>
+                <%end%>
+                <div class="text-center mt35">
+                  <%=link_to 'Main Site',root_path,:class=>"btn-confirm btn btn-small btn-primary" %>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</main>
+
+<div class="modal fade" id="myModal02" tabindex="-1" data-color=role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="get-inspired-popup-box">
+    <div class="modal-dialog bgbrbs" role="document">
+      <div class="modal-content bgbrbs">
+        <div class="modal-header bgbrbs">
+          <button type="button" class="close" id="getInspClose"  data-dismiss="modal" aria-label="Close"> <span aria-hidden="true"><img src="<%=asset_path('close-btn.png')%>"></span> </button>
+          <div class="modal-body">
+            <div class="col-md-12">
+              <div id="myCarousel2" class="carousel slide" data-ride="carousel" data-interval="false">
+                <!-- Indicators -->
+
+                <div class="carousel-inner" role="listbox" id="carouselGetinspired">
+
+                </div>
+                <!---->
+              <a class="left carousel-control" style="width:auto; top:38%;" href="#myCarousel2" data-slide="prev">
+                <img src="<%= asset_path('port-left.png') %>" style="width: 40px"></a>
+              <a class="right carousel-control" style="width:auto; top:38%;" href="#myCarousel2" data-slide="next">
+                <img src="<%= asset_path('port-right.png') %>"style="width: 40px">
+              </a>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bs-example-modal-lg" id="portfolioCarousel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+
+
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" id="innerCarousel">
+
+          <!--<%#@previous_works.each do |previous_work|%>-->
+          <!--<div class="item" id="<%#="#{previous_work.id}carousel"%>">-->
+          <!--<%#= image_tag previous_work.photo.image.url ,:class => "img-responsive" ,:style=>"width:500px;height:500px;margin-left:200px;"%>-->
+          <!--&lt;!&ndash;<div class="carousel-caption">&ndash;&gt;-->
+          <!--&lt;!&ndash;Another Image&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--</div>-->
+          <!--<%#end%>-->
+          <!--&lt;!&ndash;<div class="item">&ndash;&gt;-->
+          <!--&lt;!&ndash;<img class="img-responsive" src="http://placehold.it/1200x600/fcf00c/000&text=Three" alt="...">&ndash;&gt;-->
+          <!--&lt;!&ndash;<div class="carousel-caption">&ndash;&gt;-->
+          <!--&lt;!&ndash;Another Image&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<script type="text/javascript" src="https://cdn.jsdelivr.net/voucherify.js/1.4.5/voucherify.min.js"></script><script src="jquery.scrollstop.js" type="text/javascript"></script>-->
+
+<!--<link rel="stylesheet" type="text/css" href="/voucherify.js/voucherify-1.4.1.min.css">-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%=render 'layouts/footer' %>
+<script>
+
+
+//    $("#getLook").on("click", function () {
+//        $('#myModal02').modal('show');
+//    });
+
+
+    if (window.location.href.indexOf("shortly") !== -1){
+        $('#myModal1').modal('show');
+        /* Statements */
+    }
+
+
+    $('#datepicker').datepicker({
+        format: "mm-dd-yyyy",
+        viewMode: 'days',
+        todayHighlight: true
+
+        // currently picked date
+    }).on('show', function() {
+       var currentDate = $(this).val();
+    })
+        // if no date picked replace with previous date
+            .on('changeDate', function(ev) {
+
+
+                if ($(this).val() === '' || $(this).val() === null) {
+                    $(this).val(currentDate).datepicker('update');
+                }
+                var a = $('#datepicker').datepicker('getDate');
+                $(this).datepicker('hide');
+
+                //alert(a)
+
+            });
+
+    var $carousel = $('#carousel-example-generic');
+    $('.getLook').on("click", function () {
+        var allImages=[]
+        var carouselActive=document.getElementById('carouselGetinspired')
+        carouselActive.innerHTML=""
+         allImages=$(this).attr('allImages').split(',');
+        var current_cation=$(this).attr('current_caption')
+        var allCaption=$(this).attr('allCaption').split(',');
+
+
+        var clickedImg=$(this).attr('current_image')
+
+        //alert( allImages)
+
+        // alert(previous_works.length)
+        for  (var i = 0, len = allImages.length; i < len; ++i){
+            // alert(previous_works["previous_works"][i])
+            if (allImages[i]===clickedImg){
+                // alert(previous_works["previous_works"][i]["id"]+"true")
+                var divgetInspired=document.createElement('div')
+                divgetInspired.className="get-inspired-popup"
+                var img=document.createElement('img')
+                img.src=clickedImg
+                divgetInspired.appendChild(img)
+                var p=document.createElement('p')
+                p.className="getlook-info-text"
+                p.innerHTML=current_cation
+                var divBtn=document.createElement('div')
+                var btn =document.createElement('btn')
+                btn.className="btn-profile btn-getthis-look"
+                divBtn.appendChild(btn)
+                var div=document.createElement('div')
+                div.className="item active"
+                div.appendChild(divgetInspired)
+                div.appendChild(p)
+               // div.appendChild(divBtn)
+                carouselActive.appendChild(div)
+            }else
+            {
+                //  alert(previous_works["previous_works"][i]["id"])
+                var divgetInspired=document.createElement('div')
+                divgetInspired.className="get-inspired-popup"
+                var img=document.createElement('img')
+                img.src=allImages[i]
+                divgetInspired.appendChild(img)
+                var p=document.createElement('p')
+                p.className="getlook-info-text"
+                p.innerHTML=allCaption[i+1]
+                var divBtn=document.createElement('div')
+                var btn =document.createElement('btn')
+                btn.className="btn-profile btn-getthis-look"
+                divBtn.appendChild(btn)
+                var div=document.createElement('div')
+                div.className="item"
+                div.appendChild(divgetInspired)
+                div.appendChild(p)
+                //div.appendChild(divBtn)
+                carouselActive.appendChild(div)
+
+            }
+
+        }
+        $('body').removeClass('modal-open')
+
+        $('body').addClass('port-blur')
+//
+
+
+        $('#myModal02').modal('show')        // console.log(previous_works)
+
+
+        $('#myModal02').data('bs.modal').$backdrop.css('background-color','white')
+        $('#getInspClose').on("click", function () {
+            $('body').removeClass('port-blur')
+            $('body').addClass('')
+        });
+
+//        $('#myModal02').on('shown', function(){
+
+//
+//        });
+    });
+
+//$("img.lazy").lazyload({
+//    event: "scrollstop"
+//});
+
+
+
+
+var basePrice = 49.99;
+
+
+function showPrice(initialValue, discountedValue) {
+    var initialPriceElem = document.getElementById("initial");
+    var discountedPriceElem = document.getElementById("discounted");
+
+    initialPriceElem.innerHTML = "$" + initialValue.toFixed(2);
+    if (discountedValue) {
+        initialPriceElem.className = "deprecated";
+        discountedPriceElem.innerHTML = "$" + discountedValue.toFixed(2);
+    }
+}
+
+Voucherify.initialize(
+        "39e6bc55-ddc8-4a36-a78f-e9bdb3461a58",
+        "1248ca14-ab2d-4e21-947c-3c76e3fb2281"
+);
+//Voucherify.setIdentity("swapnil.b@consultadd.com");
+Voucherify.render("#voucher-checkout", {
+    textPlaceholder: "e.g. Testing7fjWdr",
+    onValidated: function(response) {
+        alert('hii')
+        var newPrice = Voucherify.utils.calculatePrice(basePrice, response);
+        showPrice(basePrice, newPrice);
+    }
+});
+
+showPrice(basePrice);
+</script>
+
+

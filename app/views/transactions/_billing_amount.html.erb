@@ -1,0 +1,55 @@
+
+
+
+
+
+<%if !@message.blank?%>
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <%=@message%>
+    </div>
+<%end%>
+
+
+ <%#debugger%>
+
+      <div class="pr2">
+        <div class="subtotal-box"><span class="sub-total">Service Amount</span><span class="sub-total">$<%=@service_amount%></span></div>
+        <div class="subtotal-box"> <span class="sub-total">Taxable Amount</span><span class="sub-total">$<%=@taxable_amount%></span> </div>
+        <div class="subtotal-box">  <span class="sub-total-box bcb"><%=@gift_deducted_amount.nil? ? "Total" : "Sub-Total" %></span> <span class="sub-total">$<%=@total_amount%></span> </div>
+        <%if !@json.blank?%>
+        <div class="subtotal-box"><span class="sub-total">Discount</span><span class="sub-total"><%=@json[:discounted_amount]%></span></div>
+          <div class="subtotal-box">
+            <span class="sub-total-box bcb">Total</span> <span class="sub-total"><%=@json[:gift_deducted_amount]%></span>
+
+          </div>
+        <%end%>
+        </div>
+     <%if !@json.blank?%>
+    <div class="alert alert-success alert-info pull-left" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      Amount remaining in gift card is $<%=@json[:gift_remaining_amount]%>
+    </div>
+    <%end%>
+
+<%if !@json.blank?%>
+
+<!--<button type="button" id="pay_via_gift" class="btn btn-close btn-primary pull-right mt30" style="display: none">Pay for service</button>-->
+
+    <%= form_tag  pay_gift_card_path, :html => {:method => :post} do %>
+        <%= hidden_field_tag "pay_via_entire_gift", @pay_via_entire_gift.blank? ? false:true %>
+        <%= hidden_field_tag "pay_half_from_gift", @pay_half_from_gift.blank? ? false:true %>
+        <%= hidden_field_tag "gift_card_id", @gift_card.id %>
+        <%= hidden_field_tag "amount_to_be_payed", @json[:amount_to_be_payed] %>
+        <%= hidden_field_tag "gift_amount", @json[:gift_amount] %>
+        <%= hidden_field_tag "remaining_amount", @json[:gift_remaining_amount] %>
+
+        <%= submit_tag "Pay for Service", class: "btn btn-close btn-primary pull-right mt30" ,:id=>"pay_via_gift", :stylist_id=>current_user.id,:style=>"margin-right:10px"%>
+
+        <%#=button_to 'Pay for Service',pay_gift_card_path(@amount_to_be_payed,@gift_amount,@gift_card) ,:id=>"pay_via_gift",:class=>"btn btn-close btn-primary pull-right mt30",method: :post%>
+   <%end%>
+<%end%>
+<script type="text/javascript">
+
+
+</script>

@@ -1,0 +1,31 @@
+<div class="container">
+<section class="tab">
+
+    <div class="row">
+      <!-- tab-->
+      <div id="content" class="mt15">
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+          <li  class="<%= is_active?(user_dashboard_path(current_user)) %>"><%=link_to "Dashboard",user_dashboard_path(current_user),:track=>"yes"%></li>
+          <li class="<%= is_active?(user_bookings_path(current_user)) %>"><%= link_to "Your Bookings", user_bookings_path(current_user),:track=>"yes"%></li>
+          <li class="<%= is_active?( user_services_path(current_user)) %>"><%= link_to "Manage Services",   user_services_path(current_user),:track=>"yes"%></li>
+          <li class="<%= is_active?( user_previous_works_path(current_user)) %>"><%= link_to "Manage Portfolio",user_previous_works_path(current_user),:track=>"yes" %></li>
+          <li class="<%= is_active?(user_availabilities_path(current_user)) %>"><%= link_to "Manage Schedule",user_availabilities_path(current_user),:track=>"yes" %></li>
+          <li class="<%= is_active?(transactions_path) %>" ><%=link_to "Transaction History", transactions_path,:track=>"yes" %></li>
+          <li class="<%= is_active?(user_reviews_path(current_user)) %>"><%= link_to "Recommendations",user_reviews_path(current_user),:track=>"yes" %></li>
+          <li class="<%= is_active?(edit_user_path(current_user)) %>"><%= link_to "Account Settings",edit_user_path(current_user) ,:track=>"yes"%></li>
+          <li class="<%= is_active?(stylist_path(current_user.id,current_user.first_name)) %>"><%= link_to "Profile",  stylist_path(current_user.id,current_user.first_name),:track=>"yes"%></li>
+
+        </ul>
+          </div>
+    </div>
+
+
+    </section>
+  </div>
+<script>
+
+    $('a[track]').click(function(){
+            NProgress.start();
+    });
+
+</script>

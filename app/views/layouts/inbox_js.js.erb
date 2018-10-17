@@ -1,0 +1,2 @@
+$('#messages').html("<%= j render :partial=>"layouts/inbox_messages",:locals=>{:messages=>@messages}%>");
+$('#notifications').html("<%= j render :partial=>"layouts/notifications",:locals=>{:notifications=>@notifications}%>");

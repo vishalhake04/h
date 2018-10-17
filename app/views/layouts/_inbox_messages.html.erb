@@ -1,0 +1,47 @@
+
+<button href="#" class="dropdown-toggle msg-link-text" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Messages
+  <span class="pull-right msg-not-icons"><%=read_messages(current_user).try(:size)%></span><span class="caret"></span></button>
+
+
+
+
+
+<ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
+<div class="notification-heading"><h4 class="menu-title">Messages</h4>
+</div>
+<li class="divider"></li>
+<div class="notifications-wrapper">
+<a class="content" href='<%=user_bookings_path(current_user)%>'>
+<% if !read_messages(current_user).blank? %>
+    <%read_messages(current_user).each do |notify| %>
+
+
+
+          <a class="content" href=''>
+
+            <div class="row notf-rowbox">
+              <div class="pull-left notifyLeft">
+      <span class="noti-image"><img class="" alt="Image" src="<%=notify[:image]%>">
+
+      <h1><%=notify[:messaged_person_name].split(' ')[0].capitalize.slice(0,1)%>&nbsp;<%=notify[:messaged_person_name].split(' ')[1].capitalize%></h1>
+    </span>
+
+              </div>
+              <div class="pull-right notifyRight">
+
+                <p><%=notify[:message]%></p>
+                <p class="pull-right ndt"><%=notify[:created_at]%></p>
+
+              </div>
+            </div>
+            <div class="divider2"></div>
+          </a>
+
+    <%end%>
+<%end%>
+    </a>
+</div>
+<li class="divider"></li>
+<div class="notification-footer"></div>
+
+</ul>

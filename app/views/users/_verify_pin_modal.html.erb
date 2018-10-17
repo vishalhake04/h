@@ -1,0 +1,36 @@
+<div class="modal fade" id="myModal_Verify" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <div class="col-lg-12 text-center">
+              <h2 class="shforgot-password">Verfications</h2>
+            </div>
+            <div id="send-pin">
+              <div class="modal-body">
+
+
+                <h3>Enter your PIN</h3>
+                <%= form_for @user, :url => users_verify_path, :method => :post ,:remote=>true do |f| %>
+                    <%= f.hidden_field :phone %>
+                    <%= f.hidden_field :id, :value => @user.id %>
+                    <div class="row">
+                      <div class="">
+
+                        <input type="text" id="user_pin" name="user[pin]" class="form-control pin-form" autocomplete="off" >                </div>
+                    </div>
+                    <%= submit_tag "Verify PIN", class: "btn-confirm btn btn-small",style: "height:40px;width:100px;margin-left:0.3%;margin-top:15px" %>
+                <% end %>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,398 @@
+
+<%=render 'layouts/login'%>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 col-sm-12 col-xs-12 text-center"> <span>
+          <h2 class="sh7"><%=@services.size()%> <%if @services.size()==1%>Appointment Found<%else%>Appointments Found<%end%></h2>
+          </span> <span>
+          <h2 class="sh5">
+            <%#= form_tag  sort_services_path , :method => :get ,:remote=>true do %>
+            <!-- <div class="row" style="margin-top: 20%">
+                    <%#= text_field_tag :price, params[:price], class: "form-control no-border ", placeholder: "Search a Service or Professional" %>
+                    <%#= submit_tag "Request", class: "btn btn-default btn-primary filter-btn" %>
+                </div>-->
+            <%#end%>
+
+
+
+            <div class="search-r-select">
+              <div class="select">
+                <select class="pl0" id="price-service"style="height:23px;border-radius:6px">
+                  <option value="">Price</option>
+                  <option value="20-50"> $20-$50  </option>
+                  <option value="50-100"> $50-$100
+                  </option>
+
+                  <option value="100-200"> $100-$200
+                  </option>
+                  <option value="200-300"> $200-$300
+                  </option>
+                </select>
+                <div class="select__arrow" style="margin-right:4px;margin-top:4px"></div>
+              </div>
+              </div>
+
+            <div class="search-r-select">
+              <div class="select">
+                <select class="pl0"  id="avail_time" style="height:23px;border-radius:6px">
+                  <option value="">Time</option>
+                  <option value="06AM, 07AM, 08AM" > Early Morning (6am-8am)
+                  </option>
+                  <option value="09AM, 10AM, 11AM"> Morning (9am-11am)
+                  </option>
+                  <option value="12PM, 01PM, 02PM, 03PM, 04PM" >Afternoon (12pm-4pm)
+                  </option>
+                  <option value="05PM, 06PM, 07PM, 08PM" > Evening (5pm-8pm)
+
+                  </option>
+                  <option  value="09PM, 10PM, 11PM"> Late Night (9pm-11pm)
+
+
+                  </option>
+                </select>
+                <div class="select__arrow" style="margin-right:4px;margin-top:4px"></div>
+              </div>
+
+
+
+            </div>
+
+
+            <div class="btn-searchfilter">
+              <button type="submit" class="btn btn-default btn-primary searchfilter-btn booking">Filter</button>
+            </div>
+
+          </h2>
+          </span> </div>
+  </div>
+
+  <div class="alert alert-danger alert-dismissible" id="price_time_alert" role="alert" style="display:none">
+    <button type="button" class="close" data-hide="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    Please select price and time
+  </div>
+
+
+
+  <div class="row searchresult">
+  <% @services.each do |service| %>
+      <%service_id=service.id%>
+      <%previous_works_first_image=getPreviousWorksOfUser(service.user)%>
+      <%service_amount=service.amount%>
+      <%stylist_id=service.user.id%>
+      <%stylist_first_name=service.user.first_name%>
+      <%stylist_last_name=service.user.last_name%>
+      <%stylist_prof_pic=service.user.photo.image.url%>
+      <%average_stylist_rating=getReviewAverageRating(service.user)%>
+      <%service_sub_category_name=service.service_sub_category.name%>
+      <%service_time=service.time%>
+      <%stylist_services=getServiceName(service.user,service.id)%>
+      <%stylist_type=service.user.stylist_type%>
+      <%stylist_description=service.user.description%>
+      <%booking_list=getuserBooking(service.user)%>
+      <%available_list= getuserAvaliability(service.user)%>
+      <%stylist_specific_day_avail=get_updated_availability(service.user)%>
+      <div class="col-md-4 col-xs-12 no-pad2">
+        <div  class="carousel slide" id="<%=service_id%>" data-ride="carousel" data-interval="false" >
+          <div class="carousel-inner"  role="listbox"  >
+            <div class="item active">
+            <div class="recently-box">
+              <div class="recently-box-search">
+                <%=image_tag previous_works_first_image.first.photo.image.url %>
+              </div>
+              <div class="photo-one">
+                <%#=image_tag service.photo.image.url(:medium),:style=>'width:900px;height:900px;'%>
+                <div class="prof-pic-main">
+                  <span class="price-info-recently-booked "><%#=recently_booked.user.services.first.amount%>$<%=service_amount%></span>
+                <span class="profile-pic">
+
+                     <%= link_to stylist_path(stylist_id,stylist_first_name) do  %>
+                          <%= image_tag stylist_prof_pic,:style=>"width:72px;height:72px"%>
+                      <%end%>
+                  <div class="rev-rating-search">
+                    <ul>
+                      <%average_stylist_rating.times do%>
+                          <li class="liactive">&nbsp;</li>
+                      <%end%>
+                      <%(5-average_stylist_rating).times do%>
+                          <li class="">&nbsp;</li>
+                      <%end%>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                </span>
+
+                </div>
+                <div class="book-details">
+                  <div class="bool_dtls_left">
+                  <span class="info-mid"><%=service_sub_category_name%>
+
+                  <p class="info-samll"><%#=recently_booked.user.services.first.service_sub_category.description%></p>
+                   </span>
+
+                    <span class="time-mid-search"><%=service_time%>&nbsp;mins.</span><br/>
+
+
+                  </div>
+                  <div class="bool_dtls_right">
+                    <span class="headingsearch">
+
+                       <%=stylist_first_name%>&nbsp;<%=stylist_last_name%> <div class="clearfix"></div>
+
+
+                    </span>
+                  </div>
+
+                  <div class="btn-bottom">
+                    <p class="text-left margin-btn-search">
+                      <button class="btn-profile btn-view-profile book" style="top:-18px" stylist-services="<%=stylist_services%>"  stylist_type="<%=stylist_type%>" stylist_description="<%=stylist_description%>" stylist-img="<%=stylist_prof_pic%>" stylist-name="<%= stylist_first_name%>" stylist-id="<%= stylist_id%>" service-id="<%= service_id %>" service-amount="<%= service_amount %>" booking-list="<%= booking_list %>" stylist_specific_day_avail="<%=stylist_specific_day_avail%>" availiable-list="<%= available_list%>" service-duration="<%= service_time%>" avg-rating="<%=average_stylist_rating%>" service-name="<%= service_sub_category_name%>" user-id="<% current_user.id if user_signed_in? %>"type="submit">Request Now</button>                      </p>
+                    <%= button_to "View Profile",stylist_path(stylist_id,stylist_first_name),class:"btn-profile view-profile-btn-search margin-btn-right-search",method: :get%>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <div class="item">
+              <div class="recently-box">
+                <div class="recently-box-search">
+                  <%=image_tag previous_works_first_image.second.photo.image.url %>
+                </div>
+                <div class="photo-one">
+                  <%#=image_tag service.photo.image.url(:medium),:style=>'width:900px;height:900px;'%>
+                  <div class="prof-pic-main">
+                    <span class="price-info-recently-booked "><%#=recently_booked.user.services.first.amount%>$<%=service_amount%></span>
+                <span class="profile-pic">
+
+                     <%= link_to stylist_path(stylist_id,stylist_first_name) do  %>
+                          <%= image_tag stylist_prof_pic,:style=>"width:72px;height:72px"%>
+                      <%end%>
+                  <div class="rev-rating-search">
+                    <ul>
+                      <%average_stylist_rating.times do%>
+                          <li class="liactive">&nbsp;</li>
+                      <%end%>
+                      <%(5-average_stylist_rating).times do%>
+                          <li class="">&nbsp;</li>
+                      <%end%>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                </span>
+
+                  </div>
+                  <div class="book-details">
+                    <div class="bool_dtls_left">
+                  <span class="info-mid"><%=service_sub_category_name%>
+
+                    <p class="info-samll"><%#=recently_booked.user.services.first.service_sub_category.description%></p>
+                   </span>
+
+                      <span class="time-mid-search"><%=service_time%>&nbsp;mins.</span><br/>
+
+
+                    </div>
+                    <div class="bool_dtls_right">
+                    <span class="headingsearch">
+
+                       <%=stylist_first_name%>&nbsp;<%=stylist_last_name%> <div class="clearfix"></div>
+
+
+                    </span>
+                    </div>
+
+                    <div class="btn-bottom">
+                      <p class="text-left margin-btn-search">
+                        <button class="btn-profile btn-view-profile book" style="top:-18px" stylist-services="<%=stylist_services%>"  stylist_type="<%=stylist_type%>" stylist_description="<%=stylist_description%>" stylist-img="<%=stylist_prof_pic%>" stylist-name="<%= stylist_first_name%>" stylist-id="<%= stylist_id%>" service-id="<%= service_id %>" service-amount="<%= service_amount %>" booking-list="<%= booking_list %>" stylist_specific_day_avail="<%=stylist_specific_day_avail%>" availiable-list="<%= available_list%>" stylist_specific_day_avail="<%=stylist_specific_day_avail%>" service-duration="<%= service_time%>" avg-rating="<%=average_stylist_rating%>" service-name="<%= service_sub_category_name%>" user-id="<% current_user.id if user_signed_in? %>"type="submit">Request Now</button>                      </p>
+                      <%= button_to "View Profile",stylist_path(stylist_id,stylist_first_name),class:"btn-profile view-profile-btn-search margin-btn-right-search",method: :get%>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="recently-box">
+                <div class="recently-box-search">
+                  <%=image_tag previous_works_first_image.third.photo.image.url%>
+                </div>
+                <div class="photo-one">
+                  <%#=image_tag service.photo.image.url(:medium),:style=>'width:900px;height:900px;'%>
+                  <div class="prof-pic-main">
+                    <span class="price-info-recently-booked "><%#=recently_booked.user.services.first.amount%>$<%=service_amount%></span>
+                <span class="profile-pic">
+
+                     <%= link_to stylist_path(stylist_id,stylist_first_name) do  %>
+                          <%= image_tag stylist_prof_pic,:style=>"width:72px;height:72px"%>
+                      <%end%>
+                  <div class="rev-rating-search">
+                    <ul>
+                      <%average_stylist_rating.times do%>
+                          <li class="liactive">&nbsp;</li>
+                      <%end%>
+                      <%(5-average_stylist_rating).times do%>
+                          <li class="">&nbsp;</li>
+                      <%end%>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+
+                </span>
+
+                  </div>
+                  <div class="book-details">
+                    <div class="bool_dtls_left">
+                  <span class="info-mid"><%=service_sub_category_name%>
+
+                    <p class="info-samll"><%#=recently_booked.user.services.first.service_sub_category.description%></p>
+                   </span>
+
+                      <span class="time-mid-search"><%=service_time%>&nbsp;mins.</span><br/>
+
+
+                    </div>
+                    <div class="bool_dtls_right">
+                    <span class="headingsearch">
+
+                       <%=stylist_first_name%>&nbsp;<%=stylist_last_name%> <div class="clearfix"></div>
+
+
+                    </span>
+                    </div>
+
+                    <div class="btn-bottom">
+                      <p class="text-left margin-btn-search">
+                        <button class="btn-profile btn-view-profile book" style="top:-18px" stylist-services="<%=stylist_services%>"  stylist_type="<%=stylist_type%>" stylist_description="<%=stylist_description%>" stylist-img="<%=stylist_prof_pic%>" stylist-name="<%= stylist_first_name%>" stylist-id="<%= stylist_id%>" service-id="<%= service_id %>" service-amount="<%= service_amount %>" booking-list="<%= booking_list %>" availiable-list="<%= available_list%>" service-duration="<%= service_time%>" avg-rating="<%=average_stylist_rating%>" service-name="<%= service_sub_category_name%>" user-id="<% current_user.id if user_signed_in? %>"type="submit">Request Now</button>                      </p>
+                      <%= button_to "View Profile",stylist_path(stylist_id,stylist_first_name),class:"btn-profile view-profile-btn-search margin-btn-right-search",method: :get%>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a data-slide="prev" role="button" href="#<%=service_id%>" class="left carousel-control"><span class="glyphicon arrowt" aria-hidden="true"><img src="<%=asset_path('left-arrow-search.png')%>"></span><span class="sr-only">Previous</span> </a>
+            <a data-slide="next" role="button" href="#<%=service_id%>" class="right carousel-control" style="margin-right:62px"> <span class="glyphicon arrowt" aria-hidden="true"><img src="<%=asset_path('right-arrow-search.png')%>"></span><span class="sr-only">Next</span> </a>
+          </div>
+        </div>
+      </div>
+  <%end%>
+</div>
+  <%= will_paginate @services, renderer: BootstrapPagination::Rails %>
+
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+
+<%#s=render :partial=>'bookings/avail_cal'%>
+<%=render :partial => "bookings/avail_cal" %>
+
+<%=render :partial=>'bookings/book_calendar'%>
+
+<script type="text/javascript">
+
+    $('#price_time_alert').hide()
+
+
+
+
+//        $('.dropdown-menu input[type="radio"]').on('click', function() {
+//
+//            var title = $(this).closest('.dropdown-menu').find('input[type="radio"]').val(),
+//
+//                    title = $(this).val() ;
+//
+//
+//            // alert(title)
+//            if ($(this).is(':checked')) {
+//
+//                if ((this.id).indexOf("timevalues") !== -1){
+//                    var time_with_text=$(this).attr('text');
+//                    time=title
+//                    var btn=document.getElementById('btnGroupVerticalDrop2')
+//                    btn.innerHTML="Time:"+ time_with_text
+//                }
+//                else {
+//                    price=title
+//                    var btn=document.getElementById('btnGroupVerticalDrop1')
+//                    btn.innerHTML="Price:"+price
+//                }
+//
+//                // alert(price)
+//
+//            }
+//        });
+var id
+$('input[name="price-service"]').click(function(){
+    //do stuff
+    id=$(this).attr("id")
+    var btn=document.getElementById('price-service')
+    btn.innerHTML=id
+//    if ($("#"+$(this).attr("id")).is(":checked")) {
+//
+//        for(var i=0;i<18;i++){
+//            ($('#avaliabilties_'+ i.toString() +day)).prop('checked', true);
+//        }
+//    }else if ($("#"+$(this).attr("id")).prop("checked",false    )){
+//        for(var i=0;i<18;i++){
+//            ($('#avaliabilties_'+ i.toString() +day)).prop('checked', false);
+//        }
+//    }
+
+        //alert(time)
+
+});
+$(".booking").on("click", function () {
+    //var servicePrice=$('#price').val()
+    var price=$('#price-service').find(":selected").attr('value');
+    var time=$('#avail_time').find(":selected").attr('value');
+//    alert(price)
+
+    if (price.length!=0 && time.length!=0)
+    {
+        $.ajax({
+            url: "/sort_services.js",
+            type: "POST",
+            data: {
+                price:price,
+                name:'<%=params[:name]%>',
+                location:'<%=params[:location]%>',
+                time:time,
+                date:'<%=params[:date]%>'
+
+            },
+        });
+    }
+    else
+    {
+
+        $('#price_time_alert').show()
+    }
+
+
+});
+    $(function(){
+        $("[data-hide]").on("click", function(){
+            $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+
+
+
+<!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+<!--//    var x = document.getElementById("demo");-->
+<!--//    getLocation()-->
+<!--//    function getLocation() {-->
+<!--//        if (navigator.geolocation) {-->
+<!--//              navigator.geolocation.getCurrentPosition(showPosition);-->
+<!--//        } else {-->
+<!--//            x.innerHTML = "Geolocation is not supported by this browser.";-->
+<!--//        }-->
+<!--//    }-->
+<!--//    function showPosition(position) {-->
+<!--//        x.innerHTML = "Latitude: " + position.coords.latitude +-->
+<!--//                "<br>Longitude: " + position.coords.longitude;-->
+<!--//    }-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->

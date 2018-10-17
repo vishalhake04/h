@@ -1,0 +1,127 @@
+<script>
+    $(document).ready(function () {
+        $('#myCarousel2').carousel({
+            interval: 10000
+        })
+    });
+
+    $(document).ready(function () {
+        var sideslider = $('[data-toggle=collapse-side]');
+        var sel = sideslider.attr('data-target');
+        var sel2 = sideslider.attr('data-target-2');
+        sideslider.click(function (event) {
+            $(sel).toggleClass('in');
+            $(sel2).toggleClass('out');
+        });
+    });
+</script>
+
+<!-- Navigation bar -->
+<!-- section panel -->
+<section class="redderaway">
+  <div class="container">
+    <div class="row wow fadeInUp" data-wow-offset="0" data-wow-delay="0.3s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;">
+      <div class="page-header">
+        <h1 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;" class="wow  fadeInLeft animated" data-wow-delay="0.5s">THE
+          BEST WAY TO EXPLAIN US: IT’S JUST DIFFERENT </h1>
+
+        <div class="clear"></div>
+      </div>
+      <div class="col-md-7 col-sm-7">
+        <p>Love what you do.</p>
+
+        <p>The Reddera way is just different. We care about customer satisfaction as much as our Professionals work
+          culture. They genuinely love what they do.
+
+          Create convenience.</p>
+
+        <p>We started Reddera to recreate the atmosphere you would feel in a salon or spa in your home. Keeping in mind
+          things like, easy scheduling, great products, and most importantly great Professionals. </p>
+      </div>
+      <div class="col-md-5 col-sm-5">
+        <div>
+          <img class="featurette-image img-responsive center-block img-circle" src='<%= asset_path("guslene-img.jpg") %>'>
+        </div>
+        <div>
+          <h6>Guslene at Professional’s Test Day</h6>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="page-header padding-bottom-40">
+        <h1 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;" class="wow  fadeInLeft animated" data-wow-delay="0.5s">FREEDOM </h1>
+
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="row redderaway wow fadeInDown" data-wow-offset="0" data-wow-delay="0.5s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.5s; animation-name: fadeInDown;">
+      <div class="col-md-7 col-md-push-5 col-sm-7">
+        <h5>Have Freedom.</h5>
+
+        <p>We give Professionals the freedom to run their own mobile practices and clients have the freedom to book
+          early mornings as well late nights. A good experience means creating a balance of happiness on both sides by
+          offering flexibility. </p>
+        <h5>Be unique.</h5>
+
+        <p>We created a unique and comfortable experiencec for clients, a convenience that the majority of the beauty
+          and wellness industry has yet to deliver on. </p>
+        <h5>Get to know people.</h5>
+
+        <p>We’ve built a strong trusted community around our professionals. We get to know our professionals through
+          seminars, training, and events to successfully strive towards the same goal. Giving the client a luxury
+          experience onsite. </p>
+      </div>
+      <div class="col-md-5 col-md-pull-7 col-sm-5">
+        <div>
+          <img class="featurette-image img-responsive center-block img-circle" src='<%= asset_path("arelis-img.jpg") %>'>
+        </div>
+        <div>
+          <h6>Arelis at Reddera Showcase</h6>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="page-header padding-bottom-40">
+        <h1 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;" class="wow  fadeInLeft animated" data-wow-delay="0.5s">PROFESSIONAL
+          HIGHLIGHTS OF THE MONTH </h1>
+
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="row redderaway wow fadeInUp" data-wow-offset="0" data-wow-delay="0.3s" data-wow-duration="1s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: fadeInUp;">
+      <div class="col-md-7 col-md-push-5 col-sm-7">
+        <h2>CELEBRITY STYLIST: LISA A. KLINE</h2>
+        <h5>Style tip: Black will never go out of style!</h5>
+
+        <p>Lisa A. Kline brings a unique perspective to her role as a stylist. The vision to capture and create an
+          individuals style. </p>
+
+        <p>Before becoming a stylist, Lisa spent many yeas at King World Produc=ons as the Director of Opera=ons. She
+          oversaw the distribu=on of such shows as Wheel of Fortune, Jeopardy, and was involved in the ini=al launch of
+          The Oprah Winfrey Show and Inside Edi=on. </p>
+
+        <p>At King World while on the sets and in the control rooms Lisa no=ced a void in the individual fashion style
+          of lead television personali=es and anchors. She went on to fill that void.</p>
+
+        <p>Lisa A. Kline brings a unique perspec=ve to her role as a stylist. The vision to capture and create an
+          individuals style.</p>
+
+        <p>WCBS-TV New York The NFL Pre Show, The Early Show, Maggie Rodriguez and Julie Chean, CBS News Bureau’s on air
+          correspondents. Lisa is best known as the secret stylist for Governor Sarah Palinand/</p>
+      </div>
+      <div class="col-md-5 col-md-pull-7 col-sm-5">
+        <div>
+          <img class="featurette-image img-responsive center-block img-circle" src='<%= asset_path("celibrity-img.jpg") %>'>
+        </div>
+        <div>
+          <h6>Arelis at Reddera Showcase</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /.section -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+</body>
+</html>

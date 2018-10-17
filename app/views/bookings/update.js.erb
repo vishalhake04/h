@@ -1,0 +1,5 @@
+$('#upcomings').html(" <%= j render :partial=>"bookings/upcoming",:locals=>{:booking=>@upcomings}%>");
+$('#pendings').html(" <%= j render :partial=>"bookings/pending",:locals=>{:pending=>@pendings}%>");
+$('#past').html(" <%= j render :partial=>"bookings/past",:locals=>{:past=>@past}%>");
+$('#reschedule_stylist').html(" <%= j render :partial=>"bookings/reschedule_stylist",:locals=>{:reschedule_stylist=>@reschedule_stylist}%>");
+$('#reschedule_client').html(" <%= j render :partial=>"bookings/reschedule_client",:locals=>{:reschedule_client=>@reschedule_client}%>");

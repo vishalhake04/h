@@ -1,0 +1,95 @@
+<div class="tab-pane active" id="manageportfolio">
+  <section class="container">
+    <div class="row dashboard">
+        <div>
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="page-header">
+              <h1 class="pull-left">Top 5 </h1>
+              <span class="pull-left msg-notf-icon"><img src='<%=asset_path('icon-shedule.png')%>'></span>
+              <div class="clearfix"></div>
+              <h5>Edit Top 5 Portfolio Photos </h5>
+            </div>
+          </div>
+
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div >
+
+              <%if !@previous_works.blank?%>
+                  <%@previous_works.each do |prev|%>
+                    <div class="portfolio-box">
+
+
+                          <%=image_tag prev.photo.image.url%>
+                          <%= form_tag( user_previous_work_path(current_user,prev.id), :method => :put,:multipart => true )  do %>
+                                <%= file_field_tag 'file',:accept=>"image/*", :onchange=>"this.form.submit();" ,:style=>"font-size:73%"%>
+
+                          <% end %>
+
+
+                  </div>
+
+                  <%end%>
+                  <div class="clearfix"></div>
+              <%end%>
+
+
+
+            </div>
+            <div class="clearfix"></div>
+            <hr/>
+          </div>
+        </div>
+    </div>
+    <div class="row dashboard">
+        <div>
+          <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="page-header">
+              <h1 class="pull-left">
+                Additional
+                <br>
+                Photos
+              </h1>
+             <span class="pull-left msg-notf-icon">
+                <img src="<%=asset_path('icon-sheduleplus.png')%>">
+              </span>
+              <div class="clearfix"></div>
+              <h5>
+                Edit or Upload Additional
+                <br>
+                Portfolio Photos
+              </h5>
+
+            </div>
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div>
+              <%if !@additional_photos.blank?%>
+                  <%@additional_photos.each do |prev|%>
+                      <div class="portfolio-box">
+
+
+                        <%=image_tag prev.photo.image.url%>
+                        <%= form_tag( user_previous_work_path(current_user,prev.id), :method => :put,:multipart => true )  do %>
+                            <%= file_field_tag 'file',:accept=>"image/*", :onchange=>"this.form.submit();" ,:style=>"font-size:73%"%>
+
+                        <% end %>
+
+
+                      </div>
+
+                  <%end%>
+                  <div class="clearfix"></div>
+              <%end%>
+
+            </div>
+        </div>
+        </div>
+ </div>
+  </section>
+</div>
+<script>
+    $( document ).ready(function() {
+        NProgress.done();
+
+    });
+        </script>

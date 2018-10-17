@@ -1,0 +1,27 @@
+<% if @user.verified_number==true%>
+$('#myModal_Verify').modal('hide');
+$('#status-box').removeClass()
+$('#status-box').addClass('alert alert-success')
+$('#status-message').text('Success')
+$('#verifications').html(" <%= j render :partial=>"users/verfications",:locals=>{:user=>@user}%>");
+<% else %>
+<%if params[:user][:pin].blank?%>
+$('#myModal_Verify').modal('hide');
+
+$('#status-box').removeClass()
+$('#status-box').addClass('alert alert-warning')
+$('#status-message').text("Pin is blank!")
+<%else%>
+$('#myModal_Verify').modal('hide');
+
+$('#status-box').removeClass()
+$('#status-box').addClass('alert alert-warning')
+$('#status-message').text("Sorry, that wasn't the right pin.")
+
+<%end%>
+<% end %>
+$('#status-box').show()
+
+
+
+

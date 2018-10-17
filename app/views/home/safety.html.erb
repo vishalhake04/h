@@ -1,0 +1,506 @@
+<!--<section class="safety">-->
+  <!--<div class="container">-->
+    <!--<div class="row">-->
+      <!--<div class="page-header">-->
+        <!--<h1 style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;" class="wow  fadeInLeft animated" data-wow-delay="0.5s">TRUST-->
+          <!--AND SAFETY: HOW WE DO IT </h1>-->
+      <!--</div>-->
+      <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+        <!--<h1>VERIFICATION</h1>-->
+
+        <!--<div>-->
+          <!--<h5>COMPREHENSIVE BACKGROUND CHECKS</h5>-->
+
+          <!--<p>All Reddera professionals go through an extensive vetting process before they can offer their services on-->
+            <!--Reddera. We do thorough checks, including criminal background. We make sure to adhere to state and federal-->
+            <!--laws regarding the use of these background checks. Our vetting process ensures we are building a network of-->
+            <!--reliable and trustworthy professionals.</p>-->
+          <!--<h5>INTERVIEWS AND TRAINING WORKSHOPS</h5>-->
+
+          <!--<p>We conduct in-person interviews and training workshops to ensure that every Reddera professional is skilled-->
+            <!--and qualified. We’ve built a community of trusted professionals that represent the Reddera customer service-->
+            <!--way.</p>-->
+          <!--<h5>PROFESSIONAL LICENSING</h5>-->
+
+          <!--<p>Reddera professionals are licensed in their respective areas to ensure they provide the highest quality-->
+            <!--services possible.</p>-->
+        <!--</div>-->
+        <!--<div class="safty-img"><img class="" src="<%#= asset_path('safty-img.png') %>" alt=""></div>-->
+      <!--</div>-->
+      <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+        <!--<div class="safty-img"><img class="" src="<%#= asset_path('safty-img2.png') %>" alt=""></div>-->
+        <!--<div class="caption">Reddera is committed to making a safe and vibrant community for both professionals and-->
+          <!--clients.-->
+        <!--</div>-->
+        <!--<h2>TWO-WAY REVIEWS</h2>-->
+
+        <!--<p>Both professionals and clients are reviewed after a service is complete. With our two-way review system, we-->
+          <!--are building a trusted and reliable network in the beauty and wellness community. </p>-->
+
+        <!--<h2>SECURE PAYMENT SYSTEM</h2>-->
+
+        <!--<p>Both professionals and clients are reviewed after a service is complete. With our two-way review system, we-->
+          <!--are building a trusted and reliable network in the beauty and wellness community.</p>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+      $(document).ready(function(){
+
+
+
+      });
+
+
+
+      $('#alert').hide()
+      $('#datepicker').hide()
+      $('.days.clear').hide()
+      $('#form').hide();
+      $('#availability').hide();
+      $(function () {
+
+
+          $(".book").on("click", function () {
+
+              $('#datepicker').show();
+              $('.days.clear').show();
+              $('#availability').show();
+
+              var days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+              var dyn_days=[]
+
+              var service_id = $(this).attr('service-id');
+              var service_amount = $(this).attr('service-amount');
+              var service_duration = $(this).attr('service-duration');
+              var service_name = $(this).attr('service-name');
+              var stylist_id = $(this).attr('stylist-id');
+              var availableList = $(this).attr('availiable-list');
+              var bookingList = $(this).attr('booking-list');
+              var service_time = parseInt(service_duration / 15);
+              var time_titles = [];
+              var FirstSevenDays = [];
+              var final_date;
+              CreateDates()
+              $(function () {
+                  $("#datepicker").datepicker({
+                      onSelect: CreateDates
+                  });
+                  $("#datepicker").datepicker().datepicker("setDate", new Date());
+              });
+
+              function CreateDates() {
+                  var inp =  $('#datepicker').val();
+                  var CurrentDate;
+                  if (inp != null && inp != undefined && inp != "") {
+                      CurrentDate = new Date(inp);
+                  }
+                  else {
+                      CurrentDate = new Date();
+                  }
+                  var SelectedDate = CurrentDate.getDate();
+                  for (var i = 0; i < 7; i++) {
+
+                      var date = new Date(new Date(CurrentDate.setDate(SelectedDate + i)).toUTCString());
+// GET YYYY, MM AND DD FROM THE DATE OBJECT
+                      var yyyy = date.getFullYear().toString();
+                      var mm = (date.getMonth() + 1).toString();
+                      var dd = date.getDate().toString();
+// CONVERT mm AND dd INTO chars
+                      var mmChars = mm.split('');
+                      var ddChars = dd.split('');
+// CONCAT THE STRINGS IN YYYY-MM-DD FORMAT
+                      var datestring = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+                      FirstSevenDays[i] = datestring;
+                  }
+
+                  CreateCalendar(FirstSevenDays, service_time, days);
+
+                  function CreateCalendar(FirstSevenDays, service_time, days) {
+
+                      var availList = JSON.parse(availableList);
+                      var bookedList = JSON.parse(bookingList);
+
+                      var classArr = ['t00', 't15', 't30', 't45'];
+                      var time_data = ['06AM', '07AM', '08AM', '09AM', '10AM', '11AM', '12PM', '01PM', '02PM', '03PM', '04PM', '05PM', '06PM', '07PM', '08PM', '09PM', '10PM', '11PM'] //Added because it was missing... no idea what the original should have been
+                      var data1 = time_data.length
+                      var tablearea = document.getElementById('showDataID');
+                      var dateColoumn = document.getElementById('dateColumn');
+                      var table = document.createElement('table');
+                      table.className = 'grid';
+                      var thead = document.createElement('thead');
+                      var tr = document.createElement('tr');
+                      for (var i = 0; i < data1; i++) {
+                          var headerTxt = document.createTextNode(time_data[i]);
+                          var th = document.createElement('th');
+                          th.setAttribute('colspan', '4');
+                          th.appendChild(headerTxt);
+                          tr.appendChild(th);
+                      }
+
+                      thead.appendChild(tr);
+                      table.appendChild(thead);
+                      dateColoumn.innerHTML = "";
+                      for (var i = 0; i < FirstSevenDays.length; i++) {
+                          dyn_days[i]= days[new Date(FirstSevenDays[i]).getDay() - 1]
+                          var tr = document.createElement('tr');
+                          var tr1 = document.createElement('tr');
+                          tr1.className = "gridRow padding";
+                          tr.className = "gridRow data";
+                          var headerTxt = document.createTextNode(FirstSevenDays[i]);
+                          var li = document.createElement('li');
+                          var span = document.createElement('span');
+                          span.appendChild(headerTxt);
+                          li.appendChild(span);
+                          dateColoumn.appendChild(li);
+                          var count = 0;
+                          var timeCount = 0;
+                          for (var k = 0; k < data1 * 4; k++) {
+                              var td = document.createElement('td');
+                              var td1 = document.createElement('td');
+                              td.id = i + "-" + k;
+
+                              var td_id = td.id.toString().split('-')
+                              if (td_id[1] > 23) {
+                                  td.title = time_data[timeCount].replace(/[A-Z]/g, '') + "." + classArr[count].slice(1, 3) + "PM";
+                              } else {
+                                  td.title = time_data[timeCount].replace(/[A-Z]/g, '') + "." + classArr[count].slice(1, 3) + "AM";
+                              }
+
+                              if (isBooked(bookedList, FirstSevenDays[i], td.title, count, classArr[count]).indexOf("mustCall") !== -1 ) {
+
+                                  td.className = classArr[count] + " mustCallToBook";
+
+                              } else {
+                                  td.className = isAvail(availList, dyn_days[i], time_data[timeCount], count, classArr[count]);
+                              }
+                              if (count == 3) {
+                                  count = 0;
+                                  timeCount++;
+                              } else {
+                                  count++;
+                              }
+
+                              tr.appendChild(td);
+                              tr1.appendChild(td1);
+                          }
+                          table.appendChild(tr);
+                          table.appendChild(tr1);
+                      }
+
+                      tablearea.innerHTML = "";
+                      tablearea.appendChild(table);
+                      window.scrollBy(0, 1000000);
+                  }
+
+
+
+                  $('td').mouseenter(
+                          function () {
+
+                              if ((this.className).indexOf("available") !== -1) {
+                                  var ClassAvailable = this.className;
+                                  $(this).removeClass(this.className.toString() + " " + "available");
+                                  $(this).addClass(ClassAvailable + " selectable" + " selected");
+//   alert(this.className.toString() + " available" +  " selectable"+" selected" );
+                                  if (this.className.indexOf("selectable selected") !== -1) {
+                                      var SelectableSelected = this.className;
+                                      time_titles[0] = document.getElementById(this.id).title;
+
+                                  }
+                                  ClassAdder(this.id, SelectableSelected);
+                                  final_date = FirstSevenDays[ this.id.toString().split('-')[0]];
+
+                              }
+
+
+                          }
+                  );
+
+                  function ClassAdder(id, className) {
+//alert(className);
+
+                      var td_ids = [];
+                      var clicked_id = id.toString().split('-')
+                      for (var i = 1; i < service_time; i++) {
+                          var f = parseInt(clicked_id[1]);
+                          var f1 = f + i;
+                          td_ids[i] = clicked_id[0] + "-" + f1
+                          if ((document.getElementById(td_ids[i]).className).indexOf("selectable selected") !== -1 || (document.getElementById(td_ids[i]).className).indexOf("available") !== -1) {
+                              (document.getElementById(td_ids[i]).className) += className;
+                              time_titles[i] = document.getElementById(td_ids[i]).title;
+
+
+                          }
+
+
+
+                      }
+
+
+
+                  }
+
+                  $('td').bind("click", function () {
+                      var ids;
+//  var checking_ids = []
+                      if ((this.className).indexOf("selectable selected") !== -1) {
+
+                          if (time_titles.length == service_time) {
+                              $("#showDataID").hide();
+                              $(".days.clear").hide();
+                              $('#datepicker').hide();
+                              $('#form').show();
+                              $('#myModal_book').modal('show');
+                              var p = document.getElementById('ServiceName');
+                              p.innerHTML = service_name;
+                              var p = document.getElementById('ServiceTimeDetails');
+                              p.innerHTML = final_date + " " +  days[new Date(final_date).getDay() - 1] + " " + "at" + " "  +  time_titles[0]
+                              var p = document.getElementById('ServicePrice');
+                              p.innerHTML = service_amount;
+
+
+                              $("#bookAppointment").on("click", function () {
+                                  $.ajax({
+                                      url: "/users/" + stylist_id + "/services/" + service_id + "/bookings",
+                                      type: "POST",
+                                      data: {
+                                          booking: {
+                                              slots: time_titles.toString(),
+                                              dates: final_date,
+                                              service_id: service_id,
+                                              stylist_id: stylist_id
+                                          }
+                                      },
+                                      success: function (returnhtml) {
+                                          window.location.href = "/transactions/new";
+                                      }
+                                  });
+                              });
+
+                          }
+                          else {
+                              if ((this.className).indexOf("selectable selected") !== -1) {
+
+                                  $('#alert').show()
+                              }
+                          }
+
+
+                      }
+                  });
+                  $('td').mouseleave(
+                          function () {
+                              if ((this.className).indexOf("selectable selected") !== -1) {
+                                  var p = this.className.toString()
+                                  var b = p.slice(0, 3);
+                                  $(this).removeClass(this.className + " available" + " selectable" + " selected");
+                                  $(this).addClass(b + " available");
+
+                                  ClassAdder(this.id, b + " available")
+
+                              }
+                          }
+                  );
+
+
+              }
+
+              function isBooked(list, date, time, count, classArr) {
+                  var b = 0;
+//console.log(time)
+//alert(typeof (time));
+                  var booked = classArr;
+                  list.forEach(function (book) {
+                      var bookedTime = book.time;
+                      var first_time = bookedTime.toString().split(',')
+
+                      if ((book.date == date && (jQuery.inArray(time, first_time) != -1)) == true) {
+                          booked = booked + " mustCallToBook";
+                      }
+                  });
+                  return booked;
+              }
+
+              function isAvail(avail, day, time, count, classArr) {
+                  var avaliable = classArr;
+                  avail.forEach(function (book) {
+                      if (book.time == time && book[day] == true) {
+                          if (!avaliable.indexOf("available") !== -1) {
+                              avaliable = avaliable + " available";
+                          }
+                      }
+                  });
+                  return avaliable;
+              }
+
+
+          });
+
+      });
+
+
+      $("#close").on("click", function () {
+          window.location.reload();
+
+      });
+  </script>
+  <script type="application/javascript">
+      $(document).ready(function() {
+          $('#myCarousel1').carousel({
+              interval: 5000
+          })
+
+      })
+  </script>
+  </div>
+  <script type="application/javascript">
+      /* $(document).ready(function() {
+       $('#myCarousel').carousel({
+       interval: 10000
+       })
+
+       });*/
+
+      $(".booking").on("click", function () {
+          var servicePrice=$('#price').val()
+
+          $.ajax({
+              url: "/sort_services",
+              type: "POST",
+              data: {
+                  price:servicePrice,
+                  name:'',
+                  location:'',
+                  time:'06AM, 07AM, 08AM, 09AM, 10AM, 11AM',
+                  date:'2016-05-16'
+
+              },
+          });
+
+      });
+  </script>
+
+
+  <div style="position: absolute; top: 699.4px; left: 951.5px; z-index: 4; display: none;" id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all">
+    <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a>
+      <div class="ui-datepicker-title"><span class="ui-datepicker-month">May</span>&nbsp;<span class="ui-datepicker-year">2016</span></div>
+    </div>
+    <table class="ui-datepicker-calendar">
+      <thead>
+      <tr>
+        <th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th>
+        <th scope="col"><span title="Monday">Mo</span></th>
+        <th scope="col"><span title="Tuesday">Tu</span></th>
+        <th scope="col"><span title="Wednesday">We</span></th>
+        <th scope="col"><span title="Thursday">Th</span></th>
+        <th scope="col"><span title="Friday">Fr</span></th>
+        <th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">1</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">2</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">3</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">4</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">5</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">6</a></td>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">7</a></td>
+      </tr>
+      <tr>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">8</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">9</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">10</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">11</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">12</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">13</a></td>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">14</a></td>
+      </tr>
+      <tr>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">15</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">16</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">17</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">18</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">19</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">20</a></td>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">21</a></td>
+      </tr>
+      <tr>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">22</a></td>
+        <td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">23</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">24</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">25</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">26</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">27</a></td>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">28</a></td>
+      </tr>
+      <tr>
+        <td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">29</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">30</a></td>
+        <td class=" " data-handler="selectDay" data-event="click" data-month="4" data-year="2016"><a class="ui-state-default" href="#">31</a></td>
+        <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
+        <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
+        <td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
+        <td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="footer-content padding-bottom-40">
+          <div class="col-lg-3 col-sm-6 col-xs-12 links">
+            <h5 class="block-heading">Main Menu</h5>
+            <ul>
+              <li><a href="#">The Reddera Way</a></li>
+              <li><a href="#">Our Services</a></li>
+              <li><a href="#">FAQS</a></li>
+              <li><a href="#">Safety</a></li>
+              <li><a href="#">My Account</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-xs-12 links">
+            <h5 class="block-heading">Professionals</h5>
+            <ul>
+              <li><a href="#">Sign Up</a></li>
+              <li><a href="#">Log In</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-xs-12 links">
+            <h5 class="block-heading">About</h5>
+            <ul>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">The Reddera Way</a></li>
+              <li><a href="#">Our Services</a></li>
+              <li><a href="#">Blog</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 col-sm-6 col-xs-12">
+            <h5>Social</h5>
+            <ul class="social">
+              <li><a href="#" class="f_twitter"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#" class="f_facebook"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#" class="f_instagram"><i class="fa fa-instagram"></i></a></li>
+              <li><a href="#" class="f_pinterest"><i class="fa fa-pinterest"></i></a></li>
+              <li><a href="#" class="f_tumblr"><i class="fa fa-tumblr"></i></a></li>
+            </ul>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

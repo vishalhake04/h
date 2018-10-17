@@ -1,0 +1,77 @@
+<div class="modal fade" id="edit_alter_unavail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="loginbox">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" id="closeModalLogin" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+          <div class="modal-body">
+            <%if !@update_availability.blank? %>
+            <%#=form_for :updated_availabilities, :url=> update_availability_path  ,:html => {:method => :post}  do |f| %>
+
+                <%availabilitiesWithSLots(current_user).each do |av|%>
+                        <%if @update_availability.time.include?(av.time)%>
+                        <div class="pull-left">
+                          <input id="<%=av.time%>[updated_avail]" type="checkbox" checked=checked value="<%=av.time%>"  name="[updated_avail]"style="margin-left: 50%">
+                          <label for="<%=av.time%>[updated_avail]"><%=av.time%></label>
+                        </div><br/>
+
+                            <%else%>
+                            <div class="pull-left">
+                              <input id="<%=av.time%>[updated_avail]" type="checkbox" value="<%=av.time%>"  name="[updated_avail]" style="margin-left: 50%">
+                              <label for="<%=av.time%>[updated_avail]"><%=av.time%></label>
+                            </div><br/>
+                            <%end%>
+
+
+                    <%end%>
+                    <%#= f.submit "update", class: "btn-close btn btn-small btn-primary pull-right" %>
+                <button class="btn btn-danger " id="updatealtertimes" update_availability_id="<%=@update_availability.id%>" update_availability_date="<%=@update_availability.date%>" style="width: 120px;height: 35px ;margin-left: 30%">BOOK</button>
+
+                <%end%>
+            <%#end%>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+            <script>
+
+                $("#updatealtertimes").on("click", function () {
+                    var times=[]
+                    var id=$(this).attr('update_availability_id')
+                    var date=$(this).attr('update_availability_date')
+
+                    $.each($("input[name='[updated_avail]']:checked"), function () {
+
+                        times.push($(this).val());
+
+                    });
+                    updatealternativeDate(times,id,date)
+
+
+                function updatealternativeDate(times,id,date){
+
+                    if (eventsTriggered==0) {
+                        $.ajax({
+                            url:  "/update_updated_availabilities",
+                            type: "POST",
+                            data: {
+                                availabilities: {
+                                    id:id,
+                                    date:date,
+                                    is_not_available: false,
+                                    time: times
+                                }
+                            },
+                            success: function (returnhtml) {
+
+                            }
+                        });
+                        eventsTriggered++
+                    }
+                }
+                });
+            </script>

@@ -1,0 +1,70 @@
+<table class="table table-bordered">
+  <thead>
+  <tr style="border:none;">
+    <th>Dates</th>
+    <th>Time Slots</th>
+    <th>&nbsp;</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <%if !@update_unvail_allDay.blank?%>
+  <%@update_unvail_allDay.each do|update_avail|%>
+      <tr>
+        <td>
+          <%= update_avail["date"] %>
+        </td>
+        <td>
+          <% if  !update_avail["time"].blank? %>
+            <%= update_avail["time"].first + "-" + update_avail["time"].last+" "+ "will be available"%>
+          <%else%>
+            All Day Unavailable
+          <%end%>
+        </td>
+        <td>
+          <% if  !update_avail["time"].blank? %>
+             <div class="btn-container">
+                <button class="btn-confirm btn btn-small btn-primary pull-left" stylist_id="<%=current_user.id%>" getDate="<%= update_avail["date"]%>" getTime=<%=update_avail["time"].join(",")%> id="editbtn">Edit</button>
+               <%=button_to 'Delete', delete_unavail_path(update_avail["date"] ) ,:class=>"btn-confirm btn btn-small btn-primary",method: :put ,:remote=>true%>
+            </div>
+        <%else%>
+              <%=button_to 'Delete', delete_unavail_path(update_avail["date"] ) ,:class=>"btn-confirm btn btn-small btn-primary",method: :put ,:remote=>true%>
+          <%end%>
+              </td>
+      </tr>
+
+  <%end%>
+  <%end%>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+    $('#editbtn').on("click",function(){
+        var times=[]
+      var time_to_be_edited=  $(this).attr('getTime').split(',')
+        var date=$(this).attr('getDate')
+        var stylist_id=$(this).attr('stylist_id')
+
+        for (var i=0;i<time_to_be_edited.length;i++){
+            var checkbox= document.getElementById(time_to_be_edited[i])
+             checkbox.checked="checked"
+
+         }
+
+        $('#myModal_avail').modal('show')
+
+        $("#altertimes").on("click", function () {
+            $('#myModal_avail').modal('hide');
+            $.each($("input[name='slots']:checked"), function () {
+
+                times.push($(this).val());
+
+            });
+            alternativeDate(stylist_id,date,times)
+
+        });
+      //  alert(time_to_be_edited)
+    });
+
+
+</script>

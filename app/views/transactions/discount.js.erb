@@ -1,0 +1,9 @@
+$('#billing_amount').html(" <%= j render :partial=>"transactions/billing_amount",:locals=>{:service_amount=>@service_amount,:taxable_amount=>@taxable_amount,:total_amount=>@total_amount,:gift_deducted_amount=>@gift_deducted_amount,:gift_amount=>@gift_amount,:message=>@message,:pay_via_gift=>@pay_via_gift,:pay_via_credit=>@pay_via_credit,:json=>@json}%>");
+<%if @pay_via_entire_gift==true || @pay_half_from_gift==true%>
+$('#Payment').hide();
+$('#pay_via_gift').show()
+<%else%>
+$('#Payment').show();
+$('#pay_via_gift').hide()
+
+<%end%>

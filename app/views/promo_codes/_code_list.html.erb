@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row pt20">
+    <div>
+      <table class="table table-bordered">
+        <thead>
+        <tr style="border:none;">
+          <th>Name</th>
+          <th>Description</th>
+          <th>Promo Code</th>
+          <th>Expiry Date</th>
+          <th>Percentage Discount</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <%@promo_codes.each do |code|%>
+            <tr>
+
+              <td> <%=code.name%></td>
+              <td><%=code.description%></td>
+              <td><%=code.promo_code%></td>
+              <td><%=code.expiration%></td>
+              <td><%=code.discount_by_percentage%></td>
+              <td><%=button_to "X", code_delete_path(code.id),:class=>"btn-close btn btn-small btn-primary pull-right",method: :delete,:remote=>true %></td>
+            </tr>
+
+
+        <%end%>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="col-lg-12 text-center">
+    <h2 class="sh7">Add Popular Services</h2>
+  </div>
+<%@popular_service.each do|pop|%>
+      <div class="portfolio-box">
+        <span> <%= !pop.service_sub_category.blank? ? pop.service_sub_category.name : "Popular Service" %></span>
+       <figure> <%=image_tag pop.photo.image.url(:medium)%>
+       </figure>
+
+        <%= form_tag(popular_service_path(pop.id), :method => :put,:multipart => true)  do %>
+            <%= file_field_tag 'file',:accept=>"image/*" ,:style=>"font-size:73%"%>
+            <%=select_tag 'service_category', options_for_select(ServiceSubCategory.all.collect{ |u| [ u.name,u.id] }),:id=>"service_categories_id"%>
+            <%= submit_tag "Update", class: "btn btn-default btn-primary req-btn book" ,:id=>"submitbtn",:style=>"margin-top:7px;margin-right:85px"%>
+
+        <% end %>
+
+
+      </div>
+
+  <%end%>
+
+  <%#=link_to 'Back', rails_admin.dashboard_path, class: 'navbar-link btn-deny btn btn-primary', method: :get,:style=>"margin-bottom:39px;margin-left:10px"%>
+</div>
