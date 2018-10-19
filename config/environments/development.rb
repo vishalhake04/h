@@ -30,7 +30,7 @@ Rails.application.configure do
   Paperclip.options[:command_path] = "/usr/bin/identify"
 
   config.eager_load = false
-  config.action_controller.asset_host = 'http://http://18.136.194.81/'
+  config.action_controller.asset_host = 'http://18.136.194.81/'
   config.action_mailer.asset_host = config.action_controller.asset_host
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
