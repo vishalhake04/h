@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby "2.2.2"
+ruby "2.2.6"
 
 gem 'devise'
-gem 'mysql2', '~> 0.3.18'
 gem 'omniauth'
 gem 'omniauth-facebook'
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'/
 gem 'rails', '4.2.5'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
+#gem 'mysql2','~> 0.3.18'
 gem 'twilio-ruby'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -33,12 +33,13 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem "paperclip", '~>4.2'
 gem 'rails_admin'
+gem 'tzinfo-data'
 gem 'aws-sdk', '< 2.0'
 gem 'geocoder'
 gem 'city-state'
 gem 'progress_bar'
 gem 'execjs'
-gem 'therubyracer'
+#gem 'therubyracer'
 gem 'urbanairship'
 
 #gem 'jsonapi-serializers'

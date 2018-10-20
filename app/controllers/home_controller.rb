@@ -23,7 +23,7 @@ class HomeController < ApplicationController
         @popular_services=PopularService.order(:id)
         @recently_booked=RecentlyBooked.order(:id)
         @featured_professional=FeaturedProfessional.order(:id)
-        @instagram_images = Instagram.user_recent_media("257315215").take(6)
+       # @instagram_images = Instagram.user_recent_media("257315215").take(6)
 
 
 

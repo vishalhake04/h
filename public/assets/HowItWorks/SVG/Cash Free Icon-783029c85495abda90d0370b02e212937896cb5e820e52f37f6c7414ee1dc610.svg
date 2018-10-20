@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1080 1080" style="enable-background:new 0 0 1080 1080;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;stroke:#979898;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:#9CD7D7;stroke:#979898;stroke-width:3.6;stroke-miterlimit:10;}
+	.st2{fill:#FFFFFF;}
+	.st3{fill:#979898;}
+	.st4{fill:#9CD7D7;}
+	.st5{fill:#9CD7D7;stroke:#979898;stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g>
+	<path class="st0" d="M374.7,513.2v-43.1c0-53.6-43.6-97.2-97.2-97.2s-97.2,43.6-97.2,97.2v43.1h-18.9v180.7h234.1V513.2H374.7z
+		 M339.3,513.2H215.7v-43.1c0-34.1,27.8-61.9,61.9-61.9s61.8,27.7,61.8,61.9v43.1H339.3z"/>
+	<path class="st1" d="M296.5,606.7v38.2c0,9.9-8,18-18,18s-18-8-18-18v-38.2c-6.3-5.2-10.4-13-10.4-21.8c0-15.7,12.7-28.4,28.4-28.4
+		c15.7,0,28.4,12.7,28.4,28.4C306.8,593.8,302.8,601.5,296.5,606.7z"/>
+</g>
+<g>
+	<g>
+		
+			<rect x="493.3" y="446.5" transform="matrix(0.9371 -0.349 0.349 0.9371 -144.695 248.7674)" class="st2" width="249.5" height="158.9"/>
+		<path class="st3" d="M706.2,410.3l54.2,145.5L530,641.6l-54.2-145.5L706.2,410.3 M708.3,405.7L471.1,494l56.7,152.3L765,558
+			L708.3,405.7L708.3,405.7z"/>
+	</g>
+	<g>
+		
+			<rect x="470.1" y="450.7" transform="matrix(0.9371 -0.349 0.349 0.9371 -124.412 236.7545)" class="st4" width="249.5" height="25.9"/>
+		<path class="st3" d="M706.2,410.3l7.8,20.9L483.6,517l-7.8-20.9L706.2,410.3 M708.3,405.7L471.1,494l10.3,27.6l237.2-88.3
+			L708.3,405.7L708.3,405.7z"/>
+	</g>
+	<g>
+		
+			<rect x="503.7" y="504.3" transform="matrix(0.9371 -0.349 0.349 0.9371 -153.7953 254.1534)" class="st4" width="249.5" height="99.2"/>
+		<path class="st3" d="M727,466.2l33.4,89.6L530,641.6L496.6,552L727,466.2 M729.2,461.6L492,549.9l35.9,96.4L765.1,558L729.2,461.6
+			L729.2,461.6z"/>
+	</g>
+	<g>
+		<rect x="584.5" y="493.3" class="st4" width="332.3" height="212"/>
+		<path class="st3" d="M914.9,495.1v208.4H586.3V495.1H914.9 M918.5,491.5H582.7v215.6h335.9L918.5,491.5L918.5,491.5z"/>
+	</g>
+	<g>
+		<rect x="584.5" y="493.3" class="st2" width="332.3" height="35.5"/>
+		<path class="st3" d="M914.9,495.1V527H586.3v-31.9H914.9 M918.5,491.5H582.7v39.1h335.9L918.5,491.5L918.5,491.5z"/>
+	</g>
+	<g>
+		<rect x="584.5" y="572.5" class="st2" width="332.3" height="132.8"/>
+		<path class="st3" d="M914.9,574.3v129.2H586.3V574.3H914.9 M918.5,570.7H582.7v136.4h335.9L918.5,570.7L918.5,570.7z"/>
+	</g>
+	<circle class="st5" cx="876.2" cy="666.9" r="16.6"/>
+</g>
+</svg>

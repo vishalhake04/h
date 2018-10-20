@@ -1,51 +1,103 @@
-<footer>
-  <div class="container">
-    <div class="row">
-      <div class="footer-content padding-bottom-40">
-        <div class="col-lg-3 col-sm-6 col-xs-12 links">
-          <h5 class="block-heading">Main Menu</h5>
-          <ul>
-            <li><a href="<%= how_it_works_path %>">How It Works</a></li>
-            <li><a href="<%=help_path%>">Help</a></li>
-            <li><a href="<%=help_path+".html#tab-content-link"%>">FAQS</a></li>
-            <li><a href="#">Safety</a></li>
-            <%if user_signed_in?%>
-                <li><a href="<%= user_dashboard_path(current_user.id)%>">My Account</a></li>
-            <%else%>
-                <li><a href="#" class="myAccount">My Account</a></li>
-            <%end%>
-          </ul>
-        </div>
-        <%if !user_signed_in?%>
-            <div class="col-lg-3 col-sm-6 col-xs-12 links">
-              <h5 class="block-heading">Professionals</h5>
-              <ul>
-                <li><a href="<%=professional_sign_up_path%>">Become a Professional</a></li>
-
-                <li><a href="#"  class="signup">Sign Up</a>&nbsp;|&nbsp;<a href="#"  class="Login">Log In</a></li>
-              </ul>
+<footer id="footer" class="footer">
+        <div class="footer-widgets">
+            <div class="container">
+                <div class="row">
+				<div class="col-md-3">
+                        <!-- Widget :: Address Info -->
+                        <div class="contacts-widget widget widget-footer">
+                            
+                            <div class="widget-content">
+							   <h3 class="widget-title">Main Menu</h3>
+                                <ul class="contacts-info-list">
+                                    <li> 
+										<a href="">How It Work</a>
+                                    </li>
+                                    <li> 
+										<a href="">Help</a>
+                                    </li>
+                                     <li>
+									 <a href="">FAQS</a>
+                                    </li>
+									 <li>
+									 <a href="">Sefty</a>
+                                    </li>
+									 <li>
+									 <a href="">My Account</a>
+                                    </li>
+									
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /Widget :: Address Info -->
+                    </div>
+					<div class="col-md-3">
+                        <!-- Widget :: Address Info -->
+                        <div class="contacts-widget widget widget-footer">
+                            <h3 class="widget-title">Professionals</h3>
+                            <div class="widget-content">
+                                <ul class="contacts-info-list">
+                                    <li> 
+										 <a href="">Become Professional</a>
+                                    </li>
+                                    <li> 
+										 <a href="">Sign Up</a>| <a href="">Login</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /Widget :: Address Info -->
+                    </div>
+					<div class="col-md-3">
+                        <!-- Widget :: Address Info -->
+                        <div class="contacts-widget widget widget-footer">
+                            <h3 class="widget-title">About</h3>
+                            <div class="widget-content">
+                                <ul class="contacts-info-list">
+                                    <li> 
+																			
+									 <a href="">Contact Us</a>
+                                 
+                                    </li>
+                                    <li> 
+										<a href="">Term & Policy</a>
+                                    </li>
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /Widget :: Address Info -->
+                    </div>
+                    <div class="col-md-3">
+                        <!-- Widget :: About us -->
+                        <div class="widget-newsletter widget widget-footer">
+                            <h3 class="widget-title">Join Us On</h3>
+                            
+                            <div class="social-link">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /Widget :: About us -->
+                    </div>
+                    
+                    
+                </div>
             </div>
-        <%end%>
-        <div class="col-lg-3 col-sm-6 col-xs-12 links">
-          <h5 class="block-heading">About</h5>
-          <ul>
-            <li><a href="<%= help_path("html#contact_us")%>">Contact Us</a></li>
-            <li><a href="#">Terms and Privacy</a></li>
-          </ul>
         </div>
-        <div class="col-lg-3 col-sm-6 col-xs-12">
-          <h5>Join Us On</h5>
-          <ul class="social" style="margin-left:-40px;">
-            <li><a href="#" class="f_twitter"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="#" class="f_facebook"><i class="fa fa-facebook"></i></a></li>
-            <li><a href="#" class="f_instagram"><i class="fa fa-instagram"></i></a></li>
-            <li><a href="http://linkedin.com/"><i class="fa fa-linkedin"></i></a></li>          </ul>
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12"> Copyright @ 2018 Power by <a href="#">Reddera</a> All Rihgt Reserved. </div>
+                </div>
+            </div>
         </div>
-        <div class="clear"></div>
-      </div>
-    </div>
-  </div>
-</footer>
+    </footer>
 <%=render 'layouts/login'%>
 
 <%=render 'layouts/signup'%>
