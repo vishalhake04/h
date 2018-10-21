@@ -1,0 +1,86 @@
+#style-switcher h2 a,
+.section-borders::before,
+.section-borders::after,
+.section-borders span,
+a.boxed-btn,
+.about-slider .owl-dot.active,
+.project-hover::after,
+#testimonial-slider.owl-carousel .owl-dot.active span,
+.flat .plan li.plan-name,
+.btn,
+.post-date,
+.subscribe-area,ul.portfolio li.active,ul.portfolio li:hover,.portfolio-caption{
+    background-color: #c82b5b;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > li > a:focus,
+.navbar-default .navbar-nav > li > a:hover {
+    border-bottom: 0px solid #c82b5b;
+    color: #c82b5b;
+}
+a,
+.slider-title h1 span,
+.owl-nav div.owl-prev:hover,
+.owl-nav div.owl-next:hover,
+.section-title h2 span,
+a:hover,
+.single-service-box:hover h2,
+.portfolio-counter-box h4,
+.testimonial::before,
+.testimonial::after,
+.info-bar ul li i,
+.footer-copyright a, .social-link ul li a:hover,.protfolio-link-bt:hover,.blog-col h4 a:hover,.coundown-title span{
+    color: #c82b5b;
+}
+a.btn.btn-normal,
+a.btn.btn-color:hover,
+a.btn.btn-normal-border:hover,
+.portfolio-counter-box:hover i,
+a.read-btn:hover {
+    background-color: #c82b5b;
+    color: #fff;
+}
+.about-text a.boxed-btn:hover,
+.btn:hover,
+a.read-btn,
+button.btn:hover {
+    background-color: #fff;
+    border: 1px solid #c82b5b;
+    color: #c82b5b;
+}
+.single-service-box:hover i,
+#scrollup {
+    background-color: #c82b5b;
+    border: 1px solid #c82b5b;
+    color: #fff;
+}
+.percent {
+    border: 3px solid #c82b5b;
+    color: #c82b5b;
+}
+.our-team .team-img, .flat .plan li.plan-price {
+    border-bottom: 0px solid #ffffff;
+}
+.our-team:hover .team-content,
+.btn-primary,ul.portfolio li.active,ul.portfolio li:hover,a.boxed-btn {
+    border: 1px solid #c82b5b;
+}
+.blog-img:before, .our-team .link {
+    background: rgba(231, 76, 60, 0.48);
+}
+.flat .plan li:hover .fa{color:#fff;}
+.portfolio-counter-box:hover i{border: 2px solid #c82b5b;}
+.flat .plan li:hover {
+  background: #c82b5b;
+}
+.flat .plan li:hover {
+  background: #c82b5b;
+}
+.portfolio .item::before{
+	border-top: 3px solid #c82b5b;
+}
+.portfolio .item::after{
+	border-bottom: 3px solid #c82b5b;
+}

@@ -25,5 +25,7 @@ module Reddera
     #config.serve_static_assets = true
     config.autoload_paths << Rails.root.join('lib')
     config.assets.initialize_on_precompile = false
+    config.assets.compile = true
+    
   end
 end
